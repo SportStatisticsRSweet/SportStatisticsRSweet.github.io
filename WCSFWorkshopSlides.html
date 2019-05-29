@@ -43,18 +43,18 @@ Work aside, I love being outdoors, running, and baking.
 
 I also have a miniature dachshund puppy named Dudley! `#RDogLadies`
 
-&lt;img src="Figures/DudleyAndI.jpg" width="35%" /&gt;
+&lt;img src="https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/DudleyAndI.jpg" width="35%" /&gt;
 
 ---
 
 class: inverse, center, top
-background-image: url(Figures/AFLW_WhittenOval.jpg)
+background-image: url(https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/AFLW_WhittenOval.JPG)
 background-size: cover
 # What programs do you use to analyse athlete data?
 
 ---
 
-class: center, left
+class: left, top
 
 # Advantages of using Excel
 
@@ -85,8 +85,7 @@ Can even run (basic to advanced) statistics!
 
 Help is never far away...
 
-&lt;img src="https://media.giphy.com/media/eCz0zwSl7qxB6/giphy.gif" width="45%" /&gt;
-
+&lt;img src="https://media.giphy.com/media/eCz0zwSl7qxB6/giphy.gif" align="right" width="45%"/&gt;
 
 ---
 
@@ -102,7 +101,7 @@ class: center, top
 
 # We end up here!
 
-&lt;img src="Figures/ExcelStoppedWorking.png" align="middle" width="85%"/&gt;
+&lt;img src="https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/ExcelStoppedWorking.png" align="middle" width="85%"/&gt;
 
 .footnote[
 Credit: [**Dr Jacquie Tran, ESSA Forum, 2019**](https://github.com/jacquietran/2019_essa_forum)
@@ -118,12 +117,11 @@ class: center, top
 
 ---
 
-class: center, top
+class: left, top
 
 
 # For there are better (reproducible) ways!
 
---
 
 Type a line of code, run and see output 
 
@@ -146,7 +144,7 @@ Automate reporting processes in .pdf or .html output
 
 ---
 
-class: center, top
+class: left, top
 
 
 # For there R better (reproducible) ways!
@@ -176,9 +174,9 @@ Automate reporting processes in .pdf or .html output
 ---
 class: center, top
 
-# Today - a (quick) journey on using R
+# Today - a (quick) overview on using R
 
-&lt;img src="https://media.giphy.com/media/MOTkF7sT8u2Z2/giphy.gif" align="middle" width="85%"/&gt;
+&lt;img src="https://media.giphy.com/media/MOTkF7sT8u2Z2/giphy.gif" align="right" width="85%"/&gt;
 
 
 ---
@@ -207,7 +205,7 @@ class: center, top
 
 ---
 
-class: center, top
+class: left, top
 
 # Starting out in R
 
@@ -223,7 +221,14 @@ Start out with a small dataset, with analysis that you want to replicate.
 
 --
 
-When in doubt, visit [Stack Overflow!](https://stackoverflow.com/)
+When in doubt, visit [Stack Overflow!](https://stackoverflow.com/)&lt;br&gt;&lt;br&gt;
+
+&lt;img src="https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/RForDataScience.png" align="middle" width="85%"/&gt;
+
+.footnote[
+Image Credit: [Hadley Wickham, **R For Data Science**](https://r4ds.had.co.nz/introduction.html)
+]
+
 
 ---
 
@@ -251,9 +256,40 @@ class: center, top
 
 ---
 
-class: center, top
+class: left, top
 
 # Importing Data from Smartabase
+First, install and load required packages
+
+```r
+library(rvest)
+library(plyr)
+library(dplyr)
+library(qdap)
+```
+
+Then, connect to an existing form on Smartabase (can be "live" or historical data)
+
+
+```r
+*WellnessDataURL &lt;- html_session("https://username:password@my2.smartabase.com/yourteamsname/live?report=WellnessData&amp;updategroup=true")
+```
+--
+
+```r
+# Read in data
+*WellnessData &lt;- read_html(WellnessDataURL)
+# Identify the table
+WellnessDataTable &lt;- html_nodes(WellnessData, "table")
+# Collect only table data
+WellnessDataTable1 &lt;- html_table(WellnessDataTable[1], fill = TRUE)
+```
+--
+
+```r
+# Make data.frame
+*HistoricalWellnessData &lt;- as.data.frame(WellnessDataTable1)
+```
 
 ---
 
@@ -302,6 +338,32 @@ class: center, top
 class: center, top
 
 # Creating Slides on Athlete Monitoring Data - Xaringan
+
+---
+
+class: center, top
+
+# Resources on Creating Xaringan Slides in R
+
+"Working with Data in Elite Sport" [RLadies Auckland 2019 talk by Dr Jacquie Tran](https://jacquietran.github.io/2019_may_rladies_akl/R/#1).
+
+
+"Making Slides in R Markdown" [RStudio Conf 2019 presentation by Alison Hill](https://arm.rbind.io/slides/xaringan.html#1).
+
+
+"Reproducibility in R" [RLadies Melbourne 2019 talk by Lavinia Gordon](https://mrslaviniag.github.io/xaringan_presentations/rladies_presentation_22_May_2019.html#1).
+
+
+"Presentation Ninja with xaringan" [Yihui Xie](https://slides.yihui.name/xaringan/#1).&lt;br&gt;&lt;br&gt;
+
+Install the xaringan package from Github:
+
+
+```r
+devtools::install_github("yihui/xaringan")
+```
+
+&lt;img src="https://user-images.githubusercontent.com/163582/45438104-ea200600-b67b-11e8-80fa-d9f2a99a03b0.png" align="bottom" width="25%"/&gt;
 
 
 ---
