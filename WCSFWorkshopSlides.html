@@ -54,38 +54,40 @@ background-size: cover
 
 ---
 
-class: left, top
+class: center, top
 
-# Advantages of using Excel
+# Advantages of Excel
 
-Easy to download, install, open.
+.left[
+* Easy to download, install, open.
+]
+--
+.left[
+* Create a worksheet/ workbook and type away!
+]
 
 --
-
-Create a worksheet/ workbook and type away!
-
-
+.left[
+* Interactive, (fairly) friendly to save, send, open and edit
+]
 --
-
-Interactive, (fairly) friendly to save, send, open and edit
-
+.left[
+* Point and click to enter data, create figures, calculate math
+]
 --
-
-Point and click to enter data, create figures, calculate math
-
+.left[
+* Many tabs = data entry, analysis, visualisation, (dashboard) reporting
+]
 --
-
-Many tabs = data entry, analysis, visualisation, (dashboard) reporting
-
+.left[
+* Can even run (basic to advanced) statistics!
+]
 --
+.left[
+* Help is never far away...
+]
 
-Can even run (basic to advanced) statistics!
-
---
-
-Help is never far away...
-
-&lt;img src="https://media.giphy.com/media/eCz0zwSl7qxB6/giphy.gif" align="right" width="45%"/&gt;
+&lt;img src="https://media.giphy.com/media/eCz0zwSl7qxB6/giphy.gif" width="45%"/&gt;
 
 ---
 
@@ -117,59 +119,58 @@ class: center, top
 
 ---
 
-class: left, top
-
+class: center, top
 
 # For there are better (reproducible) ways!
 
-
-Type a line of code, run and see output 
-
+.left[
+* Type a line of code, run and see output 
+]
 --
-
-Create a project, run analysis, create a dashboard and/ or report 
-
+.left[
+* Create a project, run analysis, create a dashboard and/ or report 
+]
 --
-
-Reproducibility = Create a GitHub repo, clone, commit, push, push
-
+.left[
+* Reproducibility = Create a GitHub repo, clone, commit, push, push
+]
 --
-
-Hard to manipulate raw data 
-
+.left[
+* Hard to manipulate raw data 
+]
 --
-
-Automate reporting processes in .pdf or .html output
-
+.left[
+* Automate reporting processes in .pdf or .html output
+]
 
 ---
 
-class: left, top
+class: center, top
 
 
 # For there R better (reproducible) ways!
 
+.left[
+* Type a line of code, run and see output 
+]
 
+.left[
+* Create a project, run analysis, create a dashboard and/ or report 
+]
 
-Type a line of code, run and see output 
+.left[
+* Reproducibility = Create a GitHub repo, clone, commit, push, push
+]
 
+.left[
+* Hard to manipulate raw data 
+]
 
+.left[
+* Automate reporting processes in .pdf or .html output
+]
 
-Create a project, run analysis, create a dashboard and/ or report 
-
-
-
-Reproducibility = Create a GitHub repo, clone, commit, push, push
-
-
-
-Hard to manipulate raw data 
-
-
-Automate reporting processes in .pdf or .html output
-
-
-&lt;img src="https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/RLogo.jpg" align="middle" width="50%"/&gt;
+&lt;img src="https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/RLogo.jpg"   width="50%"/&gt;
 
 ---
 class: center, top
@@ -205,23 +206,29 @@ class: center, top
 
 ---
 
-class: left, top
+class: center, top
 
 # Starting out in R
 
-Highly recommended using [RStudio IDE](https://www.rstudio.com/products/rstudio/), as it is a friendly interface.
-
+.left[
+* Highly recommended using [RStudio IDE](https://www.rstudio.com/products/rstudio/), as it is a friendly interface.
+]
 --
-
-Plenty of online resources to help learn, including [R Tutorial](http://www.r-tutor.com/r-introduction/data-frame).
-
+.left[
+* Need to install [R](https://www.r-project.org/) (required) before installing RStudio.
+]
 --
-
-Start out with a small dataset, with analysis that you want to replicate.
-
+.left[
+* Plenty of online resources to help learn, including [R Tutorial](http://www.r-tutor.com/r-introduction/data-frame).
+]
 --
-
-When in doubt, visit [Stack Overflow!](https://stackoverflow.com/)&lt;br&gt;&lt;br&gt;
+.left[
+* Start out with a small dataset, with analysis that you want to replicate.
+]
+--
+.left[
+* When in doubt, visit [Stack Overflow!](https://stackoverflow.com/)&lt;br&gt;&lt;br&gt;
+]
 
 &lt;img src="https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/RForDataScience.png" align="middle" width="85%"/&gt;
 
@@ -234,7 +241,63 @@ Image Credit: [Hadley Wickham, **R For Data Science**](https://r4ds.had.co.nz/in
 
 class: center, top
 
-# Creating A Project
+# Creating A Project in RStudio
+
+.left[
+**Using RStudio to Your Advantage**
+]
+
+.left[
+* Create a project and name the folder appropriately
+]
+--
+.left[
+* In RStudio, click `File -&gt; New Project -&gt; New Directory -&gt; New Project`
+]
+--
+.left[
+* Using this approach will contain all your files in one location
+]
+--
+.left[
+* Avoids having multiple .R and .RData files scattered on Dropbox!
+]
+--
+.left[
+* Working directory will fire when the project is opened
+]
+
+&lt;img src="https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/CreateNewProject.png" width="55%"/&gt;
+
+---
+
+class: center, top
+
+# Creating A Project in RStudio
+
+.left[
+**Be A Janitor, not a Ninja!**
+
+* Store .R files in a Scripts folder, figures in Figures folder etc&lt;br&gt; 
+
+* Aim for reproducibility and always comment your code!
+]&lt;br&gt;&lt;br&gt;
+
+&lt;img src="https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/CodeJanitor.png" width="85%"/&gt;
+
+---
+
+class: center, top
+
+# Example of This Project in RStudio
+
+&lt;img src="https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/CleanProject.png" width="65%"/&gt;
+
+
+---
+
+background-image: url(https://www.tidyverse.org/images/tidyverse-default.png)
+background-size: cover
 
 ---
 
@@ -242,17 +305,59 @@ class: center, top
 
 # The Tidyverse
 
+.left[
+Install the complete package collection with:
+
+```r
+install.packages("tidyverse")
+```
+]
+
+&lt;img src="https://lsru.github.io/tv_course/img/01_tidyverse_data_science.png" width="70%"/&gt;
+
+.footnote[
+Image Credit: [University of Luxemborg, **Life Sciences Research Unit**](https://lsru.github.io/tv_course/lecture01_intro.html#1)
+]
+
 ---
 
 class: center, top
 
-# Cleaning Data
+# Importing Data
 
----
+.left[
+**Importing a .csv file into the Global Environment**
 
-class: center, top
 
-# Visualising Data 
+```r
+RawData &lt;- read.csv("C:/Users/AJSweeting/Desktop/RawData.csv")
+```
+]
+&lt;br&gt;
+
+--
+
+.left[
+**Importing a .xlsx file into the Global Environment**
+
+
+```r
+library(readxl)
+RawData &lt;- read_excel(("C:/Users/AJSweeting/Desktop/RawData.xlsx"), sheet = "Tab 1")
+```
+]
+&lt;br&gt;
+
+--
+
+.left[
+**Importing a .csv file from a project folder**
+
+
+```r
+RawData &lt;- read_excel(("data/RawGroinBarData.csv"), sheet = "Tab 1")
+```
+]
 
 ---
 
@@ -268,17 +373,19 @@ library(dplyr)
 library(qdap)
 ```
 
+--
+
 Then, connect to an existing form on Smartabase (can be "live" or historical data)
 
 
 ```r
-*WellnessDataURL &lt;- html_session("https://username:password@my2.smartabase.com/yourteamsname/live?report=WellnessData&amp;updategroup=true")
+WellnessDataURL &lt;- html_session("https://username:password@my2.smartabase.com/yourteamsname/live?report=WellnessData&amp;updategroup=true") 
 ```
 --
 
 ```r
 # Read in data
-*WellnessData &lt;- read_html(WellnessDataURL)
+WellnessData &lt;- read_html(WellnessDataURL) 
 # Identify the table
 WellnessDataTable &lt;- html_nodes(WellnessData, "table")
 # Collect only table data
@@ -288,20 +395,62 @@ WellnessDataTable1 &lt;- html_table(WellnessDataTable[1], fill = TRUE)
 
 ```r
 # Make data.frame
-*HistoricalWellnessData &lt;- as.data.frame(WellnessDataTable1)
+HistoricalWellnessData &lt;- as.data.frame(WellnessDataTable1)
 ```
 
+
+---
+class: inverse, center, top
+background-image: url(https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/AFLW2_WhittenOval.jpg)
+background-size: cover
+# Analysing Athlete Data - Working Example
+
 ---
 
 class: center, top
 
-# Analysing Athlete Monitoring Data - GroinBar
+# Setting up the R Environment
+
+.left[
+Download R and RStudio.
+]&lt;br&gt;
+
+.left[
+Create a new project in RStudio: `File -&gt; New Project -&gt; New Directory -&gt; New Project (WCSF Workshop)`
+]&lt;br&gt;
+
+.left[
+Ensure the packages below are up-to-date and installed:
+
+
+```r
+WCSFWorkshopPackages &lt;- c(
+    'readr',
+    'tidyverse', 
+    'here',
+    'usethis')
+
+install.packages(WCSFWorkshopPackages)
+```
+]
 
 ---
 
 class: center, top
 
-# Visualising Athlete Monitoring Data - GroinBar
+# Importing the Example Data
+
+.left[
+The `here` package helps locate a specific file within your project
+
+
+```r
+library(here)
+library(readr)
+RawGroinBarData &lt;- read_csv(                                           
+  here("Data/RawGroinBarData.csv"), col_names = TRUE, col_types = NULL)
+```
+]
 
 ---
 
