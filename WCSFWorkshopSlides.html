@@ -412,13 +412,15 @@ class: center, top
 # Setting up the R Environment
 
 .left[
-Download R and RStudio.
-]&lt;br&gt;
+Download R and RStudio.&lt;br&gt; 
+
+Create a new project in RStudio: `File -&gt; New Project -&gt; New Directory -&gt; New Project (WCSF Workshop)`&lt;br&gt;
+]
 
 .left[
-Create a new project in RStudio: `File -&gt; New Project -&gt; New Directory -&gt; New Project (WCSF Workshop)`
+Create a folder within this project (can be manual) named "Data"
 ]&lt;br&gt;
-
+--
 .left[
 Ensure the packages below are up-to-date and installed:
 
@@ -432,16 +434,15 @@ WCSFWorkshopPackages &lt;- c(
 
 install.packages(WCSFWorkshopPackages)
 ```
-]
+]&lt;br&gt;
 
 ---
-
 class: center, top
 
-# Importing the Example Data
+# Example Data
 
 .left[
-The `here` package helps locate a specific file within your project
+Import example data, using the `here` package, which helps locate a specific file within your project
 
 
 ```r
@@ -452,41 +453,444 @@ RawGroinBarData &lt;- read_csv(
 ```
 ]
 
----
+--
 
-class: center, top
+.left[
+Example data is hip adduction strength force (N), on athletes over time, assessed via [GroinBar](https://www.valdperformance.com/groinbar-hip-strength-testing-system/)&lt;br&gt;&lt;br&gt;
+]
 
-# Analysing Athlete Monitoring Data - GPS
+&lt;img src="https://47e0bue9c3g1vuv0432ksik1-wpengine.netdna-ssl.com/wp-content/uploads/2017/09/GroinBar-Adjustment2.png" width="50%"/&gt;
 
----
+.footnote[
+Image Credit: [Vald Performance**](https://www.valdperformance.com/welcome-to-vald-performance/)
+]
 
-class: center, top
-
-# Visualising Athlete Monitoring Data - GPS
-
----
-
-class: center, top
-
-# Reporting on Athlete Monitoring Data - RMarkdown
 
 ---
 
-class: center, top
-
-# Creating Apps on Athlete Monitoring Data - RShiny
-
----
-
-class: center, top
-
-# Creating Projects on Athlete Monitoring Data - WorkflowR
+class: inverse, center, top
+background-image: url(https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/AFLW2_WhittenOval.jpg)
+background-size: cover
+# First Step - How to Assess Example Data?
 
 ---
 
 class: center, top
 
-# Creating Slides on Athlete Monitoring Data - Xaringan
+# Assessing Example Data
+
+.left[
+
+```r
+# Assess the structure of the data.frame
+str(RawGroinBarData)
+```
+
+```
+## Classes 'spec_tbl_df', 'tbl_df', 'tbl' and 'data.frame':	249 obs. of  4 variables:
+##  $ Date                         : chr  "4/12/2017" "7/12/2017" "9/12/2017" "9/12/2017" ...
+##  $ Athlete                      : chr  "Gus Smith" "Gus Smith" "Gus Smith" "Gus Smith" ...
+##  $ X45.Degrees.Adduction..LEFT. : num  294 310 349 433 303 474 345 325 358 366 ...
+##  $ X45.Degrees.Adduction..RIGHT.: num  297 315 360 412 307 457 354 336 395 373 ...
+##  - attr(*, "spec")=
+##   .. cols(
+##   ..   Date = col_character(),
+##   ..   Athlete = col_character(),
+##   ..   X45.Degrees.Adduction..LEFT. = col_double(),
+##   ..   X45.Degrees.Adduction..RIGHT. = col_double()
+##   .. )
+```
+]
+
+---
+
+class: center, top
+
+# Cleaning Example Data
+
+.left[
+
+```r
+# Ensure example data is a data.frame
+RawGroinBarData &lt;- as.data.frame(RawGroinBarData)
+```
+]
+--
+.left[
+
+```r
+# View the top four rows
+head(RawGroinBarData, 5)
+```
+
+```
+##         Date   Athlete X45.Degrees.Adduction..LEFT.
+## 1  4/12/2017 Gus Smith                          294
+## 2  7/12/2017 Gus Smith                          310
+## 3  9/12/2017 Gus Smith                          349
+## 4  9/12/2017 Gus Smith                          433
+## 5 11/12/2017 Gus Smith                          303
+##   X45.Degrees.Adduction..RIGHT.
+## 1                           297
+## 2                           315
+## 3                           360
+## 4                           412
+## 5                           307
+```
+] 
+--
+.left[
+
+```r
+# Rename columns - make them tidy
+colnames(RawGroinBarData) &lt;- c("Date", "Athlete", "Left", "Right")
+```
+]
+
+---
+
+class: center, top
+
+# From Wide to Long Format
+
+.left[
+
+```r
+# Move from many columns to many rows
+library(tidyr)
+GroinBarData_Long &lt;- gather(RawGroinBarData, Limb, Force, Left:Right)
+```
+]
+
+--
+
+.left[
+
+```r
+# Inspect data.frame now
+head(GroinBarData_Long, 10)
+```
+
+```
+##          Date   Athlete Limb Force
+## 1   4/12/2017 Gus Smith Left   294
+## 2   7/12/2017 Gus Smith Left   310
+## 3   9/12/2017 Gus Smith Left   349
+## 4   9/12/2017 Gus Smith Left   433
+## 5  11/12/2017 Gus Smith Left   303
+## 6  11/12/2017 Gus Smith Left   474
+## 7  14/12/2017 Gus Smith Left   345
+## 8  16/12/2017 Gus Smith Left   325
+## 9  18/12/2017 Gus Smith Left   358
+## 10  9/01/2018 Gus Smith Left   366
+```
+]
+
+---
+
+class: center, top
+
+# From Wide to Long Format
+
+.left[
+
+```r
+# Move from many columns to many rows
+library(tidyr)
+GroinBarData_Long &lt;- gather(RawGroinBarData, Limb, Force, Left:Right)
+```
+]
+
+
+.left[
+
+```r
+# Inspect data.frame now
+tail(GroinBarData_Long, 10)
+```
+
+```
+##           Date    Athlete  Limb Force
+## 489 24/05/2018 Hudson Lee Right   422
+## 490 29/05/2018 Hudson Lee Right   452
+## 491 31/05/2018 Hudson Lee Right   440
+## 492  6/06/2018 Hudson Lee Right   428
+## 493 11/06/2018 Hudson Lee Right   440
+## 494 13/06/2018 Hudson Lee Right   416
+## 495 19/06/2018 Hudson Lee Right   426
+## 496 21/06/2018 Hudson Lee Right   449
+## 497  3/07/2018 Hudson Lee Right   422
+## 498  5/07/2018 Hudson Lee Right   420
+```
+]
+
+---
+
+class: center, top
+
+# Visual Inspection of Example Data
+
+.left[
+
+```r
+# Create a plot of force over time
+library(ggplot2)
+ggplot(GroinBarData_Long, aes(x = Date, y = Force)) +
+  geom_point()
+```
+]
+
+--
+
+&lt;img src="WCSFWorkshopSlides_files/figure-html/Plot2-1.png" width="720" /&gt;
+
+---
+
+class: center, top
+
+# (Better) Visual Inspection of Example Data
+
+.left[
+
+```r
+# Create many plots, by athlete and limb, over time
+library(ggplot2)
+ggplot(GroinBarData_Long, 
+       aes(x = Date, y = Force, colour = Limb)) +
+  geom_point() +
+  ylab("\n Max Force (N)") +
+  ggtitle("45 Degrees Adduction") +
+  scale_y_continuous(expand = c(0, 0)) +
+  facet_wrap(~Athlete)
+```
+]
+
+--
+
+&lt;img src="WCSFWorkshopSlides_files/figure-html/Plot4-1.png" width="720" /&gt;
+
+---
+class: center, top
+
+# (Better) Visual Inspection of Example Data
+
+.left[
+
+```r
+# Add a time stamp column
+GroinBarData_Long$TimeStamp &lt;- as.POSIXct(paste(GroinBarData_Long$Date), format="%d/%m/%Y")
+
+# Create many plots, by athlete and limb, over time
+library(ggplot2)
+ggplot(GroinBarData_Long, 
+       aes(x = TimeStamp, y = Force, colour = Limb)) +
+  geom_point() +
+  ggtitle("45 Degrees Adduction \n") +
+  ylab("Max Force (N) \n") +
+  scale_x_datetime(date_labels = "%b") +
+  scale_y_continuous(expand = c(0, 0)) +
+  theme_classic() +
+  theme(axis.line.x = element_line(size = .5, colour = "black"),
+        axis.line.y = element_line(size = .5, colour = "black"),
+        axis.ticks.x = element_line(size = .5, colour = "black"),
+        axis.ticks.y = element_line(size = .5, colour = "black"),
+        axis.text.x = element_text(size = 10, colour = "black", angle = 35, hjust = 1, vjust = 1.15),
+        axis.text.y = element_text(size = 10, colour = "black"),
+        axis.title.x = element_blank(), 
+        axis.title.y = element_text(face = "bold", size = 12, colour = "black"), 
+        legend.position = "bottom",
+        plot.title = element_text(face = "bold", size = 14, colour = "black", hjust = 0.5)) +
+  facet_wrap(~Athlete)
+```
+]
+
+---
+class: center, top
+
+# (Better) Visual Inspection of Example Data
+
+&lt;img src="WCSFWorkshopSlides_files/figure-html/Plot6-1.png" width="792" /&gt;
+
+---
+class: center, top
+
+# (Sparking) Joy Plots of Example Data
+
+.left[
+
+```r
+library(ggridges)
+ggplot(GroinBarData_Long, 
+       aes(x = Force, y = Athlete)) + 
+  geom_density_ridges(scale = 3) + 
+  ggtitle("45 Degrees Adduction \n") +
+  ylab("Athlete \n") +
+  xlab("\n Force (N)") +
+  theme_classic() +
+  theme(axis.line.x = element_line(size = .5, colour = "black"),
+        axis.line.y = element_line(size = .5, colour = "black"),
+        axis.ticks.x = element_line(size = .5, colour = "black"),
+        axis.ticks.y = element_line(size = .5, colour = "black"),
+        axis.text.x = element_text(size = 10, colour = "black"),
+        axis.text.y = element_text(size = 10, colour = "black"),
+        axis.title.x =element_text(face = "bold", size = 12, colour = "black"), 
+        axis.title.y = element_text(face = "bold", size = 12, colour = "black"), 
+        plot.title = element_text(face = "bold", size = 14, colour = "black", hjust = 0.5)) +
+  facet_wrap(~Limb, scales = "free_x")
+```
+]
+
+---
+class: center, top
+
+#(Sparking) Joy Plots of Example Data
+
+&lt;img src="WCSFWorkshopSlides_files/figure-html/Plot8-1.png" width="792" /&gt;
+
+---
+class: center, top
+
+#(Sparking) Joy Plots of Example Data
+
+&lt;img src="WCSFWorkshopSlides_files/figure-html/Plot10-1.png" width="792" /&gt;
+
+---
+class: center, top
+
+#(Sparking) Joy Plots of Example Data
+
+&lt;img src="WCSFWorkshopSlides_files/figure-html/Plot11-1.png" width="792" /&gt;
+
+---
+class: center, top
+
+#(Sparking) Joy Plots of Example Data
+
+&lt;img src="WCSFWorkshopSlides_files/figure-html/Plot12-1.png" width="792" /&gt;
+
+---
+class: center, top
+
+#(Sparking) Joy Plots of Example Data
+
+.left[
+
+```r
+# Colourblind palette:
+cbPalette &lt;- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+# Load required package
+library(ggridges)
+# Spark joy!
+ggplot(GroinBarData_Long, 
+       aes(x = Force, y = Athlete, fill = Athlete)) + 
+  stat_density_ridges(scale = 3, quantile_lines = TRUE, quantiles = 2) +
+  scale_fill_cyclical(values = cbPalette) +
+  ggtitle("45 Degrees Adduction \n") +
+  ylab("Athlete \n") +
+  xlab("\n Force (N)") +
+  theme_classic() +
+  theme(axis.line.x = element_line(size = .5, colour = "black"),
+        axis.line.y = element_line(size = .5, colour = "black"),
+        axis.ticks.x = element_line(size = .5, colour = "black"),
+        axis.ticks.y = element_line(size = .5, colour = "black"),
+        axis.text.x = element_text(size = 10, colour = "black"),
+        axis.text.y = element_text(size = 10, colour = "black"),
+        axis.title.x =element_text(face = "bold", size = 12, colour = "black"), 
+        axis.title.y = element_text(face = "bold", size = 12, colour = "black"), 
+        plot.title = element_text(face = "bold", size = 14, colour = "black", hjust = 0.5)) +
+  facet_wrap(~Limb, scales = "free_x")
+```
+]
+
+---
+class: center, top
+
+#But What About Change Over Time?
+
+.left[
+## Statistical Process Control
+]
+--
+.left[
+* Quantitative approach to monitoring and detecing change in a process, over time
+]
+--
+.left[
+* Widely tilised in manufacturing and software development 
+]
+--
+.left[
+* Utilises control charts to demonstrate a measure (y axis) over time (x axis)
+]
+--
+.left[
+* Centre line represents (weighted) mean or median
+]
+--
+.left[
+* Two horizontal lines that represent the boundaries of common cause variation
+]
+--
+.left[
+.bold[Common cause variation]: Present in any process/ system, often called random variation (noise)
+]
+--
+.left[
+.bold[Special cause variation]: Sometimes present, makes process unpredictable, often called non-random variation (signal)
+]
+---
+# Statistical Process Control - Example Data
+
+
+```r
+# Load required package
+require(qicharts2)
+
+# Subset to include only one athlete's data
+HudsonData &lt;- subset(GroinBarData_Long, Athlete=="Hudson Lee")
+```
+
+--
+
+```r
+# Create Control Chart
+ControlChart &lt;- qic(Force,
+    data = HudsonData,
+    chart = 'i',
+    title = NULL,
+    xlab  = NULL,
+    x = TimeStamp, 
+    ncol = 1,
+    show.labels = TRUE,
+    point.size = 3,
+    scales = "free_y",
+    facets = ~ Limb) 
+```
+
+---
+class: center, top
+# Statistical Process Control - Example Data
+
+&lt;img src="WCSFWorkshopSlides_files/figure-html/ControlChart-1.png" width="792" /&gt;
+
+---
+class: center, top
+# Statistical Process Control - Example Data
+
+&lt;img src="WCSFWorkshopSlides_files/figure-html/ControlChart2-1.png" width="792" /&gt;
+
+---
+class: center, top
+# Statistical Process Control - Example Data
+
+&lt;img src="WCSFWorkshopSlides_files/figure-html/ControlChartDiffData-1.png" width="792" /&gt;
+
+---
+
+class: inverse, center, top
+background-image: url(https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/AFLWPhoto3.JPG)
+background-size: cover
+# What Do You Use to Assess Change in Athlete Data Over Time?
 
 ---
 
@@ -524,8 +928,9 @@ class: center, middle
 <i class="fas  fa-link "></i> [SportStatisticsRSweet](http://sportstatisticsrsweet.rbind.io/)&lt;br&gt;&lt;br&gt;
 <i class="fas  fa-envelope "></i> [Alice.Sweeting@vu.edu.au](mailto:Alice.Sweeting@vu.edu.au)&lt;br&gt;&lt;br&gt;
 <i class="fab  fa-twitter "></i> [alicesweeting](https://twitter.com/alicesweeting)&lt;br&gt;&lt;br&gt;
+<i class="fab  fa-github "></i> [SportStatisticsRSweet](https://github.com/SportStatisticsRSweet)&lt;br&gt;&lt;br&gt;
 
-&lt;img src="https://media.giphy.com/media/mCRJDo24UvJMA/giphy.gif" align="right, middle" /&gt;
+&lt;img src="https://media.giphy.com/media/mCRJDo24UvJMA/giphy.gif" width="50%"/&gt;
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
