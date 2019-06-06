@@ -11,7 +11,7 @@
     <textarea id="source">
 
 
-class: inverse, center, top
+class: center, top, inverse
 background-image: url(https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/WhittenOval.jpg)
 background-size: cover
 # Using R to Analyse, Visualise and Report on Team-Sport Athlete Data
@@ -412,14 +412,16 @@ class: center, top
 # Setting up the R Environment
 
 .left[
-Download R and RStudio.&lt;br&gt; 
-
-Create a new project in RStudio: `File -&gt; New Project -&gt; New Directory -&gt; New Project (WCSF Workshop)`&lt;br&gt;
+Download R and RStudio. Create a new project in RStudio: `File -&gt; New Project -&gt; New Directory -&gt; New Project (WCSF Workshop)`. Create a folder within this project (can be manual) named "Data".
 ]
-
+--
 .left[
-Create a folder within this project (can be manual) named "Data"
-]&lt;br&gt;
+Create a folder within this project (can be manual) named "Data".
+]
+--
+.left[
+Visit [http://bit.ly/WCSF_WorkshopInR](http://bit.ly/WCSF_WorkshopInR) to download the required workshop materials.
+]
 --
 .left[
 Ensure the packages below are up-to-date and installed:
@@ -429,6 +431,9 @@ Ensure the packages below are up-to-date and installed:
 WCSFWorkshopPackages &lt;- c(
     'readr',
     'tidyverse', 
+    'qicharts2',
+    'ggridges',
+    'kableExtra',
     'here',
     'usethis')
 
@@ -734,7 +739,7 @@ ggplot(GroinBarData_Long,
         axis.text.x = element_text(size = 10, colour = "black"),
         axis.text.y = element_text(size = 10, colour = "black"),
         axis.title.x =element_text(face = "bold", size = 12, colour = "black"), 
-        axis.title.y = element_text(face = "bold", size = 12, colour = "black"), 
+        axis.title.y = element_blank(),
         plot.title = element_text(face = "bold", size = 14, colour = "black", hjust = 0.5)) +
   facet_wrap(~Limb, scales = "free_x")
 ```
@@ -796,7 +801,7 @@ ggplot(GroinBarData_Long,
         axis.text.x = element_text(size = 10, colour = "black"),
         axis.text.y = element_text(size = 10, colour = "black"),
         axis.title.x =element_text(face = "bold", size = 12, colour = "black"), 
-        axis.title.y = element_text(face = "bold", size = 12, colour = "black"), 
+        axis.title.y = element_blank(),
         plot.title = element_text(face = "bold", size = 14, colour = "black", hjust = 0.5)) +
   facet_wrap(~Limb, scales = "free_x")
 ```
@@ -804,13 +809,46 @@ ggplot(GroinBarData_Long,
 
 ---
 class: center, top
-
-#But What About Change Over Time?
-
+# Calculating Summary Statistics
 .left[
-## Statistical Process Control
+
+```r
+# Make limb a factor and calculate summary stats, by limb
+GroinBarData_Long$Limb &lt;- as.factor(GroinBarData_Long$Limb)
+SummaryStats &lt;- GroinBarData_Long %&gt;% 
+  group_by(Limb) %&gt;%
+  summarise(Mean = mean(Force), 
+            SD = sd(Force)) %&gt;% 
+  mutate_if(is.numeric, ~round(., 0)) 
+```
 ]
+&lt;br&gt;
 --
+.left[
+
+```r
+# Make limb a factor and calculate summary stats, by limb and athlete
+GroinBarData_Long$Limb &lt;- as.factor(GroinBarData_Long$Limb)
+SummaryStats &lt;- GroinBarData_Long %&gt;% 
+  group_by(Limb, Athlete) %&gt;%
+  summarise(Mean = mean(Force), 
+            SD = sd(Force)) %&gt;% 
+  mutate_if(is.numeric, ~round(., 0)) 
+```
+]
+
+---
+background-image: url(https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/AFLWPhoto3.JPG)
+background-size: cover
+class: inverse, center, top
+
+# But What About Individual Change Over Time?
+
+---
+class: center, top
+
+# Statistical Process Control
+
 .left[
 * Quantitative approach to monitoring and detecing change in a process, over time
 ]
@@ -885,18 +923,311 @@ class: center, top
 
 &lt;img src="WCSFWorkshopSlides_files/figure-html/ControlChartDiffData-1.png" width="792" /&gt;
 
+
 ---
 
 class: inverse, center, top
-background-image: url(https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/AFLWPhoto3.JPG)
+background-image: url(https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/AFL_WCE.JPG)
 background-size: cover
-# What Do You Use to Assess Change in Athlete Data Over Time?
+# Example 2 - Player Tracking Data
+
 
 ---
 
 class: center, top
 
-# Resources on Creating Xaringan Slides in R
+# Working with Example Tracking
+
+.left[
+Visit [http://bit.ly/2EW0jXZWCSF_RWorkshop_TrackingData](http://bit.ly/2EW0jXZWCSF_RWorkshop_TrackingData) to download the next set of example data and save to `Data` folder within your project.
+]
+
+--
+.left[
+
+```r
+# Load packages
+library(readr)
+library(here)
+# Import raw tracking data
+RawTrackingData &lt;- read_csv(                                           
+  here("Data/RawTrackingData.csv"), col_names = TRUE, col_types = NULL)
+```
+]
+
+--
+.left[
+
+```r
+# Make data.frame
+RawTrackingData &lt;- as.data.frame(RawTrackingData)
+# Assess structure
+str(RawTrackingData)
+```
+]
+
+---
+class: center, top
+
+# Assess Tracking Data Structure
+.left[
+
+```r
+# Make data.frame
+RawTrackingData &lt;- as.data.frame(RawTrackingData)
+# Assess structure
+str(RawTrackingData, list.len = 19)
+```
+
+```
+## 'data.frame':	150105 obs. of  71 variables:
+##  $ Period          : num  1 1 1 1 1 1 1 1 1 1 ...
+##  $ Frame           : num  1 2 3 4 5 6 7 8 9 10 ...
+##  $ Time            : num  0.04 0.08 0.12 0.16 0.2 0.24 0.28 0.32 0.36 0.4 ...
+##  $ TeamA_Player1_X : num  0.0265 0.0265 0.0265 0.0265 0.0265 ...
+##  $ TeamA_Player1_Y : num  0.507 0.507 0.507 0.507 0.507 ...
+##  $ TeamA_Player2_X : num  -0.0436 -0.0436 -0.0436 -0.0446 -0.0456 ...
+##  $ TeamA_Player2_Y : num  -0.05 -0.05 -0.05 -0.05 -0.05 -0.05 -0.05 -0.05 -0.05 -0.05 ...
+##  $ TeamA_Player3_X : num  -0.0436 -0.0436 -0.0436 -0.0446 -0.0456 ...
+##  $ TeamA_Player3_Y : num  -0.05 -0.05 -0.05 -0.05 -0.05 -0.05 -0.05 -0.05 -0.05 -0.05 ...
+##  $ TeamA_Player4_X : num  -0.0436 -0.0436 -0.0436 -0.0446 -0.0456 ...
+##  $ TeamA_Player4_Y : num  -0.05 -0.05 -0.05 -0.05 -0.05 -0.05 -0.05 -0.05 -0.05 -0.05 ...
+##  $ TeamA_Player5_X : num  0.314 0.314 0.314 0.314 0.314 ...
+##  $ TeamA_Player5_Y : num  0.268 0.268 0.268 0.268 0.268 ...
+##  $ TeamA_Player6_X : num  0.436 0.436 0.436 0.436 0.436 ...
+##  $ TeamA_Player6_Y : num  0.647 0.647 0.647 0.658 0.659 ...
+##  $ TeamA_Player7_X : num  0.371 0.371 0.371 0.371 0.372 ...
+##  $ TeamA_Player7_Y : num  0.525 0.525 0.525 0.525 0.525 ...
+##  $ TeamA_Player8_X : num  0.421 0.421 0.421 0.421 0.421 ...
+##  $ TeamA_Player8_Y : num  0.499 0.499 0.499 0.499 0.499 ...
+##   [list output truncated]
+##  - attr(*, "spec")=
+##   .. cols(
+##   ..   Period = col_double(),
+##   ..   Frame = col_double(),
+##   ..   Time = col_double(),
+##   ..   TeamA_Player1_X = col_double(),
+##   ..   TeamA_Player1_Y = col_double(),
+##   ..   TeamA_Player2_X = col_double(),
+##   ..   TeamA_Player2_Y = col_double(),
+##   ..   TeamA_Player3_X = col_double(),
+##   ..   TeamA_Player3_Y = col_double(),
+##   ..   TeamA_Player4_X = col_double(),
+##   ..   TeamA_Player4_Y = col_double(),
+##   ..   TeamA_Player5_X = col_double(),
+##   ..   TeamA_Player5_Y = col_double(),
+##   ..   TeamA_Player6_X = col_double(),
+##   ..   TeamA_Player6_Y = col_double(),
+##   ..   TeamA_Player7_X = col_double(),
+##   ..   TeamA_Player7_Y = col_double(),
+##   ..   TeamA_Player8_X = col_double(),
+##   ..   TeamA_Player8_Y = col_double(),
+##   ..   TeamA_Player9_X = col_double(),
+##   ..   TeamA_Player9_Y = col_double(),
+##   ..   TeamA_Player10_X = col_double(),
+##   ..   TeamA_Player10_Y = col_double(),
+##   ..   TeamA_Player11_X = col_double(),
+##   ..   TeamA_Player11_Y = col_double(),
+##   ..   TeamA_Player12_X = col_double(),
+##   ..   TeamA_Player12_Y = col_double(),
+##   ..   TeamA_Player13_X = col_double(),
+##   ..   TeamA_Player13_Y = col_double(),
+##   ..   Ball_X = col_double(),
+##   ..   Ball_Y = col_double(),
+##   ..   TeamB_Player1_X = col_double(),
+##   ..   TeamB_Player1_Y = col_double(),
+##   ..   TeamB_Player2_X = col_double(),
+##   ..   TeamB_Player2_Y = col_double(),
+##   ..   TeamB_Player3_X = col_double(),
+##   ..   TeamB_Player3_Y = col_double(),
+##   ..   TeamB_Player4_X = col_double(),
+##   ..   TeamB_Player4_Y = col_double(),
+##   ..   TeamB_Player5_X = col_double(),
+##   ..   TeamB_Player5_Y = col_double(),
+##   ..   TeamB_Player6_X = col_double(),
+##   ..   TeamB_Player6_Y = col_double(),
+##   ..   TeamB_Player7_X = col_double(),
+##   ..   TeamB_Player7_Y = col_double(),
+##   ..   TeamB_Player8_X = col_double(),
+##   ..   TeamB_Player8_Y = col_double(),
+##   ..   TeamB_Player9_X = col_double(),
+##   ..   TeamB_Player9_Y = col_double(),
+##   ..   TeamB_Player10_X = col_double(),
+##   ..   TeamB_Player10_Y = col_double(),
+##   ..   TeamB_Player11_X = col_double(),
+##   ..   TeamB_Player11_Y = col_double(),
+##   ..   TeamB_Player12_X = col_double(),
+##   ..   TeamB_Player12_Y = col_double(),
+##   ..   TeamB_Player13_X = col_double(),
+##   ..   TeamB_Player13_Y = col_double(),
+##   ..   TeamB_Player14_X = col_double(),
+##   ..   TeamB_Player14_Y = col_double(),
+##   ..   Team = col_character(),
+##   ..   Type = col_character(),
+##   ..   Subtype = col_character(),
+##   ..   Period.y = col_double(),
+##   ..   StartFrame = col_double(),
+##   ..   `StartTime[s]` = col_double(),
+##   ..   EndFrame = col_double(),
+##   ..   `EndTime[s]` = col_double(),
+##   ..   StartX = col_double(),
+##   ..   StartY = col_double(),
+##   ..   EndX = col_double(),
+##   ..   EndY = col_double()
+##   .. )
+```
+]
+
+---
+class: center, top
+
+# Visualising Tracking Data 
+
+&lt;img src="WCSFWorkshopSlides_files/figure-html/TrackingDataPlot2-1.png" width="792" /&gt;
+
+---
+
+class: inverse, center, top
+background-image: url(https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/AFL_Tackle.JPG)
+background-size: cover
+# What is Missing?
+
+---
+class: center, top
+
+# Analysing An Athlete's Data
+.left[
+
+```r
+# Make new data.frame, create new column
+ExampleAthleteData &lt;- RawTrackingData %&gt;%
+  select(Period, Frame, Time, TeamB_Player3_X, TeamB_Player3_Y) %&gt;%
+  mutate(Half = case_when(Period &lt;= 1 ~ "First Half",
+                          Period &gt;= 2 ~ "Second Half"))
+```
+]
+--
+.left[
+
+```r
+# Rename columns
+colnames(ExampleAthleteData) &lt;- c("Period", "Frame", "Time", "X", "Y", "Half")
+# Inspect
+head(ExampleAthleteData, 10)
+```
+
+```
+##    Period Frame Time       X       Y       Half
+## 1       1     1 0.04 0.69872 0.42173 First Half
+## 2       1     2 0.08 0.69872 0.42173 First Half
+## 3       1     3 0.12 0.69872 0.42173 First Half
+## 4       1     4 0.16 0.69845 0.42192 First Half
+## 5       1     5 0.20 0.69818 0.42209 First Half
+## 6       1     6 0.24 0.69751 0.42542 First Half
+## 7       1     7 0.28 0.69724 0.42555 First Half
+## 8       1     8 0.32 0.69737 0.42248 First Half
+## 9       1     9 0.36 0.69710 0.42257 First Half
+## 10      1    10 0.40 0.69683 0.42264 First Half
+```
+]
+
+---
+class: center, top
+
+# Analysing An Athlete's Data
+.left[
+
+```r
+# Calculate distance for each 'Sample' across the different data acquisitions
+DisplacementData &lt;- ExampleAthleteData %&gt;%
+     arrange(Frame, Half) %&gt;%
+     group_by(Half) %&gt;%
+     mutate( lagX = lag(X, order_by = Frame), lagY = lag(Y, order_by = Frame)) %&gt;%
+     rowwise() %&gt;%
+     mutate(Distance = dist( matrix( c(X,Y,lagX,lagY),nrow=2,byrow=TRUE) )) %&gt;%
+     select(-lagX, -lagY)
+# Make Half a factor
+DisplacementData$Half &lt;- as.factor(DisplacementData$Half)
+# Inspect
+head(DisplacementData, 5)
+```
+
+```
+## Source: local data frame [5 x 7]
+## Groups: &lt;by row&gt;
+## 
+## # A tibble: 5 x 7
+##   Period Frame  Time     X     Y Half       Distance
+##    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;         &lt;dbl&gt;
+## 1      1     1  0.04 0.699 0.422 First Half     1.72
+## 2      1     2  0.08 0.699 0.422 First Half     1.72
+## 3      1     3  0.12 0.699 0.422 First Half     1.72
+## 4      1     4  0.16 0.698 0.422 First Half     1.72
+## 5      1     5  0.2  0.698 0.422 First Half     1.72
+```
+]
+
+---
+class: center, top
+
+# Analysing An Athlete's Data
+.left[
+
+```r
+# Set the SampleRate
+SampleRate &lt;- 25
+k &lt;- as.integer(SampleRate)
+
+# Calculate Velocity
+VelocityData &lt;- DisplacementData %&gt;%
+  arrange(Frame, Half) %&gt;%
+  group_by(Half) %&gt;%
+  mutate(Velocity = sqrt( (X - lag(X) )^2 + (Y - lag(Y) )^2 ) * SampleRate)
+
+# Inspect
+head(VelocityData, 5)
+```
+
+```
+## # A tibble: 5 x 8
+## # Groups:   Half [1]
+##   Period Frame  Time     X     Y Half       Distance Velocity
+##    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;         &lt;dbl&gt;    &lt;dbl&gt;
+## 1      1     1  0.04 0.699 0.422 First Half     1.72 NA      
+## 2      1     2  0.08 0.699 0.422 First Half     1.72  0      
+## 3      1     3  0.12 0.699 0.422 First Half     1.72  0      
+## 4      1     4  0.16 0.698 0.422 First Half     1.72  0.00825
+## 5      1     5  0.2  0.698 0.422 First Half     1.72  0.00798
+```
+]
+
+---
+class: center, top
+
+# Visualising An Athlete's Data
+
+&lt;img src="WCSFWorkshopSlides_files/figure-html/CalcVelocityExampleAthlete2-1.png" width="792" /&gt;
+
+---
+class: center, top
+
+# Visualising An Athlete's Data
+
+&lt;img src="WCSFWorkshopSlides_files/figure-html/CalcVelocityExampleAthlete3-1.png" width="792" /&gt;
+
+
+---
+
+class: inverse, center, top
+background-image: url(https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/AFL_Hunter.JPG)
+background-size: cover
+# Over To You!
+
+---
+
+class: center, top
+
+# Resources on Creating in R Markdown
 
 "Working with Data in Elite Sport" [RLadies Auckland 2019 talk by Dr Jacquie Tran](https://jacquietran.github.io/2019_may_rladies_akl/R/#1).
 
