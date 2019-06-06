@@ -939,11 +939,6 @@ class: center, top
 # Working with Example Tracking
 
 .left[
-Visit [http://bit.ly/2EW0jXZWCSF_RWorkshop_TrackingData](http://bit.ly/2EW0jXZWCSF_RWorkshop_TrackingData) to download the next set of example data and save to `Data` folder within your project.
-]
-
---
-.left[
 
 ```r
 # Load packages
@@ -1101,7 +1096,7 @@ class: center, top
 ```r
 # Make new data.frame, create new column
 ExampleAthleteData &lt;- RawTrackingData %&gt;%
-  select(Period, Frame, Time, TeamB_Player3_X, TeamB_Player3_Y) %&gt;%
+  select(Period, Frame, Time, TeamB_Player5_X, TeamB_Player5_Y) %&gt;%
   mutate(Half = case_when(Period &lt;= 1 ~ "First Half",
                           Period &gt;= 2 ~ "Second Half"))
 ```
@@ -1117,17 +1112,17 @@ head(ExampleAthleteData, 10)
 ```
 
 ```
-##    Period Frame Time       X       Y       Half
-## 1       1     1 0.04 0.69872 0.42173 First Half
-## 2       1     2 0.08 0.69872 0.42173 First Half
-## 3       1     3 0.12 0.69872 0.42173 First Half
-## 4       1     4 0.16 0.69845 0.42192 First Half
-## 5       1     5 0.20 0.69818 0.42209 First Half
-## 6       1     6 0.24 0.69751 0.42542 First Half
-## 7       1     7 0.28 0.69724 0.42555 First Half
-## 8       1     8 0.32 0.69737 0.42248 First Half
-## 9       1     9 0.36 0.69710 0.42257 First Half
-## 10      1    10 0.40 0.69683 0.42264 First Half
+##    Period Frame Time      X       Y       Half
+## 1       1     1 0.04 0.6595 0.70651 First Half
+## 2       1     2 0.08 0.6595 0.70651 First Half
+## 3       1     3 0.12 0.6595 0.70651 First Half
+## 4       1     4 0.16 0.6595 0.70651 First Half
+## 5       1     5 0.20 0.6595 0.70651 First Half
+## 6       1     6 0.24 0.6595 0.70651 First Half
+## 7       1     7 0.28 0.6595 0.70651 First Half
+## 8       1     8 0.32 0.6595 0.70651 First Half
+## 9       1     9 0.36 0.6595 0.70651 First Half
+## 10      1    10 0.40 0.6595 0.70651 First Half
 ```
 ]
 
@@ -1159,11 +1154,11 @@ head(DisplacementData, 5)
 ## # A tibble: 5 x 7
 ##   Period Frame  Time     X     Y Half       Distance
 ##    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;         &lt;dbl&gt;
-## 1      1     1  0.04 0.699 0.422 First Half     1.72
-## 2      1     2  0.08 0.699 0.422 First Half     1.72
-## 3      1     3  0.12 0.699 0.422 First Half     1.72
-## 4      1     4  0.16 0.698 0.422 First Half     1.72
-## 5      1     5  0.2  0.698 0.422 First Half     1.72
+## 1      1     1  0.04 0.660 0.707 First Half     1.66
+## 2      1     2  0.08 0.660 0.707 First Half     1.66
+## 3      1     3  0.12 0.660 0.707 First Half     1.66
+## 4      1     4  0.16 0.660 0.707 First Half     1.66
+## 5      1     5  0.2  0.660 0.707 First Half     1.66
 ```
 ]
 
@@ -1193,11 +1188,11 @@ head(VelocityData, 5)
 ## # Groups:   Half [1]
 ##   Period Frame  Time     X     Y Half       Distance Velocity
 ##    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;         &lt;dbl&gt;    &lt;dbl&gt;
-## 1      1     1  0.04 0.699 0.422 First Half     1.72 NA      
-## 2      1     2  0.08 0.699 0.422 First Half     1.72  0      
-## 3      1     3  0.12 0.699 0.422 First Half     1.72  0      
-## 4      1     4  0.16 0.698 0.422 First Half     1.72  0.00825
-## 5      1     5  0.2  0.698 0.422 First Half     1.72  0.00798
+## 1      1     1  0.04 0.660 0.707 First Half     1.66       NA
+## 2      1     2  0.08 0.660 0.707 First Half     1.66        0
+## 3      1     3  0.12 0.660 0.707 First Half     1.66        0
+## 4      1     4  0.16 0.660 0.707 First Half     1.66        0
+## 5      1     5  0.2  0.660 0.707 First Half     1.66        0
 ```
 ]
 
@@ -1222,6 +1217,18 @@ class: inverse, center, top
 background-image: url(https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/AFL_Hunter.JPG)
 background-size: cover
 # Over To You!
+
+---
+
+class: center, top
+
+# Downloading Data
+
+
+.left[
+Visit [http://bit.ly/2EW0jXZWCSF_RWorkshop_TrackingData](http://bit.ly/2EW0jXZWCSF_RWorkshop_TrackingData) to download the next set of example data and save to `Data` folder within your project.
+]
+
 
 ---
 
