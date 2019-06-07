@@ -1,0 +1,62 @@
+---
+output:
+  xaringan::moon_reader:
+    css: ["rladies", "rladies-fonts"]
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+    
+---
+
+class: inverse, center, top
+background-image: url(https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/WhittenOval.jpg)
+background-size: cover
+# Workshop Requirements
+## Alice Sweeting, PhD
+.large[Workshop - WCSF | Friday 7th June 2019]<br><br><br>
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(fig.retina = 3, warning = FALSE, message = FALSE)
+library(icon)      
+library(tidyverse) 
+```
+
+---
+
+class: center, top
+
+#  Setting up the R Environment
+
+.left[
+Download R and RStudio.
+]
+
+.left[
+Create a new project in RStudio: `File -> New Project -> New Directory -> New Project (WCSF Workshop)`
+]
+
+.left[
+Ensure the packages below are up-to-date and installed:
+
+```{r LoadPackagesForWorkshop, eval = FALSE}
+WCSFWorkshopPackages <- c(
+    'readr',
+    'tidyverse', 
+    'here',
+    'usethis')
+
+install.packages(WCSFWorkshopPackages)
+
+```
+]
+
+# Download the Example Data
+
+.left[
+Visit [http://bit.ly/WCSF_WorkshopInR](http://bit.ly/WCSF_WorkshopInR) to download the required workshop materials.
+]
+
+
+
