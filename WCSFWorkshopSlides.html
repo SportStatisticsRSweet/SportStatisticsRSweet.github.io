@@ -814,6 +814,8 @@ class: center, top
 
 ```r
 # Make limb a factor and calculate summary stats, by limb
+library(plyr)
+library(dplyr)
 GroinBarData_Long$Limb &lt;- as.factor(GroinBarData_Long$Limb)
 SummaryStats &lt;- GroinBarData_Long %&gt;% 
   group_by(Limb) %&gt;%
@@ -882,7 +884,7 @@ class: center, top
 
 ```r
 # Load required package
-require(qicharts2)
+library(qicharts2)
 
 # Subset to include only one athlete's data
 HudsonData &lt;- subset(GroinBarData_Long, Athlete=="Hudson Lee")
