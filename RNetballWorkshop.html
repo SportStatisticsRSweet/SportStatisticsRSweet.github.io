@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>RNetballWorkshop.utf8.md</title>
+    <meta charset="utf-8" />
+    <link href="RNetballWorkshop_files/remark-css/rladies.css" rel="stylesheet" />
+    <link href="RNetballWorkshop_files/remark-css/rladies-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+class: center, top, inverse
+background-image: url(http://maxevents.com.au/wp-content/uploads/2017/08/GettyImages-484200604.jpg)
+background-size: cover
+&lt;br&gt;
+# Analysing Netball Tracking Data in R
+
+
+
+
+---
+class: center, top
+
+# Setting up the R Environment
+
+.left[
+Create a new project in RStudio: `File -&gt; New Project -&gt; New Directory -&gt; New Project (R Netball Workshop)`. 
+]
+&lt;br&gt;
+
+--
+.left[
+Create a folder within this project (can be manual) named "Data".
+]
+&lt;br&gt;
+--
+.left[
+Visit [http://bit.ly/NetballATWorkshop](http://bit.ly/NetballATWorkshop) to download the data.
+]
+
+.left[
+Enter the password `Analytics&amp;Technology` to gain access - the link will expire within a week.
+]
+&lt;br&gt;
+
+--
+.left[
+Ensure the packages below are up-to-date and installed:
+
+
+```r
+RNetballWorkshopPackages &lt;- c(
+'tidyverse',
+'stringr')
+
+install.packages(RNetballWorkshopPackages)
+```
+]&lt;br&gt;
+
+---
+class: center, top
+
+# Loading Data into R
+
+.left[
+Import netball tracking data, located within your project
+
+
+```r
+NetballTrackingData &lt;- readRDS("Data/NetballTrackingData.rds")
+```
+]
+
+--
+
+.left[
+
+```r
+# Assess the structure of the data
+str(NetballTrackingData)
+```
+
+```
+## Classes 'grouped_df', 'tbl_df', 'tbl' and 'data.frame':	1462388 obs. of  12 variables:
+##  $ Centisec     : num  1.52e+11 1.52e+11 1.52e+11 1.52e+11 1.52e+11 ...
+##  $ Time         : 'hms' num  20:25:13 20:25:13 20:25:13 20:25:13 ...
+##   ..- attr(*, "units")= chr "secs"
+##  $ X            : num  38.5 38.6 38.6 38.6 38.7 ...
+##  $ Y            : num  12 11.9 11.7 11.6 11.5 ...
+##  $ Velocity     : num  1.02 1.24 1.32 1.29 1.28 ...
+##  $ Acceleration : num  0.967 1.09 1.149 1.181 1.181 ...
+##  $ PlayerLoad   : num  174 174 174 174 174 ...
+##  $ TotalDistance: num  2010 2011 2011 2011 2011 ...
+##  $ Date         : Factor w/ 3 levels "11_01_2018","12_01_2018",..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ Quarter      : Factor w/ 4 levels "Q1","Q2","Q3",..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ Athlete      : chr  "Player 1" "Player 1" "Player 1" "Player 1" ...
+##  $ TimeStamp    : int  1 2 3 4 5 6 7 8 9 10 ...
+##  - attr(*, "groups")=Classes 'tbl_df', 'tbl' and 'data.frame':	183 obs. of  4 variables:
+##   ..$ Date   : Factor w/ 3 levels "11_01_2018","12_01_2018",..: 1 1 1 1 1 1 1 1 1 1 ...
+##   ..$ Quarter: Factor w/ 4 levels "Q1","Q2","Q3",..: 1 1 1 1 1 1 1 1 1 1 ...
+##   ..$ Athlete: chr  "Player 1" "Player 10" "Player 11" "Player 12" ...
+##   ..$ .rows  :List of 183
+##   .. ..$ : int  1 2 3 4 5 6 7 8 9 10 ...
+##   .. ..$ : int  9189 9190 9191 9192 9193 9194 9195 9196 9197 9198 ...
+##   .. ..$ : int  18366 18367 18368 18369 18370 18371 18372 18373 18374 18375 ...
+##   .. ..$ : int  26138 26139 26140 26141 26142 26143 26144 26145 26146 26147 ...
+##   .. ..$ : int  35320 35321 35322 35323 35324 35325 35326 35327 35328 35329 ...
+##   .. ..$ : int  44507 44508 44509 44510 44511 44512 44513 44514 44515 44516 ...
+##   .. ..$ : int  53694 53695 53696 53697 53698 53699 53700 53701 53702 53703 ...
+##   .. ..$ : int  62882 62883 62884 62885 62886 62887 62888 62889 62890 62891 ...
+##   .. ..$ : int  71373 71374 71375 71376 71377 71378 71379 71380 71381 71382 ...
+##   .. ..$ : int  79579 79580 79581 79582 79583 79584 79585 79586 79587 79588 ...
+##   .. ..$ : int  88743 88744 88745 88746 88747 88748 88749 88750 88751 88752 ...
+##   .. ..$ : int  97917 97918 97919 97920 97921 97922 97923 97924 97925 97926 ...
+##   .. ..$ : int  107105 107106 107107 107108 107109 107110 107111 107112 107113 107114 ...
+##   .. ..$ : int  116216 116217 116218 116219 116220 116221 116222 116223 116224 116225 ...
+##   .. ..$ : int  125225 125226 125227 125228 125229 125230 125231 125232 125233 125234 ...
+##   .. ..$ : int  133897 133898 133899 133900 133901 133902 133903 133904 133905 133906 ...
+##   .. ..$ : int  143044 143045 143046 143047 143048 143049 143050 143051 143052 143053 ...
+##   .. ..$ : int  152178 152179 152180 152181 152182 152183 152184 152185 152186 152187 ...
+##   .. ..$ : int  161356 161357 161358 161359 161360 161361 161362 161363 161364 161365 ...
+##   .. ..$ : int  170536 170537 170538 170539 170540 170541 170542 170543 170544 170545 ...
+##   .. ..$ : int  177235 177236 177237 177238 177239 177240 177241 177242 177243 177244 ...
+##   .. ..$ : int  184867 184868 184869 184870 184871 184872 184873 184874 184875 184876 ...
+##   .. ..$ : int  194016 194017 194018 194019 194020 194021 194022 194023 194024 194025 ...
+##   .. ..$ : int  203165 203166 203167 203168 203169 203170 203171 203172 203173 203174 ...
+##   .. ..$ : int  212297 212298 212299 212300 212301 212302 212303 212304 212305 212306 ...
+##   .. ..$ : int  221334 221335 221336 221337 221338 221339 221340 221341 221342 221343 ...
+##   .. ..$ : int  230481 230482 230483 230484 230485 230486 230487 230488 230489 230490 ...
+##   .. ..$ : int  239631 239632 239633 239634 239635 239636 239637 239638 239639 239640 ...
+##   .. ..$ : int  248780 248781 248782 248783 248784 248785 248786 248787 248788 248789 ...
+##   .. ..$ : int  257876 257877 257878 257879 257880 257881 257882 257883 257884 257885 ...
+##   .. ..$ : int  267019 267020 267021 267022 267023 267024 267025 267026 267027 267028 ...
+##   .. ..$ : int  276167 276168 276169 276170 276171 276172 276173 276174 276175 276176 ...
+##   .. ..$ : int  284593 284594 284595 284596 284597 284598 284599 284600 284601 284602 ...
+##   .. ..$ : int  293742 293743 293744 293745 293746 293747 293748 293749 293750 293751 ...
+##   .. ..$ : int  302889 302890 302891 302892 302893 302894 302895 302896 302897 302898 ...
+##   .. ..$ : int  312033 312034 312035 312036 312037 312038 312039 312040 312041 312042 ...
+##   .. ..$ : int  321182 321183 321184 321185 321186 321187 321188 321189 321190 321191 ...
+##   .. ..$ : int  330297 330298 330299 330300 330301 330302 330303 330304 330305 330306 ...
+##   .. ..$ : int  339443 339444 339445 339446 339447 339448 339449 339450 339451 339452 ...
+##   .. ..$ : int  348592 348593 348594 348595 348596 348597 348598 348599 348600 348601 ...
+##   .. ..$ : int  357734 357735 357736 357737 357738 357739 357740 357741 357742 357743 ...
+##   .. ..$ : int  364706 364707 364708 364709 364710 364711 364712 364713 364714 364715 ...
+##   .. ..$ : int  369783 369784 369785 369786 369787 369788 369789 369790 369791 369792 ...
+##   .. ..$ : int  378912 378913 378914 378915 378916 378917 378918 378919 378920 378921 ...
+##   .. ..$ : int  388051 388052 388053 388054 388055 388056 388057 388058 388059 388060 ...
+##   .. ..$ : int  397178 397179 397180 397181 397182 397183 397184 397185 397186 397187 ...
+##   .. ..$ : int  406283 406284 406285 406286 406287 406288 406289 406290 406291 406292 ...
+##   .. ..$ : int  415422 415423 415424 415425 415426 415427 415428 415429 415430 415431 ...
+##   .. ..$ : int  424449 424450 424451 424452 424453 424454 424455 424456 424457 424458 ...
+##   .. ..$ : int  433588 433589 433590 433591 433592 433593 433594 433595 433596 433597 ...
+##   .. ..$ : int  442424 442425 442426 442427 442428 442429 442430 442431 442432 442433 ...
+##   .. ..$ : int  451536 451537 451538 451539 451540 451541 451542 451543 451544 451545 ...
+##   .. ..$ : int  460659 460660 460661 460662 460663 460664 460665 460666 460667 460668 ...
+##   .. ..$ : int  469794 469795 469796 469797 469798 469799 469800 469801 469802 469803 ...
+##   .. ..$ : int  478934 478935 478936 478937 478938 478939 478940 478941 478942 478943 ...
+##   .. ..$ : int  488038 488039 488040 488041 488042 488043 488044 488045 488046 488047 ...
+##   .. ..$ : int  496676 496677 496678 496679 496680 496681 496682 496683 496684 496685 ...
+##   .. ..$ : int  505815 505816 505817 505818 505819 505820 505821 505822 505823 505824 ...
+##   .. ..$ : int  514954 514955 514956 514957 514958 514959 514960 514961 514962 514963 ...
+##   .. ..$ : int  524025 524026 524027 524028 524029 524030 524031 524032 524033 524034 ...
+##   .. ..$ : int  533161 533162 533163 533164 533165 533166 533167 533168 533169 533170 ...
+##   .. ..$ : int  542292 542293 542294 542295 542296 542297 542298 542299 542300 542301 ...
+##   .. ..$ : int  551431 551432 551433 551434 551435 551436 551437 551438 551439 551440 ...
+##   .. ..$ : int  557798 557799 557800 557801 557802 557803 557804 557805 557806 557807 ...
+##   .. ..$ : int  567005 567006 567007 567008 567009 567010 567011 567012 567013 567014 ...
+##   .. ..$ : int  576212 576213 576214 576215 576216 576217 576218 576219 576220 576221 ...
+##   .. ..$ : int  585418 585419 585420 585421 585422 585423 585424 585425 585426 585427 ...
+##   .. ..$ : int  594511 594512 594513 594514 594515 594516 594517 594518 594519 594520 ...
+##   .. ..$ : int  603718 603719 603720 603721 603722 603723 603724 603725 603726 603727 ...
+##   .. ..$ : int  612925 612926 612927 612928 612929 612930 612931 612932 612933 612934 ...
+##   .. ..$ : int  622127 622128 622129 622130 622131 622132 622133 622134 622135 622136 ...
+##   .. ..$ : int  631312 631313 631314 631315 631316 631317 631318 631319 631320 631321 ...
+##   .. ..$ : int  640508 640509 640510 640511 640512 640513 640514 640515 640516 640517 ...
+##   .. ..$ : int  648652 648653 648654 648655 648656 648657 648658 648659 648660 648661 ...
+##   .. ..$ : int  657660 657661 657662 657663 657664 657665 657666 657667 657668 657669 ...
+##   .. ..$ : int  666859 666860 666861 666862 666863 666864 666865 666866 666867 666868 ...
+##   .. ..$ : int  676065 676066 676067 676068 676069 676070 676071 676072 676073 676074 ...
+##   .. ..$ : int  685271 685272 685273 685274 685275 685276 685277 685278 685279 685280 ...
+##   .. ..$ : int  693547 693548 693549 693550 693551 693552 693553 693554 693555 693556 ...
+##   .. ..$ : int  702753 702754 702755 702756 702757 702758 702759 702760 702761 702762 ...
+##   .. ..$ : int  711879 711880 711881 711882 711883 711884 711885 711886 711887 711888 ...
+##   .. ..$ : int  720787 720788 720789 720790 720791 720792 720793 720794 720795 720796 ...
+##   .. ..$ : int  727746 727747 727748 727749 727750 727751 727752 727753 727754 727755 ...
+##   .. ..$ : int  736774 736775 736776 736777 736778 736779 736780 736781 736782 736783 ...
+##   .. ..$ : int  744324 744325 744326 744327 744328 744329 744330 744331 744332 744333 ...
+##   .. ..$ : int  753459 753460 753461 753462 753463 753464 753465 753466 753467 753468 ...
+##   .. ..$ : int  762593 762594 762595 762596 762597 762598 762599 762600 762601 762602 ...
+##   .. ..$ : int  771727 771728 771729 771730 771731 771732 771733 771734 771735 771736 ...
+##   .. ..$ : int  780860 780861 780862 780863 780864 780865 780866 780867 780868 780869 ...
+##   .. ..$ : int  789994 789995 789996 789997 789998 789999 790000 790001 790002 790003 ...
+##   .. ..$ : int  799128 799129 799130 799131 799132 799133 799134 799135 799136 799137 ...
+##   .. ..$ : int  808111 808112 808113 808114 808115 808116 808117 808118 808119 808120 ...
+##   .. ..$ : int  817201 817202 817203 817204 817205 817206 817207 817208 817209 817210 ...
+##   .. ..$ : int  826336 826337 826338 826339 826340 826341 826342 826343 826344 826345 ...
+##   .. ..$ : int  835373 835374 835375 835376 835377 835378 835379 835380 835381 835382 ...
+##   .. ..$ : int  844504 844505 844506 844507 844508 844509 844510 844511 844512 844513 ...
+##   .. ..$ : int  853638 853639 853640 853641 853642 853643 853644 853645 853646 853647 ...
+##   .. ..$ : int  862766 862767 862768 862769 862770 862771 862772 862773 862774 862775 ...
+##   .. ..$ : int  871901 871902 871903 871904 871905 871906 871907 871908 871909 871910 ...
+##   .. .. [list output truncated]
+##   ..- attr(*, ".drop")= logi TRUE
+```
+]
+
+---
+
+class: center, top
+
+# Inspecting Tracking Data
+
+.left[
+
+```r
+# Ensure example data is a data.frame
+NetballTrackingData &lt;- as.data.frame(NetballTrackingData)
+```
+]
+--
+.left[
+
+```r
+# Assess the structure again
+str(NetballTrackingData)
+```
+
+```
+## 'data.frame':	1462388 obs. of  12 variables:
+##  $ Centisec     : num  1.52e+11 1.52e+11 1.52e+11 1.52e+11 1.52e+11 ...
+##  $ Time         : 'hms' num  20:25:13 20:25:13 20:25:13 20:25:13 ...
+##   ..- attr(*, "units")= chr "secs"
+##  $ X            : num  38.5 38.6 38.6 38.6 38.7 ...
+##  $ Y            : num  12 11.9 11.7 11.6 11.5 ...
+##  $ Velocity     : num  1.02 1.24 1.32 1.29 1.28 ...
+##  $ Acceleration : num  0.967 1.09 1.149 1.181 1.181 ...
+##  $ PlayerLoad   : num  174 174 174 174 174 ...
+##  $ TotalDistance: num  2010 2011 2011 2011 2011 ...
+##  $ Date         : Factor w/ 3 levels "11_01_2018","12_01_2018",..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ Quarter      : Factor w/ 4 levels "Q1","Q2","Q3",..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ Athlete      : chr  "Player 1" "Player 1" "Player 1" "Player 1" ...
+##  $ TimeStamp    : int  1 2 3 4 5 6 7 8 9 10 ...
+```
+] 
+
+---
+
+class: center, top
+
+# Inspecting Tracking Data
+
+.left[
+
+```r
+# View the top 10 rows
+head(NetballTrackingData, 10)
+```
+
+```
+##        Centisec     Time        X        Y  Velocity Acceleration
+## 1  151566271321 20:25:13 38.53274 12.02848 1.0225000  0.967198968
+## 2  151566271331 20:25:13 38.57121 11.88983 1.2445000  1.089746833
+## 3  151566271341 20:25:13 38.60509 11.74874 1.3175000  1.148707390
+## 4  151566271351 20:25:13 38.63228 11.61959 1.2925000  1.180858612
+## 5  151566271361 20:25:13 38.65531 11.49670 1.2775000  1.180821538
+## 6  151566271371 20:25:13 38.67717 11.37881 1.2555001  1.089772105
+## 7  151566271381 20:25:13 38.69840 11.26385 1.2335000  0.887811542
+## 8  151566271387 20:25:13 38.71830 11.14944 1.2175000  0.603479505
+## 9  151566271401 20:25:14 38.73393 11.04754 1.1255000  0.290546954
+## 10 151566271402 20:25:14 38.74462 10.96393 0.9855001 -0.005605698
+##    PlayerLoad TotalDistance       Date Quarter  Athlete TimeStamp
+## 1    174.0638      2010.339 11_01_2018      Q1 Player 1         1
+## 2    174.0679      2010.919 11_01_2018      Q1 Player 1         2
+## 3    174.0703      2010.919 11_01_2018      Q1 Player 1         3
+## 4    174.0725      2010.919 11_01_2018      Q1 Player 1         4
+## 5    174.0744      2010.919 11_01_2018      Q1 Player 1         5
+## 6    174.0789      2011.441 11_01_2018      Q1 Player 1         6
+## 7    174.0834      2011.441 11_01_2018      Q1 Player 1         7
+## 8    174.0858      2011.441 11_01_2018      Q1 Player 1         8
+## 9    174.0886      2011.441 11_01_2018      Q1 Player 1         9
+## 10   174.0887      2011.441 11_01_2018      Q1 Player 1        10
+```
+] 
+
+---
+
+class: center, top
+
+# Inspecting Tracking Data
+
+.left[
+
+```r
+# Inspect levels associated with each date
+levels(NetballTrackingData$Date)
+```
+
+```
+## [1] "11_01_2018" "12_01_2018" "14_01_2018"
+```
+] 
+
+--
+
+.left[
+
+```r
+# Inspect athlete levels
+levels(NetballTrackingData$Athlete)
+```
+
+```
+## NULL
+```
+] 
+--
+
+.left[
+
+```r
+# Make athlete a factor
+NetballTrackingData$Athlete &lt;- as.factor(NetballTrackingData$Athlete)
+```
+] 
+
+--
+
+.left[
+
+```r
+# Inspect levels again
+levels(NetballTrackingData$Athlete)
+```
+
+```
+##  [1] "Player 1"  "Player 10" "Player 11" "Player 12" "Player 13"
+##  [6] "Player 14" "Player 15" "Player 16" "Player 17" "Player 18"
+## [11] "Player 19" "Player 2"  "Player 3"  "Player 4"  "Player 5" 
+## [16] "Player 6"  "Player 7"  "Player 8"  "Player 9"  "Umpire 1" 
+## [21] "Umpire 2"  "Umpire 3"
+```
+] 
+
+---
+
+class: center, top
+
+# Subsetting Match 1
+
+.left[
+
+```r
+library(tidyverse)
+
+# Split based on date
+Match1 &lt;- subset(NetballTrackingData, Date=="11_01_2018")
+Match2 &lt;- subset(NetballTrackingData, Date=="12_01_2018")
+Match3 &lt;- subset(NetballTrackingData, Date=="14_01_2018")
+```
+] 
+
+--
+
+.left[
+
+```r
+# Inspect data frame
+str(Match1)
+```
+
+```
+## 'data.frame':	557797 obs. of  12 variables:
+##  $ Centisec     : num  1.52e+11 1.52e+11 1.52e+11 1.52e+11 1.52e+11 ...
+##  $ Time         : 'hms' num  20:25:13 20:25:13 20:25:13 20:25:13 ...
+##   ..- attr(*, "units")= chr "secs"
+##  $ X            : num  38.5 38.6 38.6 38.6 38.7 ...
+##  $ Y            : num  12 11.9 11.7 11.6 11.5 ...
+##  $ Velocity     : num  1.02 1.24 1.32 1.29 1.28 ...
+##  $ Acceleration : num  0.967 1.09 1.149 1.181 1.181 ...
+##  $ PlayerLoad   : num  174 174 174 174 174 ...
+##  $ TotalDistance: num  2010 2011 2011 2011 2011 ...
+##  $ Date         : Factor w/ 3 levels "11_01_2018","12_01_2018",..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ Quarter      : Factor w/ 4 levels "Q1","Q2","Q3",..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ Athlete      : Factor w/ 22 levels "Player 1","Player 10",..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ TimeStamp    : int  1 2 3 4 5 6 7 8 9 10 ...
+```
+] 
+
+---
+
+class: center, top
+
+# Dropping Unused Levels
+
+.left[
+
+```r
+# Assess unique factor levels
+unique(Match1$Date)
+```
+
+```
+## [1] 11_01_2018
+## Levels: 11_01_2018 12_01_2018 14_01_2018
+```
+] 
+
+--
+.left[
+
+```r
+# Remove unused levels
+Match1$Date &lt;- factor(Match1$Date)
+unique(Match1$Date)
+```
+
+```
+## [1] 11_01_2018
+## Levels: 11_01_2018
+```
+] 
+
+---
+
+class: center, top
+
+# Visualising Tracking Data
+
+.left[
+
+```r
+# Plot Player 1's trace on the court
+Match1 %&gt;%
+  filter(Athlete=="Player 12") %&gt;%
+  ggplot(aes(x = X, y = Y, colour = Velocity)) + 
+  geom_point() +
+  scale_colour_gradientn(colours = rainbow(7)) +
+  theme_classic() +
+  scale_x_continuous(expand = c(0,0)) +
+  scale_y_continuous(expand = c(0,0)) +
+  theme(axis.line.x = element_line(size = .5, colour = "black"),
+        axis.line.y = element_line(size = .5, colour = "black"),
+        axis.ticks.x = element_line(size = .5, colour = "black"),
+        axis.ticks.y = element_line(size = .5, colour = "black"),
+        axis.text.x = element_text(size = 10, colour = "black"),
+        axis.text.y = element_text(size = 10, colour = "black"),
+        axis.title.x = element_blank(), 
+        axis.title.y = element_text(face = "bold", size = 12, colour = "black"), 
+        legend.position = "bottom",
+        plot.title = element_text(face = "bold", size = 14, colour = "black", hjust = 0.5)) +
+  facet_wrap(~Quarter, nrow = 1)
+```
+] 
+
+---
+
+class: center, top
+
+# Visualising Tracking Data
+
+&lt;img src="RNetballWorkshop_files/figure-html/Plot1-1.png" width="936" /&gt;
+
+---
+
+class: center, top
+
+# What are we missing?
+
+&lt;img src="https://media.giphy.com/media/5ULCLp7HziF4xTjQv7/giphy.gif" align="middle" width="45%"/&gt;
+
+---
+
+class: center, top
+
+# What are we missing?
+
+.left[
+* Calibrating relative to a netball court/ line markings
+]
+--
+.left[
+* Information on position - is Player 12 WA or WD in Q3?
+]
+--
+.left[
+* Match event data - to give context/ constraints to player movement
+]
+--
+.left[
+* No information on breaks in play/ time outs called/ throw ins etc
+]
+--
+.left[
+* Any others?
+]
+
+&lt;img src="https://media.giphy.com/media/YoiYN5ObNcivRnbr8N/giphy.gif" align="left" width="45%"/&gt;
+
+---
+
+class: center, top
+
+# Let's Get Tracking!
+
+.left[
+* Add a column for time seconds (s) and another for sample rate = 10 Hz
+]
+--
+.left[
+
+```r
+# Create a time (s) column
+Match1$Seconds &lt;- (Match1$TimeStamp)/10
+# Turn time into minutes
+Match1$Minutes &lt;- (Match1$Seconds)/60
+# Plot Player 1's trace on the court
+Match1 %&gt;%
+  filter(Athlete=="Player 12" &amp; Quarter=="Q1") %&gt;%
+  ggplot(aes(x = Minutes, y = Velocity)) + 
+  geom_point(colour = "grey34") +
+  scale_colour_gradientn(colours = rainbow(7)) +
+  theme_classic() +
+  scale_x_continuous(expand = c(0,0)) +
+  scale_y_continuous(expand = c(0,0)) +
+  xlab("\n Time (minutes)") +
+  ylab(expression(bold(paste(Velocity,"  ",(m.s^-1))))) +
+  theme(axis.line.x = element_line(size = .5, colour = "black"),
+        axis.line.y = element_line(size = .5, colour = "black"),
+        axis.ticks.x = element_line(size = .5, colour = "black"),
+        axis.ticks.y = element_line(size = .5, colour = "black"),
+        axis.text.x = element_text(size = 10, colour = "black"),
+        axis.text.y = element_text(size = 10, colour = "black"),
+        axis.title.x = element_text(face = "bold", size = 12, colour = "black"), 
+        axis.title.y = element_text(face = "bold", size = 12, colour = "black"), 
+        legend.position = "bottom",
+        plot.title = element_text(face = "bold", size = 14, colour = "black", hjust = 0.5)) 
+```
+] 
+
+---
+
+class: center, top
+
+# Visualising Velocity Over Time
+
+.left[
+&lt;img src="RNetballWorkshop_files/figure-html/Plot2-1.png" width="936" /&gt;
+] 
+
+---
+class: center, top
+
+# Visualising (Banded) Velocity Over Time
+
+.left[
+
+```r
+# Calculate velocity bands
+BandedData &lt;- Match1 %&gt;%
+              mutate(VelocityBand = ifelse(Velocity &gt; 0 &amp; Velocity &lt; 4.2, 'Walk', 
+                                           ifelse(Velocity &gt; 4.2 &amp; Velocity &lt; 5, 'Jog', 
+                                                  ifelse(Velocity &gt; 5 &amp; Velocity &lt; 6.9, 'Run', 
+                                                         ifelse(Velocity &gt; 6.9, 'Sprint',NA)))))
+# Bin into velocity bands
+BandedData %&gt;%
+filter(Athlete=="Player 12" &amp; Quarter=="Q1") %&gt;%
+  ggplot(aes(x = Minutes, y = Velocity)) + 
+  geom_point(aes(colour = factor(VelocityBand))) +
+  scale_color_manual(values=c("yellow","green","purple","green"), 
+                     breaks = c('Walk','Jog','Run','Sprint'), 
+                     name = "Velocity Band") +
+  xlab("\n Time (minutes)") +
+  ylab(expression(bold(paste(Velocity,"  ",(m.s^-1))))) +
+  scale_x_continuous(limits = c(0,15), expand = c(0,0)) +
+  scale_y_continuous(limits = c(0,6), expand = c(0,0)) +
+  theme_classic() +
+  theme(axis.title.x = element_text(size = 12, colour = "black", face = "bold"),
+        axis.title.y = element_text(size = 12, colour = "black", face = "bold"),
+        axis.text.x = element_text(size = 10, colour = "black", face = "bold"),
+        axis.text.y = element_text(size = 10, colour = "black", face = "bold"),
+        axis.ticks.x = element_line(colour = "black"), 
+        axis.ticks.y = element_line(colour = "black"))
+```
+] 
+
+---
+
+class: center, top
+
+# Visualising (Banded) Velocity Over Time
+
+.left[
+&lt;img src="RNetballWorkshop_files/figure-html/Plot4-1.png" width="936" /&gt;
+]
+
+---
+
+class: center, top
+
+# Uh Oh!
+
+&lt;img src="https://media.giphy.com/media/21GCae4djDWtP5soiY/giphy.gif" align="middle" width="35%"/&gt;
+
+---
+
+class: center, top
+
+# k-means Clustering
+.left[
+
+```r
+# Calculate velocity bands
+nVelocityClusters &lt;- 4
+# Ensure the initial cluster points are constant for each movement variable.
+set.seed(1)
+# Obtain the kMeans cluster
+m_velocity_clusters &lt;- kmeans(Match1$Velocity,nVelocityClusters)
+VelocitykMeans &lt;- m_velocity_clusters$centers 
+m_velocity_clusters$centers
+```
+
+```
+##        [,1]
+## 1 1.9749152
+## 2 1.0623348
+## 3 3.3366841
+## 4 0.2627287
+```
+
+```r
+# Add column to original data frame
+clusteredData &lt;- cbind(Match1, m_velocity_clusters$cluster)
+# Rename column
+colnames(clusteredData)[colnames(clusteredData)=="m_velocity_clusters$cluster"] &lt;- "VelocityCluster"
+# Assign level
+clusteredData$VelocityDescriptor &lt;- factor(clusteredData$VelocityCluster,
+                             levels = c(1,2,3,4),
+                             labels = c("Run", "Jog", "Sprint", "Walk"))
+```
+]
+
+---
+
+class: center, top
+
+# k-means Clustering
+.left[
+
+```r
+# Plot the number of points within each cluster, to show the distribution - Velocity
+clusteredData %&gt;%
+filter(Athlete=="Player 12" &amp; Quarter=="Q1") %&gt;%
+  ggplot(aes(x = Minutes, y = Velocity)) + 
+  geom_point(aes(colour = factor(VelocityDescriptor))) +
+  scale_color_manual(values=c("yellow","magenta","blue","green"), 
+                     breaks = c("Run", "Jog", "Sprint", "Walk"), 
+                    labels = c("1.9 m/s", "1.1 m/s", "3.3 m/s", "0.3 m/s"), 
+                     name = "Velocity Clusters") +
+  xlab("\n Time (minutes)") +
+  ylab(expression(bold(paste(Velocity,"  ",(m.s^-1))))) +
+  scale_x_continuous(limits = c(0,15), expand = c(0,0)) +
+  scale_y_continuous(limits = c(0,6), expand = c(0,0)) +
+  theme_classic() +
+  theme(axis.title.x = element_text(size = 12, colour = "black", face = "bold"),
+        axis.title.y = element_text(size = 12, colour = "black", face = "bold"),
+        axis.text.x = element_text(size = 10, colour = "black", face = "bold"),
+        axis.text.y = element_text(size = 10, colour = "black", face = "bold"),
+        axis.ticks.x = element_line(colour = "black"), 
+        axis.ticks.y = element_line(colour = "black"))
+```
+]
+
+---
+
+class: center, top
+
+# k-means Clustering
+.left[
+&lt;img src="RNetballWorkshop_files/figure-html/Clustering3-1.png" width="936" /&gt;
+]
+
+---
+
+class: inverse, right, top
+background-image: url(https://diamonds.netball.com.au/sites/diamonds/files/styles/con/public/2019-07/AUS%20V%20RSA%20-%20GRETEL%20TIPPETT%20-%20NETBALL%20WORLD%20CUP%202019.jpg?itok=-3v7awj1)
+background-size: cover
+# The ball is now in your court!
+
+---
+
+class: center, top
+
+# Resources on Creating in R Markdown
+
+"Working with Data in Elite Sport" [RLadies Auckland 2019 talk by Dr Jacquie Tran](https://jacquietran.github.io/2019_may_rladies_akl/R/#1).
+
+
+"Making Slides in R Markdown" [RStudio Conf 2019 presentation by Alison Hill](https://arm.rbind.io/slides/xaringan.html#1).
+
+
+"Reproducibility in R" [RLadies Melbourne 2019 talk by Lavinia Gordon](https://mrslaviniag.github.io/xaringan_presentations/rladies_presentation_22_May_2019.html#1).
+
+
+"Presentation Ninja with xaringan" [Yihui Xie](https://slides.yihui.name/xaringan/#1).&lt;br&gt;&lt;br&gt;
+
+Install the xaringan package from Github:
+
+
+```r
+devtools::install_github("yihui/xaringan")
+```
+
+&lt;img src="https://user-images.githubusercontent.com/163582/45438104-ea200600-b67b-11e8-80fa-d9f2a99a03b0.png" align="bottom" width="15%"/&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
