@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>SportsAnalytics_LectureOne.utf8.md</title>
+    <meta charset="utf-8" />
+    <link href="SportsAnalytics_LectureOne_files/remark-css/rladies-fonts.css" rel="stylesheet" />
+    <link href="SportsAnalytics_LectureOne_files/font-awesome/css/fontawesome-all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="VictoriaUniversity.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+class: title-slide
+background-image: url(https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/WhittenOval.jpg)
+background-size: cover 
+.center[ 
+# Data Analytics &amp; Programming in Sport Science - Part 1   
+## Alice Sweeting, PhD  
+]
+ 
+
+
+
+---
+class: right, middle
+&lt;img src="https://www.versionmuseum.com/images/applications/microsoft-excel/microsoft-excel%5E2016%5Eexcel-logo-new.png" width="40%" align="left"/&gt;
+
+# Today's Session
+
+ Common data types in sport science
+
+ Analysing (example) data in Excel
+
+ Benefits of learning a programming language
+
+ Setting up the R environment
+
+&lt;img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/R_logo.svg/724px-R_logo.svg.png" width="30%" align="left"/&gt;
+
+&lt;br&gt;
+&lt;img src="https://media.giphy.com/media/l3vR5DQFURvrVNuj6/giphy.gif" align="right" width="40%"/&gt;
+
+---
+class: center
+
+# A little about me!
+
+.left[
+In 2012, I completed my Bachelor of Applied Science - Human Movement (Honours) [thesis](https://www.frontiersin.org/articles/10.3389/fphys.2017.00080/full) at Victoria University (VU).
+]
+&lt;br&gt;
+&lt;img src="/HonoursPresentation.png" width="75%" align="bottom"/&gt;
+
+---
+class: center
+
+# A little about me!
+
+.left[
+In 2012, I completed my Bachelor of Applied Science - Human Movement (Honours) [thesis](https://www.frontiersin.org/articles/10.3389/fphys.2017.00080/full) at Victoria University (VU).
+]
+
+.left[
+I completed my [PhD](http://vuir.vu.edu.au/34111/) with VU, Netball Australia and the Australian Institute of Sport (AIS) from 2013 to 2017.
+]
+&lt;br&gt;
+&lt;br&gt;
+&lt;img src="https://static.ffx.io/images/$width_375%2C$height_211/t_crop_fill/q_86%2Cf_auto/7e5cde91e8445fa885a0dbde6b277817ee2bcab2" width="60%" align="bottom"/&gt;
+
+---
+class: center
+
+# A little about me!
+
+.left[
+In 2012, I completed my Bachelor of Applied Science - Human Movement (Honours) [thesis](https://www.frontiersin.org/articles/10.3389/fphys.2017.00080/full) at Victoria University (VU).
+]
+
+.left[
+I completed my [PhD](http://vuir.vu.edu.au/34111/) with VU, Netball Australia and the Australian Institute of Sport (AIS) from 2013 to 2017.
+]
+
+.left[
+In 2016, I commenced as a Research Fellow (Sport Scientist) with VU and the Western Bulldogs.
+]
+&lt;br&gt;
+&lt;img src="https://s.afl.com.au/staticfile/AFL%20Tenant/WesternBulldogs/Hero/2017_HERO/VicUniHero.jpg" width="55%" align="bottom"/&gt;
+
+---
+class: left
+.center[
+# VU-WB Sport Science Partnership
+]
+&lt;img src="https://www.vu.edu.au/sites/default/files/styles/full_width_at_small_breakpoint/public/images/HighPerformanceTeam_20171205_016.jpg?itok=g3ORHZon" width="60%" align="right"/&gt;
+&lt;br&gt;
+.pull-left[.content-box-red[Knowledge exchange between VU-WB]]
+
+---
+class: left
+.center[
+# VU-WB Sport Science Partnership
+]
+&lt;img src="https://www.vu.edu.au/sites/default/files/western-bulldogs-training.jpg" align="right"/&gt;
+&lt;br&gt;
+.pull-left[.content-box-red[Knowledge exchange between VU-WB]]
+&lt;br&gt;
+&lt;br&gt; 
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+.pull-left[.content-box-blue[Data collection and athlete monitoring]]
+
+---
+class: left
+.center[
+# VU-WB Sport Science Partnership
+]
+&lt;img src="https://cdn.newsapi.com.au/image/v1/fbabfe351f5a109cdb666d1a84001f67?width=1024" width="60%" align="right"/&gt;
+&lt;br&gt;
+.pull-left[.content-box-red[Knowledge exchange between VU-WB]]
+&lt;br&gt;
+&lt;br&gt; 
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+.pull-left[.content-box-blue[Data collection and athlete monitoring]]
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+.pull-left[.content-box-red[Sport science research program]]
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+.right[.caption[
+Image source: The Australian
+]] 
+---
+class: left
+.center[
+# VU-WB Sport Science Partnership
+]
+&lt;img src="https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/MozVU.png", width="60%" align="right"&gt;
+&lt;br&gt;
+.pull-left[.content-box-red[Knowledge exchange between VU-WB]]
+&lt;br&gt;
+&lt;br&gt; 
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+.pull-left[.content-box-blue[Data collection and athlete monitoring]]
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+.pull-left[.content-box-red[Sport science research program]]
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+.pull-left[.content-box-blue[Evidence-based support strategies]]   
+
+
+---
+class: left
+.center[
+# Examples of Data in Sport Science
+]
+&lt;img src="https://s.afl.com.au/staticfile/AFL%20Tenant/WesternBulldogs/Images/WEIGHTS_MitchWallis.jpg" width="70%" align="right"/&gt;
+&lt;br&gt;
+.pull-left[.content-box-yellow[Profiling strength over time]]
+&lt;br&gt;
+&lt;br&gt; 
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+
+---
+class: left
+.center[
+# Examples of Data in Sport Science
+]
+&lt;img src="https://hudl-content.s3.amazonaws.com/craft/sportstec-bid-04.jpg?mtime=20161205122419" height="25%" align="right"/&gt;
+&lt;br&gt;
+.pull-left[.content-box-grey[Profiling strength over time]]
+&lt;br&gt;
+&lt;br&gt; 
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+.pull-left[.content-box-yellow[Analysing skilled performance]]
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+.right[.caption[
+Image source: Hudl
+]] 
+---
+
+class: left
+.center[
+# Examples of Data in Sport Science
+]
+&lt;img src="https://static.capabiliaserver.com/frontend/clients/barca/wp/wp-content/uploads/2019/07/f5e8161c-figura_2-eng.jpg", width="60%" align="right"&gt;
+&lt;br&gt;
+.pull-left[.content-box-grey[Profiling strength over time]]
+&lt;br&gt;
+&lt;br&gt; 
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+.pull-left[.content-box-grey[Analysing skilled performance]]
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+.pull-left[.content-box-yellow[Assessing readiness to train]]
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+.right[.caption[
+Image source: Barca Innovation Hub
+]] 
+---
+
+class: left
+.center[
+# Examples of Data in Sport Science
+]
+&lt;img src="https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/GPS.JPG", width="65%" align="right"&gt;
+&lt;br&gt;
+.pull-left[.content-box-grey[Profiling strength over time]]
+&lt;br&gt;
+&lt;br&gt; 
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+.pull-left[.content-box-grey[Analysing skilled performance]]
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+.pull-left[.content-box-grey[Assessing readiness to train]]
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+.pull-left[.content-box-yellow[Measuring physical output]]
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt; 
+
+---
+
+class: inverse, left, top
+background-image: url(https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/AFL_Tackle.JPG)
+background-size: cover
+# Analysing Sport Science Data - Excel Task
+
+---
+
+class: center, top
+
+# Advantages of Excel
+
+.left[
+* Easy to download, install, open.
+]
+
+--
+.left[
+* Interactive, (fairly) friendly to save, send, open and edit
+]
+--
+.left[
+* Point and click to enter data, create figures, calculate math
+]
+--
+.left[
+* Many tabs = data entry, analysis, visualisation, (dashboard) reporting
+]
+--
+.left[
+* Can even run (basic to advanced) statistics!
+]
+--
+.left[
+* Help is never far away...
+]
+ 
+&lt;img src="https://media.giphy.com/media/eCz0zwSl7qxB6/giphy.gif" width="40%", align="middle"/&gt;
+
+---
+
+class: center, top
+
+# But before long...
+
+&lt;img src="https://media.giphy.com/media/l1IY5NRhxdCJYxsmA/giphy.gif" align="middle" width="85%%"/&gt;
+
+---
+
+class: center, top
+
+# We end up here!
+
+&lt;img src="https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/ExcelStoppedWorking.png" align="middle" width="75%"/&gt;
+
+.footnote[
+Credit: [**Dr Jacquie Tran, ESSA Forum, 2019**](https://github.com/jacquietran/2019_essa_forum)
+]
+
+---
+
+class: center, top
+
+# Working with Data in Elite Sport
+
+.left[
+* Abundance of data, from varying technologies at differing sample rates, stored in multiple formats.
+]
+
+--
+
+.left[
+* Large datasets, that often need cleaning and merging, which is likely performed manually.
+]
+
+--
+
+.left[
+* Need to ensure accurate, stringent and reproducible work. 
+]
+
+---
+
+class: center, top
+
+# Working with Data in Elite Sport
+
+.left[
+* Abundance of data, from varying technologies at differing sample rates, stored in multiple formats.
+]
+
+
+
+.left[
+* Large datasets, that often need cleaning and merging, which is likely performed manually.
+]
+
+
+
+.left[
+* Need to ensure accurate, stringent and reproducible work. 
+]
+.left[
+&lt;img src="/NaturePublishing.png" align="middle" width="65%"/&gt; 
+]
+.right[
+[Reproducibility: A tragedy of errors](https://www.nature.com/news/reproducibility-a-tragedy-of-errors-1.19264)
+]
+
+---
+
+class: center, top
+
+# Working with Data in Elite Sport
+
+.left[
+* Abundance of data, from varying technologies at differing sample rates, stored in multiple formats.
+]
+
+
+
+.left[
+* Large datasets, that often need cleaning and merging, which is likely performed manually.
+]
+
+
+
+.left[
+* Need to ensure accurate, stringent and reproducible work. 
+]
+
+&lt;img src="https://www.sciencemag.org/sites/default/files/styles/article_main_large/public/Science53-color-1%20horizontal.jpg?itok=GQb_KAEe" align="middle" width="65%"/&gt;
+
+---
+class: center
+
+&lt;img src="https://www.researchgate.net/profile/Keith_Lewis11/publication/322492965/figure/fig1/AS:601660149747739@1520458366825/A-conceptual-framework-for-open-science-and-reproducible-research-in-wildlife-biology.png" width="80%"/&gt;
+.right[
+[Wildlife biology, big data, and reproducible research](https://wildlife.onlinelibrary.wiley.com/doi/10.1002/wsb.847)
+]
+---
+
+class: center, top
+
+# Programming Languages
+
+.left[
+* Type a line of code, run and see output 
+]
+--
+.left[
+* Create a project, run analysis, create a dashboard and/ or report 
+]
+--
+.left[
+* Reproducibility = Create a GitHub repo, clone, commit, push, push
+]
+--
+.left[
+* Hard to manipulate raw data 
+]
+--
+.left[
+* Automate reporting processes in .pdf or .html output
+]
+
+---
+
+class: center, top
+
+# Programming Languages
+
+.left[
+* Type a line of code, run and see output 
+]
+
+.left[
+* Create a project, run analysis, create a dashboard and/ or report 
+]
+
+.left[
+* Reproducibility = Create a GitHub repo, clone, commit, push, push
+]
+
+.left[
+* Hard to manipulate raw data 
+]
+
+.left[
+* Automate reporting processes in .pdf or .html output
+]
+.right[
+&lt;img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVTxeCggv7BO3dg2V89vPn3zeGqpbyVVmw2qPd9yjQIE6ooHKsvQ"  width="40%"/&gt;
+]
+---
+
+class: center, top
+
+# Programming Languages
+
+.left[
+* Type a line of code, run and see output 
+]
+
+.left[
+* Create a project, run analysis, create a dashboard and/ or report 
+]
+
+.left[
+* Reproducibility = Create a GitHub repo, clone, commit, push, push
+]
+
+.left[
+* Hard to manipulate raw data 
+]
+
+.left[
+* Automate reporting processes in .pdf or .html output
+]
+&lt;br&gt;
+&lt;br&gt;
+&lt;img src="https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/RLogo.jpg" width="30%"/&gt;
+
+---
+class: center, top
+
+# Why Learn to Program in R? 
+
+.left[
+* Named (partly) after the first two authors convinced the project in 1992, then released (fully) in 2000.  
+]
+
+--
+.left[
+* Free, powerful, open-source and developed with data science/ statistics in mind.   
+]
+
+--
+.left[
+* Not only a programming language but can compile apps, reports and presentations (like this one!).
+]
+
+--
+.left[
+* User-created packages that allow for data cleaning, manipulation, visualisation and reporting.
+]
+
+--
+.left[
+* Annual [UseR!](https://www.r-project.org/conferences/) Conferences, [The R Journal](https://journal.r-project.org/), local and online [communities](https://blog.revolutionanalytics.com/local-r-groups.html), that also support diversity: [RLadies](https://www.meetup.com/en-AU/rladies-melbourne/)
+]
+--
+&lt;img src="https://coderseye.com/wp-content/uploads/Benefits-of-everyone-learning-programming.jpeg" align="middle"/&gt;
+ 
+---
+class: center, top
+
+# Today - a (quick) overview on how to setup and use R 
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;img src="https://media.giphy.com/media/MOTkF7sT8u2Z2/giphy.gif" align="middle" width="45%"/&gt;
+
+---
+
+class: center, top
+
+# Starting out in R
+
+.left[
+* First, install [R](https://www.r-project.org/) (required) from your local CRAN.
+]
+
+--
+.left[
+* Next, install [RStudio](https://www.rstudio.com/products/rstudio/), as it is a friendly interface to learn and use R.
+]
+
+--
+.left[
+* Plenty of free, online resources to help learn, including [RStudio Education](https://education.rstudio.com/).
+]
+--
+.left[
+* Online Q&amp;A forum [Stack Overflow](https://stackoverflow.com/) also contains a community of help. 
+]
+--
+.left[
+* My number 1 resource for beginners: [R for Data Science](https://r4ds.had.co.nz/) by Garrett Grolemund and Hadley Wickham
+]
+--
+&lt;img src="http://m.quickmeme.com/img/c1/c16c94b2aa0b5deaf6e6ff04f117c665c1edde074d751383adf02d184941e4c0.jpg" align="middle" width="50%"/&gt;
+
+---
+class: center, top
+
+# How RStudio Works
+&lt;img src="https://pbs.twimg.com/media/D83d2-dW4AULriR?format=jpg&amp;name=medium" align="middle" width="85%"/&gt;
+
+---
+class: inverse, right
+background-image: url(https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/AFL_Hunter.JPG)
+background-size: cover 
+# Next Steps...
+
+
+---
+class: inverse, right
+background-image: url(https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/Questions.JPG)
+background-size: cover 
+
+# Any Questions?
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;span style = 'font-size: 50%;'&gt;
+.right[
+<i class="fas  fa-link "></i> [http://sportstatisticsrsweet.rbind.io/](http://sportstatisticsrsweet.rbind.io/)&lt;br&gt;&lt;br&gt;
+<i class="fas  fa-envelope "></i> [Alice.Sweeting@vu.edu.au](mailto:Alice.Sweeting@vu.edu.au)&lt;br&gt;&lt;br&gt;
+<i class="fab  fa-twitter "></i> [alicesweeting](https://twitter.com/alicesweeting)&lt;br&gt;&lt;br&gt;
+<i class="fab  fa-linkedin "></i> [/alicejsweeting](https://www.linkedin.com/in/alicejsweeting/)&lt;br&gt;&lt;br&gt;
+]
+&lt;br&gt;
+&lt;img src="http://www.sportandrecreationspatial.com.au/images/vu-institute-health-sport.png", align="right" width="30%"&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
