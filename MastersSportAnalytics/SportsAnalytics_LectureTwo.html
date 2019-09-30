@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>SportsAnalytics_LectureTwo.utf8.md</title>
+    <meta charset="utf-8" />
+    <link href="SportsAnalytics_LectureTwo_files/remark-css/rladies-fonts.css" rel="stylesheet" />
+    <link href="SportsAnalytics_LectureTwo_files/font-awesome/css/fontawesome-all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="VictoriaUniversity.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+class: title-slide
+background-image: url(https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/WhittenOval.jpg)
+background-size: cover 
+.center[ 
+# Data Analytics &amp; Programming in Sport Science - Part 2   
+## Alice Sweeting, PhD  
+]
+ 
+
+
+
+---
+
+class: center, top
+
+# Creating A Project in RStudio
+
+.left[
+**Using RStudio to Your Advantage**
+]
+
+.left[
+* Create a project and name the folder appropriately
+]
+--
+.left[
+* In RStudio, click `File -&gt; New Project -&gt; New Directory -&gt; New Project`
+]
+--
+.left[
+* Using this approach will contain all your files in one location
+]
+--
+.left[
+* Avoids having multiple .R and .RData files scattered on Dropbox!
+]
+--
+.left[
+* Working directory will fire when the project is opened
+]
+
+&lt;img src="https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/CreateNewProject.png" width="40%"/&gt;
+
+---
+
+class: center, top
+
+# Setting up the R Environment
+
+.left[
+Ensure R and RStudio are downloaded. 
+&lt;br&gt;
+&lt;br&gt;
+Create a new project in RStudio: `File -&gt; New Project -&gt; New Directory -&gt; New Project (AnalyticsWorkshop)`. 
+]
+--
+&lt;br&gt;
+.left[
+Create a folder within this project named "Data"
+]
+--
+.left[
+Copy the LPT Data (.csv) file into the "Data" folder
+]
+--
+&lt;br&gt;
+.left[
+Ensure the packages below are up-to-date and installed:
+
+
+```r
+AnalyticsWorkshopPackages &lt;- c(
+    'readr',
+    'here',
+    'ggridges',
+    'tidyverse')
+
+install.packages(AnalyticsWorkshopPackages)
+```
+]&lt;br&gt;
+
+---
+class: center, top
+
+# Example LPT Data 
+
+.left[
+Import our example LPT data, using the `readr` package, which loads Excel data into R
+
+
+```r
+library(readr)
+RawLPTData &lt;- read_csv("Data/LPTData.csv")
+```
+]
+
+---
+
+class: inverse, center, top
+background-image: url(https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/AFLW2_WhittenOval.jpg)
+background-size: cover
+# First Step - How to Assess Example Data?
+
+---
+
+class: center, top
+
+# Assessing Example Data
+
+.left[
+
+```r
+# Assess the structure of the data.frame
+str(RawLPTData)
+```
+
+```
+## Classes 'spec_tbl_df', 'tbl_df', 'tbl' and 'data.frame':	308 obs. of  10 variables:
+##  $ first.name       : chr  "Alice" "Alice" "Alice" "Alice" ...
+##  $ last.name        : chr  "Sweeting" "Sweeting" "Sweeting" "Sweeting" ...
+##  $ date             : chr  "10/04/2019" "10/04/2019" "10/04/2019" "10/04/2019" ...
+##  $ time             : 'hms' num  13:19:00 13:19:00 13:19:00 13:19:00 ...
+##   ..- attr(*, "units")= chr "secs"
+##  $ exercise         : chr  "Deadlift (Trap Bar)" "Deadlift (Trap Bar)" "Deadlift (Trap Bar)" "Deadlift (Trap Bar)" ...
+##  $ set.id           : num  3294447 3294447 3294447 3294447 3294460 ...
+##  $ bar.weight..kg.  : num  80 80 80 80 100 100 100 100 100 100 ...
+##  $ total.weight..kg.: num  80 80 80 80 100 100 100 100 100 100 ...
+##  $ Rep.Number       : num  1 2 3 4 1 2 3 4 1 2 ...
+##  $ Mean Velocity    : num  0.72 0.75 0.65 0.75 0.68 0.69 0.66 0.67 0.67 0.65 ...
+##  - attr(*, "spec")=
+##   .. cols(
+##   ..   first.name = col_character(),
+##   ..   last.name = col_character(),
+##   ..   date = col_character(),
+##   ..   time = col_time(format = ""),
+##   ..   exercise = col_character(),
+##   ..   set.id = col_double(),
+##   ..   bar.weight..kg. = col_double(),
+##   ..   total.weight..kg. = col_double(),
+##   ..   Rep.Number = col_double(),
+##   ..   `Mean Velocity` = col_double()
+##   .. )
+```
+]
+
+---
+
+class: center, top
+
+# Cleaning Example Data
+
+.left[
+
+```r
+# Ensure example data is a data.frame
+RawLPTData &lt;- as.data.frame(RawLPTData)
+```
+]
+--
+.left[
+
+```r
+# View the top five rows
+head(RawLPTData, 5)
+```
+
+```
+##   first.name last.name       date     time            exercise  set.id
+## 1      Alice  Sweeting 10/04/2019 13:19:00 Deadlift (Trap Bar) 3294447
+## 2      Alice  Sweeting 10/04/2019 13:19:00 Deadlift (Trap Bar) 3294447
+## 3      Alice  Sweeting 10/04/2019 13:19:00 Deadlift (Trap Bar) 3294447
+## 4      Alice  Sweeting 10/04/2019 13:19:00 Deadlift (Trap Bar) 3294447
+## 5      Alice  Sweeting 10/04/2019 13:23:00 Deadlift (Trap Bar) 3294460
+##   bar.weight..kg. total.weight..kg. Rep.Number Mean Velocity
+## 1              80                80          1          0.72
+## 2              80                80          2          0.75
+## 3              80                80          3          0.65
+## 4              80                80          4          0.75
+## 5             100               100          1          0.68
+```
+] 
+--
+.left[
+
+```r
+# Rename columns - make them tidier
+colnames(RawLPTData) &lt;- c("Firstname", "Surname", "Date", "Time", "Exercise", "SetID", "BarWeight", 
+                          "TotalWeight", "RepNumber", "MeanVelocity")
+```
+]
+
+---
+
+class: center, top
+
+# Asking Questions of the Data
+
+.left[
+* How many different types of lifts (under the exercise column) are there?
+]
+--
+&lt;br&gt;
+.left[
+
+```r
+# Inspect levels of exercise column
+levels(RawLPTData$Exercise)
+```
+
+```
+## NULL
+```
+]
+
+--
+.left[
+
+```r
+# Make exercise column a factor
+RawLPTData$Exercise &lt;- as.factor(RawLPTData$Exercise)
+```
+]
+--
+.left[
+
+```r
+# Now inspect levels
+levels(RawLPTData$Exercise)
+```
+
+```
+## [1] "Bench Press"                 "Bench Pull"                 
+## [3] "DeadLift (Trap Bar - bands)" "Deadlift (Trap Bar)"        
+## [5] "Squat (Box)"                 "Squat (SSB - Bands)"
+```
+]
+
+---
+
+class: center, top
+
+# Asking Questions of the Data
+
+.left[
+* What is the maximum mean velocity lifed by Alice?
+]
+--
+.left[
+
+```r
+# Maximum mean velocity
+max(RawLPTData$MeanVelocity)
+```
+
+```
+## [1] 1.25
+```
+]
+--
+&lt;br&gt;
+&lt;br&gt;
+.left[
+* What about the minimum mean velocity lifed by Alice?
+]
+--
+.left[
+
+```r
+# Minimum mean velocity
+min(RawLPTData$MeanVelocity)
+```
+
+```
+## [1] 0.18
+```
+]
+---
+
+class: center, top
+
+# Asking Questions of the Data
+
+.left[
+* What is the maximum mean velocity lifed by Alice?
+]
+
+.left[
+
+```r
+# Maximum mean velocity
+max(RawLPTData$MeanVelocity)
+```
+
+```
+## [1] 1.25
+```
+]
+
+&lt;br&gt;
+&lt;br&gt;
+.left[
+* What about the minimum mean velocity lifed by Alice?
+]
+
+.left[
+
+```r
+# Minimum mean velocity
+min(RawLPTData$MeanVelocity)
+```
+
+```
+## [1] 0.18
+```
+]
+&lt;br&gt;
+#### How can we easily calculate the above, over time?
+
+---
+
+background-image: url(https://www.tidyverse.org/images/tidyverse-default.png)
+background-size: cover
+
+---
+
+class: center, top
+
+# The Tidyverse
+.left[
+Install the complete package collection with:
+
+```r
+install.packages("tidyverse")
+```
+]
+&lt;img src="https://lsru.github.io/tv_course/img/01_tidyverse_data_science.png" width="50%"/&gt;
+
+.footnote[
+Image Credit: [University of Luxemborg, **Life Sciences Research Unit**](https://lsru.github.io/tv_course/lecture01_intro.html#1)
+]
+
+
+---
+
+class: center, top
+
+# Asking Questions of the Data
+
+.left[
+* What is the maximum mean velocity lifed by Alice?
+* What about the minimum mean velocity lifed by Alice?
+* Create a pivot table to calculate the average mean velocity, by date.
+]
+--
+.left[
+
+```r
+library(tidyverse)
+SummaryByDateLPTData &lt;- RawLPTData  %&gt;%
+  group_by(Date, Exercise, BarWeight) %&gt;%
+  summarise(Maximum = max(MeanVelocity), 
+            Minimum = min(MeanVelocity), 
+            Median = median(MeanVelocity), 
+            Average = mean(MeanVelocity))
+```
+]
+--
+.left[
+
+```r
+head(SummaryByDateLPTData, 5)
+```
+
+```
+## # A tibble: 5 x 7
+## # Groups:   Date, Exercise [1]
+##   Date      Exercise    BarWeight Maximum Minimum Median Average
+##   &lt;chr&gt;     &lt;fct&gt;           &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+## 1 1/07/2019 Bench Press        60    0.86    0.72   0.77   0.783
+## 2 1/07/2019 Bench Press        70    0.69    0.68   0.68   0.683
+## 3 1/07/2019 Bench Press        80    0.62    0.62   0.62   0.62 
+## 4 1/07/2019 Bench Press        90    0.51    0.51   0.51   0.51 
+## 5 1/07/2019 Bench Press       100    0.28    0.28   0.28   0.28
+```
+]
+
+
+---
+
+class: center, top
+
+# Filtering Data in R
+
+.left[
+* Plot Mean Velocity, over reps and sets, on 30th May
+]
+--
+&lt;br&gt;
+.left[
+* First, we need to create a subset of data for 30th May
+]
+--
+.left[
+
+```r
+May30Data &lt;- RawLPTData  %&gt;%
+  filter(Date == "30/05/2019")
+```
+]
+--
+&lt;br&gt;
+&lt;img src="https://media.giphy.com/media/l0Iy3LAv9rjoLG0BG/giphy.gif" width="45%" align="center"/&gt;
+
+---
+
+class: center, top
+
+# Filtering Data in R
+.left[
+
+```r
+print(May30Data)
+```
+
+```
+##    Firstname  Surname       Date     Time                    Exercise
+## 1      Alice Sweeting 30/05/2019 13:50:00 DeadLift (Trap Bar - bands)
+## 2      Alice Sweeting 30/05/2019 13:50:00 DeadLift (Trap Bar - bands)
+## 3      Alice Sweeting 30/05/2019 13:50:00 DeadLift (Trap Bar - bands)
+## 4      Alice Sweeting 30/05/2019 13:50:00 DeadLift (Trap Bar - bands)
+## 5      Alice Sweeting 30/05/2019 13:50:00 DeadLift (Trap Bar - bands)
+## 6      Alice Sweeting 30/05/2019 13:47:00 DeadLift (Trap Bar - bands)
+## 7      Alice Sweeting 30/05/2019 13:47:00 DeadLift (Trap Bar - bands)
+## 8      Alice Sweeting 30/05/2019 13:47:00 DeadLift (Trap Bar - bands)
+## 9      Alice Sweeting 30/05/2019 13:47:00 DeadLift (Trap Bar - bands)
+## 10     Alice Sweeting 30/05/2019 13:47:00 DeadLift (Trap Bar - bands)
+##      SetID BarWeight TotalWeight RepNumber MeanVelocity
+## 1  3597650        80          80         1         0.95
+## 2  3597650        80          80         2         0.99
+## 3  3597650        80          80         3         1.01
+## 4  3597650        80          80         4         0.96
+## 5  3597650        80          80         5         0.99
+## 6  3597654        80          80         1         1.04
+## 7  3597654        80          80         2         1.02
+## 8  3597654        80          80         3         0.96
+## 9  3597654        80          80         4         0.92
+## 10 3597654        80          80         5         1.04
+```
+]
+
+
+---
+
+class: center, top
+
+# Plotting Data in R
+.left[
+
+```r
+# We want to plot the May 30th data
+ggplot(data = May30Data,
+# We want our x-axis to be rep number and our y-axis to be mean velocity
+       aes(x = RepNumber, y = MeanVelocity)) +
+# We want a scatter plot so we use:  
+  geom_point()
+```
+
+&lt;img src="SportsAnalytics_LectureTwo_files/figure-html/PlotMay30-1.png" width="1080" /&gt;
+]
+
+---
+
+class: center, top
+
+# (Cleaner) Plotting Data in R
+.left[
+
+```r
+# We want to plot the May 30th data
+ggplot(data = May30Data,
+# We want our x-axis to be rep number and our y-axis to be mean velocity, assign a colour to Set
+       aes(x = RepNumber, y = MeanVelocity, colour = factor(SetID))) +
+# We want a scatter plot so we use:  
+  geom_point() +
+# Create a x-axis label  
+  xlab("\n Rep Number") +
+# Create a y-axis label  
+  ylab(expression(bold(paste(Mean," ",Velocity,"  ",(m.s^-1))))) +
+# Drop label from the legend
+  labs(colour = "") +
+# Ensure we have neat axis lines
+  scale_y_continuous(expand = c(0,0), limits = c(0, 1.05)) +
+# Use a minimal inbuilt theme
+  theme_classic() +
+# Format our x axis title
+  theme(axis.title.x = element_text(size = 12, colour = "black", face = "bold"),
+# Format our y axis title
+        axis.title.y = element_text(size = 12, colour = "black", face = "bold"),
+# Format our x axis text
+        axis.text.x = element_text(size = 10, colour = "black", face = "bold"),
+# Format our y axis text
+        axis.text.y = element_text(size = 10, colour = "black", face = "bold"),
+# Ensure we have neat tick marks
+        axis.ticks.x = element_line(colour = "black"), 
+        axis.ticks.y = element_line(colour = "black"),
+# Include a legend and place this at the bottom of the figure
+        legend.position = "bottom")
+```
+]
+
+---
+
+class: center, top
+
+# (Cleaner) Plotting Data in R
+
+&lt;img src="SportsAnalytics_LectureTwo_files/figure-html/unnamed-chunk-1-1.png" width="936" /&gt;
+
+---
+
+class: center, top
+
+# Assessing Distributions in R
+.left[
+
+```r
+# Load package
+library(ggridges)
+# We want to look at all the data
+ggplot(data = RawLPTData,
+# We want our x-axis to be mean velocity and y to be exercise
+  aes(x = MeanVelocity, y = Exercise)) +
+# We wish to assess the distribution of mean velocity, across individual exercises  
+  geom_density_ridges() + 
+# Add our x axis label
+xlab(expression(bold(paste(Mean," ",Velocity,"  ",(m.s^-1))))) +
+# Expand the axes so we get the full view
+  scale_y_discrete(expand = c(0.01, 0)) +  
+  scale_x_continuous(expand = c(0, 0)) +  
+# Use a neat, minima; theme
+  theme_classic() +
+# Add more theme options  
+  theme(axis.title.x = element_text(size = 12, colour = "black", face = "bold"),
+# We don't need a y axis title
+  axis.title.y = element_blank(),
+ # Format our x axis text
+  axis.text.x = element_text(size = 10, colour = "black", face = "bold"),
+# Format our y axis text
+  axis.text.y = element_text(size = 10, colour = "black", face = "bold"),
+# Ensure we have neat tick marks
+  axis.ticks.x = element_line(colour = "black"), 
+  axis.ticks.y = element_line(colour = "black"))
+```
+]
+
+---
+
+class: center, top
+
+# Assessing Distributions in R
+&lt;img src="SportsAnalytics_LectureTwo_files/figure-html/unnamed-chunk-2-1.png" width="1080" /&gt;
+
+---
+
+class: center, top
+
+# Assessing Coloured Distributions in R
+.left[
+
+```r
+# We want to look at all the data
+ggplot(data = RawLPTData,
+       # We want our x-axis to be mean velocity and y to be exercise
+       aes(x = MeanVelocity, y = Exercise, fill = Exercise)) +
+  # We wish to assess the distribution of mean velocity, across individual exercises  
+  geom_density_ridges() + 
+  # Add our x axis label
+  xlab(expression(bold(paste(Mean," ",Velocity,"  ",(m.s^-1))))) +
+  # Expand the axes so we get the full view
+  scale_y_discrete(expand = c(0.01, 0)) +  
+  scale_x_continuous(expand = c(0, 0)) +  
+  # Use a neat, minima; theme
+  theme_classic() +
+  # Add more theme options  
+  theme(axis.title.x = element_text(size = 12, colour = "black", face = "bold"),
+        # We don't need a y axis title
+        axis.title.y = element_blank(),
+        # Format our x axis text
+        axis.text.x = element_text(size = 10, colour = "black", face = "bold"),
+        # Format our y axis text
+        axis.text.y = element_text(size = 10, colour = "black", face = "bold"),
+        # Ensure we have neat tick marks
+        axis.ticks.x = element_line(colour = "black"), 
+        axis.ticks.y = element_line(colour = "black"), 
+        # We don't want a legend
+        legend.position = "none")
+```
+]
+
+---
+
+class: center, top
+
+# Assessing Distributions in R
+&lt;img src="SportsAnalytics_LectureTwo_files/figure-html/unnamed-chunk-3-1.png" width="1080" /&gt;
+
+
+---
+
+class: inverse, right, top
+background-image: url(https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/AFL_Hunter.JPG)
+background-size: cover
+# Any Issues With These Colours?
+
+---
+class: center, top
+
+# Not Designing for Color-Vision Deficiency
+
+.left[
+* A proportion population may have some form of color-vision deficiency (i.e., are colorblind). 
+&lt;br&gt;
+&lt;br&gt;
+* These people may not be able to distinguish colors that look clearly different to most other people.
+]
+
+--
+.left[
+&lt;br&gt;
+&lt;br&gt;
+* We should make slight modifications in ALL visuals so they safe for Color-vision deficiency
+&lt;br&gt;
+&lt;br&gt;
+* Should probably not color-code more than eight different items in a plot
+]
+--
+&lt;br&gt;
+&lt;br&gt;
+.left[
+
+```r
+# Colourblind palette:
+cbPalette &lt;- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+```
+]
+
+---
+
+class: center, top
+
+# Assessing Distributions in R
+&lt;img src="SportsAnalytics_LectureTwo_files/figure-html/unnamed-chunk-5-1.png" width="936" /&gt;
+
+---
+class: center, top
+
+# Assessing Coloured Distributions in R
+
+&lt;img src="SportsAnalytics_LectureTwo_files/figure-html/PlotColouredDistribution2-1.png" width="936" /&gt;
+
+---
+
+class: inverse, right, top
+background-image: url(https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/Questions.JPG)
+background-size: cover
+# Other R Exercises to Try...
+&lt;br&gt;
+ Create a bar plot of Average Mean Velocity, by Exercise
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+--
+ Visualise change in each Exercise, over time
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+--
+ Make an interactive plot using [ggplotly](https://www.rdocumentation.org/packages/plotly/versions/4.9.0/topics/ggplotly)
+
+---
+class: center, top
+# Any Questions?
+&lt;span style = 'font-size: 50%;'&gt;
+
+.left[
+<i class="fas  fa-link "></i> [http://sportstatisticsrsweet.rbind.io/](http://sportstatisticsrsweet.rbind.io/)&lt;br&gt;&lt;br&gt;
+<i class="fas  fa-envelope "></i> [Alice.Sweeting@vu.edu.au](mailto:Alice.Sweeting@vu.edu.au)&lt;br&gt;&lt;br&gt;
+<i class="fab  fa-twitter "></i> [alicesweeting](https://twitter.com/alicesweeting)&lt;br&gt;&lt;br&gt;
+<i class="fab  fa-linkedin "></i> [/alicejsweeting](https://www.linkedin.com/in/alicejsweeting/)&lt;br&gt;&lt;br&gt;
+]
+
+&lt;img src="https://media.giphy.com/media/mCRJDo24UvJMA/giphy.gif" align="left" width="30%"/&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

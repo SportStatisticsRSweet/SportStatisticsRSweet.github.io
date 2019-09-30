@@ -1,0 +1,619 @@
+---
+output:
+  xaringan::moon_reader:
+    css: ["VictoriaUniversity.css", "rladies-fonts"]
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: 16:9 
+      
+---
+class: title-slide
+background-image: url(https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/WhittenOval.jpg)
+background-size: cover 
+.center[ 
+# Data Analytics & Programming in Sport Science - Part 2   
+## Alice Sweeting, PhD  
+]
+ 
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE, knitr.table.format = "html")
+knitr::opts_chunk$set(fig.retina = 3, warning = FALSE, message = FALSE)
+library(icon)      
+library(tidyverse) 
+```
+
+---
+
+class: center, top
+
+# Creating A Project in RStudio
+
+.left[
+**Using RStudio to Your Advantage**
+]
+
+.left[
+* Create a project and name the folder appropriately
+]
+--
+.left[
+* In RStudio, click `File -> New Project -> New Directory -> New Project`
+]
+--
+.left[
+* Using this approach will contain all your files in one location
+]
+--
+.left[
+* Avoids having multiple .R and .RData files scattered on Dropbox!
+]
+--
+.left[
+* Working directory will fire when the project is opened
+]
+
+<img src="https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/CreateNewProject.png" width="40%"/>
+
+---
+
+class: center, top
+
+# Setting up the R Environment
+
+.left[
+Ensure R and RStudio are downloaded. 
+<br>
+<br>
+Create a new project in RStudio: `File -> New Project -> New Directory -> New Project (AnalyticsWorkshop)`. 
+]
+--
+<br>
+.left[
+Create a folder within this project named "Data"
+]
+--
+.left[
+Copy the LPT Data (.csv) file into the "Data" folder
+]
+--
+<br>
+.left[
+Ensure the packages below are up-to-date and installed:
+
+```{r LoadPackagesForWorkshop, eval = FALSE}
+AnalyticsWorkshopPackages <- c(
+    'readr',
+    'here',
+    'ggridges',
+    'tidyverse')
+
+install.packages(AnalyticsWorkshopPackages)
+
+```
+]<br>
+
+---
+class: center, top
+
+# Example LPT Data 
+
+.left[
+Import our example LPT data, using the `readr` package, which loads Excel data into R
+
+``` {r ImportingData, include=TRUE}
+library(readr)
+RawLPTData <- read_csv("Data/LPTData.csv")
+```
+]
+
+---
+
+class: inverse, center, top
+background-image: url(https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/AFLW2_WhittenOval.jpg)
+background-size: cover
+# First Step - How to Assess Example Data?
+
+---
+
+class: center, top
+
+# Assessing Example Data
+
+.left[
+``` {r AssessStructureData, include=TRUE}
+# Assess the structure of the data.frame
+str(RawLPTData)
+```
+]
+
+---
+
+class: center, top
+
+# Cleaning Example Data
+
+.left[
+``` {r MakeDataFrame}
+# Ensure example data is a data.frame
+RawLPTData <- as.data.frame(RawLPTData)
+```
+]
+--
+.left[
+```{r MakeDataFrame2}
+# View the top five rows
+head(RawLPTData, 5)
+```
+] 
+--
+.left[
+``` {r RenameColumnHeaders}
+# Rename columns - make them tidier
+colnames(RawLPTData) <- c("Firstname", "Surname", "Date", "Time", "Exercise", "SetID", "BarWeight", 
+                          "TotalWeight", "RepNumber", "MeanVelocity")
+```
+]
+
+---
+
+class: center, top
+
+# Asking Questions of the Data
+
+.left[
+* How many different types of lifts (under the exercise column) are there?
+]
+--
+<br>
+.left[
+``` {r InspectLevels}
+# Inspect levels of exercise column
+levels(RawLPTData$Exercise)
+```
+]
+
+--
+.left[
+``` {r InspectLevels2}
+# Make exercise column a factor
+RawLPTData$Exercise <- as.factor(RawLPTData$Exercise)
+```
+]
+--
+.left[
+``` {r InspectLevels3}
+# Now inspect levels
+levels(RawLPTData$Exercise)
+```
+]
+
+---
+
+class: center, top
+
+# Asking Questions of the Data
+
+.left[
+* What is the maximum mean velocity lifed by Alice?
+]
+--
+.left[
+``` {r MaxmimumLift}
+# Maximum mean velocity
+max(RawLPTData$MeanVelocity)
+```
+]
+--
+<br>
+<br>
+.left[
+* What about the minimum mean velocity lifed by Alice?
+]
+--
+.left[
+``` {r  MaxmimumLift2}
+# Minimum mean velocity
+min(RawLPTData$MeanVelocity)
+```
+]
+---
+
+class: center, top
+
+# Asking Questions of the Data
+
+.left[
+* What is the maximum mean velocity lifed by Alice?
+]
+
+.left[
+``` {r MaxmimumLift3}
+# Maximum mean velocity
+max(RawLPTData$MeanVelocity)
+```
+]
+
+<br>
+<br>
+.left[
+* What about the minimum mean velocity lifed by Alice?
+]
+
+.left[
+``` {r  MaxmimumLift4}
+# Minimum mean velocity
+min(RawLPTData$MeanVelocity)
+```
+]
+<br>
+#### How can we easily calculate the above, over time?
+
+---
+
+background-image: url(https://www.tidyverse.org/images/tidyverse-default.png)
+background-size: cover
+
+---
+
+class: center, top
+
+# The Tidyverse
+.left[
+Install the complete package collection with:
+```{r InstallTidyverse2, eval = FALSE}
+install.packages("tidyverse")
+```
+]
+<img src="https://lsru.github.io/tv_course/img/01_tidyverse_data_science.png" width="50%"/>
+
+.footnote[
+Image Credit: [University of Luxemborg, **Life Sciences Research Unit**](https://lsru.github.io/tv_course/lecture01_intro.html#1)
+]
+
+
+---
+
+class: center, top
+
+# Asking Questions of the Data
+
+.left[
+* What is the maximum mean velocity lifed by Alice?
+* What about the minimum mean velocity lifed by Alice?
+* Create a pivot table to calculate the average mean velocity, by date.
+]
+--
+.left[
+```{r UsingTidyverse}
+library(tidyverse)
+SummaryByDateLPTData <- RawLPTData  %>%
+  group_by(Date, Exercise, BarWeight) %>%
+  summarise(Maximum = max(MeanVelocity), 
+            Minimum = min(MeanVelocity), 
+            Median = median(MeanVelocity), 
+            Average = mean(MeanVelocity))
+
+```
+]
+--
+.left[
+```{r UsingTidyverse2}
+head(SummaryByDateLPTData, 5)
+```
+]
+
+
+---
+
+class: center, top
+
+# Filtering Data in R
+
+.left[
+* Plot Mean Velocity, over reps and sets, on 30th May
+]
+--
+<br>
+.left[
+* First, we need to create a subset of data for 30th May
+]
+--
+.left[
+```{r FilterTidyverse}
+May30Data <- RawLPTData  %>%
+  filter(Date == "30/05/2019")
+```
+]
+--
+<br>
+<img src="https://media.giphy.com/media/l0Iy3LAv9rjoLG0BG/giphy.gif" width="45%" align="center"/>
+
+---
+
+class: center, top
+
+# Filtering Data in R
+.left[
+```{r PrintMay30}
+print(May30Data)
+```
+]
+
+
+---
+
+class: center, top
+
+# Plotting Data in R
+.left[
+```{r PlotMay30, include=TRUE, fig.height = 5, fig.width = 15}
+# We want to plot the May 30th data
+ggplot(data = May30Data,
+# We want our x-axis to be rep number and our y-axis to be mean velocity
+       aes(x = RepNumber, y = MeanVelocity)) +
+# We want a scatter plot so we use:  
+  geom_point()
+```
+]
+
+---
+
+class: center, top
+
+# (Cleaner) Plotting Data in R
+.left[
+```{r PlotCleanMay30, fig.show = 'hide', fig.height = 7, fig.width = 13}
+# We want to plot the May 30th data
+ggplot(data = May30Data,
+# We want our x-axis to be rep number and our y-axis to be mean velocity, assign a colour to Set
+       aes(x = RepNumber, y = MeanVelocity, colour = factor(SetID))) +
+# We want a scatter plot so we use:  
+  geom_point() +
+# Create a x-axis label  
+  xlab("\n Rep Number") +
+# Create a y-axis label  
+  ylab(expression(bold(paste(Mean," ",Velocity,"  ",(m.s^-1))))) +
+# Drop label from the legend
+  labs(colour = "") +
+# Ensure we have neat axis lines
+  scale_y_continuous(expand = c(0,0), limits = c(0, 1.05)) +
+# Use a minimal inbuilt theme
+  theme_classic() +
+# Format our x axis title
+  theme(axis.title.x = element_text(size = 12, colour = "black", face = "bold"),
+# Format our y axis title
+        axis.title.y = element_text(size = 12, colour = "black", face = "bold"),
+# Format our x axis text
+        axis.text.x = element_text(size = 10, colour = "black", face = "bold"),
+# Format our y axis text
+        axis.text.y = element_text(size = 10, colour = "black", face = "bold"),
+# Ensure we have neat tick marks
+        axis.ticks.x = element_line(colour = "black"), 
+        axis.ticks.y = element_line(colour = "black"),
+# Include a legend and place this at the bottom of the figure
+        legend.position = "bottom")
+```
+]
+
+---
+
+class: center, top
+
+# (Cleaner) Plotting Data in R
+
+```{r ref.label = 'PlotCleanMay30', echo = FALSE,fig.height = 7, fig.width = 13}
+
+```
+
+---
+
+class: center, top
+
+# Assessing Distributions in R
+.left[
+```{r PlotDistribution, fig.show = 'hide', fig.height = 7, fig.width = 13, message = FALSE}
+# Load package
+library(ggridges)
+# We want to look at all the data
+ggplot(data = RawLPTData,
+# We want our x-axis to be mean velocity and y to be exercise
+  aes(x = MeanVelocity, y = Exercise)) +
+# We wish to assess the distribution of mean velocity, across individual exercises  
+  geom_density_ridges() + 
+# Add our x axis label
+xlab(expression(bold(paste(Mean," ",Velocity,"  ",(m.s^-1))))) +
+# Expand the axes so we get the full view
+  scale_y_discrete(expand = c(0.01, 0)) +  
+  scale_x_continuous(expand = c(0, 0)) +  
+# Use a neat, minima; theme
+  theme_classic() +
+# Add more theme options  
+  theme(axis.title.x = element_text(size = 12, colour = "black", face = "bold"),
+# We don't need a y axis title
+  axis.title.y = element_blank(),
+ # Format our x axis text
+  axis.text.x = element_text(size = 10, colour = "black", face = "bold"),
+# Format our y axis text
+  axis.text.y = element_text(size = 10, colour = "black", face = "bold"),
+# Ensure we have neat tick marks
+  axis.ticks.x = element_line(colour = "black"), 
+  axis.ticks.y = element_line(colour = "black"))
+```
+]
+
+---
+
+class: center, top
+
+# Assessing Distributions in R
+```{r ref.label = 'PlotDistribution', echo = FALSE,fig.height = 7, fig.width = 15, message = FALSE}
+
+```
+
+---
+
+class: center, top
+
+# Assessing Coloured Distributions in R
+.left[
+```{r PlotColouredDistribution, fig.show = 'hide', fig.height = 7, fig.width = 13, message = FALSE}
+# We want to look at all the data
+ggplot(data = RawLPTData,
+       # We want our x-axis to be mean velocity and y to be exercise
+       aes(x = MeanVelocity, y = Exercise, fill = Exercise)) +
+  # We wish to assess the distribution of mean velocity, across individual exercises  
+  geom_density_ridges() + 
+  # Add our x axis label
+  xlab(expression(bold(paste(Mean," ",Velocity,"  ",(m.s^-1))))) +
+  # Expand the axes so we get the full view
+  scale_y_discrete(expand = c(0.01, 0)) +  
+  scale_x_continuous(expand = c(0, 0)) +  
+  # Use a neat, minima; theme
+  theme_classic() +
+  # Add more theme options  
+  theme(axis.title.x = element_text(size = 12, colour = "black", face = "bold"),
+        # We don't need a y axis title
+        axis.title.y = element_blank(),
+        # Format our x axis text
+        axis.text.x = element_text(size = 10, colour = "black", face = "bold"),
+        # Format our y axis text
+        axis.text.y = element_text(size = 10, colour = "black", face = "bold"),
+        # Ensure we have neat tick marks
+        axis.ticks.x = element_line(colour = "black"), 
+        axis.ticks.y = element_line(colour = "black"), 
+        # We don't want a legend
+        legend.position = "none")
+```
+]
+
+---
+
+class: center, top
+
+# Assessing Distributions in R
+```{r ref.label = 'PlotColouredDistribution', echo = FALSE,fig.height = 7, fig.width = 15, message = FALSE}
+
+```
+
+
+---
+
+class: inverse, right, top
+background-image: url(https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/AFL_Hunter.JPG)
+background-size: cover
+# Any Issues With These Colours?
+
+---
+class: center, top
+
+# Not Designing for Color-Vision Deficiency
+
+.left[
+* A proportion population may have some form of color-vision deficiency (i.e., are colorblind). 
+<br>
+<br>
+* These people may not be able to distinguish colors that look clearly different to most other people.
+]
+
+--
+.left[
+<br>
+<br>
+* We should make slight modifications in ALL visuals so they safe for Color-vision deficiency
+<br>
+<br>
+* Should probably not color-code more than eight different items in a plot
+]
+--
+<br>
+<br>
+.left[
+``` {r eval = FALSE}
+# Colourblind palette:
+cbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+```
+]
+
+---
+
+class: center, top
+
+# Assessing Distributions in R
+```{r ref.label = 'PlotColouredDistribution', echo = FALSE,fig.height = 7, fig.width = 13, message = FALSE}
+
+```
+
+---
+class: center, top
+
+# Assessing Coloured Distributions in R
+
+```{r PlotColouredDistribution2, fig.height = 7, fig.width = 13, message = FALSE, echo = FALSE}
+# Colourblind palette:
+cbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+# We want to look at all the data
+ggplot(data = RawLPTData,
+       # We want our x-axis to be mean velocity and y to be exercise
+       aes(x = MeanVelocity, y = Exercise, fill = Exercise)) +
+  # We wish to assess the distribution of mean velocity, across individual exercises  
+  geom_density_ridges() + 
+  # Add our x axis label
+  xlab(expression(bold(paste(Mean," ",Velocity,"  ",(m.s^-1))))) +
+  # Expand the axes so we get the full view
+  scale_y_discrete(expand = c(0.01, 0)) +  
+  scale_x_continuous(expand = c(0, 0)) +  
+  scale_fill_cyclical(values = cbPalette) +
+  # Use a neat, minima; theme
+  theme_classic() +
+  # Add more theme options  
+  theme(axis.title.x = element_text(size = 12, colour = "black", face = "bold"),
+        # We don't need a y axis title
+        axis.title.y = element_blank(),
+        # Format our x axis text
+        axis.text.x = element_text(size = 10, colour = "black", face = "bold"),
+        # Format our y axis text
+        axis.text.y = element_text(size = 10, colour = "black", face = "bold"),
+        # Ensure we have neat tick marks
+        axis.ticks.x = element_line(colour = "black"), 
+        axis.ticks.y = element_line(colour = "black"), 
+        # We don't want a legend
+        legend.position = "none")
+```
+
+---
+
+class: inverse, right, top
+background-image: url(https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/Questions.JPG)
+background-size: cover
+# Other R Exercises to Try...
+<br>
+ Create a bar plot of Average Mean Velocity, by Exercise
+<br>
+<br>
+<br>
+--
+ Visualise change in each Exercise, over time
+<br>
+<br>
+<br>
+--
+ Make an interactive plot using [ggplotly](https://www.rdocumentation.org/packages/plotly/versions/4.9.0/topics/ggplotly)
+
+---
+class: center, top
+# Any Questions?
+<span style = 'font-size: 50%;'>
+
+.left[
+`r icon::fa("link")` [http://sportstatisticsrsweet.rbind.io/](http://sportstatisticsrsweet.rbind.io/)<br><br>
+`r icon::fa("envelope")` [Alice.Sweeting@vu.edu.au](mailto:Alice.Sweeting@vu.edu.au)<br><br>
+`r icon::fa("twitter")` [alicesweeting](https://twitter.com/alicesweeting)<br><br>
+`r icon::fa("linkedin")` [/alicejsweeting](https://www.linkedin.com/in/alicejsweeting/)<br><br>
+]
+
+<img src="https://media.giphy.com/media/mCRJDo24UvJMA/giphy.gif" align="left" width="30%"/>
+
+
