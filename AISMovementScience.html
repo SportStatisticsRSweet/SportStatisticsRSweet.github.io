@@ -79,7 +79,7 @@ class: center, top
 # Download Example Data
 
 .left[
-Visit [http://bit.ly/MovementScienceForumData](http://bit.ly/MovementScienceForumData) to download the example data.
+Visit [http://bit.ly/MovementScienceExampleData](http://bit.ly/MovementScienceExampleData) to download the example data.
 ]
 &lt;br&gt;
 &lt;img src="https://media.giphy.com/media/3o7WTAkv7Ze17SWMOQ/giphy.gif" align="middle" width="70%"/&gt;
@@ -90,7 +90,7 @@ Visit [http://bit.ly/MovementScienceForumData](http://bit.ly/MovementScienceForu
 class: inverse, center, top
 background-image: url(https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/AFL_Tackle.JPG)
 background-size: cover
-# Open Example Data in Excel
+# View Example Data in Excel
 
 ---
 
@@ -495,13 +495,13 @@ class: center, top
 # Interrogating the Data 
 
 .left[
-* How many different athlete are there?
+* How many different athletes are in the example data?
 ]
 --
 .left[
 
 ```r
-# Inspect levels of exercise column
+# Inspect levels of athlete column
 levels(RawData$Athlete)
 ```
 
@@ -514,7 +514,7 @@ levels(RawData$Athlete)
 .left[
 
 ```r
-# Make exercise column a factor
+# Make athlete column a factor
 RawData$Athlete &lt;- as.factor(RawData$Athlete)
 ```
 ]
@@ -545,7 +545,7 @@ class: center, top
 .left[
 
 ```r
-# Maximum force
+# Maximum force - left leg
 max(RawData$LeftLeg)
 ```
 
@@ -563,7 +563,7 @@ max(RawData$LeftLeg)
 .left[
 
 ```r
-# Minimum force
+# Minimum force - left leg
 min(RawData$LeftLeg)
 ```
 
@@ -583,7 +583,7 @@ class: center, top
 .left[
 
 ```r
-# Maximum force
+# Maximum force - left leg
 max(RawData$LeftLeg)
 ```
 
@@ -601,7 +601,7 @@ max(RawData$LeftLeg)
 .left[
 
 ```r
-# Minimum force
+# Minimum force - left leg
 min(RawData$LeftLeg)
 ```
 
@@ -685,53 +685,10 @@ tail(RawData_Long, 10)
 ## 498      43227 Hudson Lee RightLeg   420
 ```
 ]
-
----
-
-class: center, top
-
-# Obtaining Summary Statistics 
-
-.left[
-* What is the maximum force, for the left and right leg, by athlete?
-* What is the minimumm force, for the left and right leg, by athlete?
-* What is the mean force, for the left and right leg, by athlete?
-]
---
-.left[
-
-```r
-library(tidyverse)
-SummaryData &lt;- RawData_Long  %&gt;%
-  group_by(Athlete, Limb) %&gt;%
-  summarise(Maximum = max(Force), 
-            Minimum = min(Force), 
-            Mean = mean(Force))
-```
-]
---
-.left[
-
-```r
-head(SummaryData, 4)
-```
-
-```
-## # A tibble: 4 x 5
-## # Groups:   Athlete [2]
-##   Athlete      Limb     Maximum Minimum  Mean
-##   &lt;fct&gt;        &lt;chr&gt;      &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
-## 1 Bobby Lewis  LeftLeg      504     368  464.
-## 2 Bobby Lewis  RightLeg     508     367  466.
-## 3 Dudley Jones LeftLeg      409     280  329.
-## 4 Dudley Jones RightLeg     414     283  340.
-```
-]
-
 ---
 class: center, top
 
-# Filtering Data 
+# Filtering Data - Individual Athlete 
 
 .left[
 
@@ -813,6 +770,51 @@ tail(BobbyData, 15)
 ## 104 27/06/2018 Bobby Lewis RightLeg   481
 ```
 ]
+
+
+---
+
+class: center, top
+
+# Obtaining Summary Statistics 
+
+.left[
+* What is the maximum force, for the left and right leg, by athlete?
+* What is the minimumm force, for the left and right leg, by athlete?
+* What is the mean force, for the left and right leg, by athlete?
+]
+--
+.left[
+
+```r
+library(tidyverse)
+SummaryData &lt;- RawData_Long  %&gt;%
+  group_by(Athlete, Limb) %&gt;%
+  summarise(Maximum = max(Force), 
+            Minimum = min(Force), 
+            Mean = mean(Force),
+            SD = sd(Force))
+```
+]
+--
+.left[
+
+```r
+head(SummaryData, 4)
+```
+
+```
+## # A tibble: 4 x 6
+## # Groups:   Athlete [2]
+##   Athlete      Limb     Maximum Minimum  Mean    SD
+##   &lt;fct&gt;        &lt;chr&gt;      &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 Bobby Lewis  LeftLeg      504     368  464.  29.1
+## 2 Bobby Lewis  RightLeg     508     367  466.  26.4
+## 3 Dudley Jones LeftLeg      409     280  329.  26.9
+## 4 Dudley Jones RightLeg     414     283  340.  27.9
+```
+]
+
 
 ---
 
@@ -913,6 +915,91 @@ class: center, top
 ---
 class: center, top
 
+# Plotting Summary Data - Bar Plots
+.left[
+
+```r
+ggplot(SummaryData, 
+       aes(x = Athlete, y = Mean, fill = Limb)) + 
+  geom_bar(position = position_dodge(), stat = "identity") +
+  geom_errorbar(aes(ymin = Mean-SD, ymax = Mean+SD),
+                width=.2,                    
+                position=position_dodge(.9)) +
+  ggtitle("Mean Max Force (N) By Athlete \n") +
+  ylab("Max Force (N) \n") +
+  scale_y_continuous(expand = c(0, 0)) +
+  theme_classic() +
+  theme(axis.line.x = element_line(size = .5, colour = "black"),
+        axis.line.y = element_line(size = .5, colour = "black"),
+        axis.ticks.x = element_line(size = .5, colour = "black"),
+        axis.ticks.y = element_line(size = .5, colour = "black"),
+        axis.text.x = element_text(size = 10, colour = "black", angle = 35, hjust = 1, vjust = 1.15),
+        axis.text.y = element_text(size = 10, colour = "black"),
+        axis.title.x = element_blank(), 
+        axis.title.y = element_text(face = "bold", size = 12, colour = "black"), 
+        legend.position = "bottom",
+        plot.title = element_text(face = "bold", size = 14, colour = "black", hjust = 0.5))
+```
+]
+
+---
+class: center, top
+
+# Plotting Summary Data - Bar Plots
+
+&lt;img src="AISMovementScience_files/figure-html/unnamed-chunk-4-1.png" width="936" /&gt;
+
+---
+class: center, top
+
+# Issues with Bar Plots?
+
+--
+&lt;img src="https://pbs.twimg.com/media/DxgVz3KWsAEoq74?format=jpg&amp;name=small" width="65%" align="bottom"/&gt;  
+
+---
+class: center, top
+# Why You Shouldn't Use A Bar Plot...
+
+.left[
+* Do not allow us to critically evaluate continuous data (should be reserved for counts or proportions)
+]
+
+--
+.left[
+* Bottom part of the bar plot is wasted space
+]
+
+--
+.left[
+* Top part of the bar plot is invisible/ hard for human eye to distinguish space
+]
+
+--
+.left[
+* We (humans) assign importance to the height of bars, rather than difference between means/ comparing variability
+]
+--
+&lt;img src="https://pbs.twimg.com/media/DxgWGHAWwAAIBIW?format=jpg&amp;name=small" width="60%" align="bottom"/&gt;  
+
+---
+class: center, top
+
+&lt;img src="https://pbs.twimg.com/media/DxgWMN8W0AEhRZa?format=jpg&amp;name=900x900" width="80%" align="middle"/&gt;  
+
+---
+class: center, top
+
+# Sparking Joy... with joy (or ridgeline) plots! 
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;img src="https://media.giphy.com/media/PmABbbUe3IqUKSOIBV/giphy.gif" align="middle" width="70%"/&gt;
+
+
+---
+class: center, top
+
 # (Sparking) Joy Plots of Example Data
 
 .left[
@@ -944,7 +1031,7 @@ class: center, top
 
 # (Sparking) Joy Plots of Example Data
 
-&lt;img src="AISMovementScience_files/figure-html/unnamed-chunk-4-1.png" width="936" /&gt;
+&lt;img src="AISMovementScience_files/figure-html/unnamed-chunk-5-1.png" width="936" /&gt;
 
 ---
 class: center, top
@@ -980,14 +1067,14 @@ class: center, top
 
 # (Sparking More) Joy Plots of Example Data
 
-&lt;img src="AISMovementScience_files/figure-html/unnamed-chunk-5-1.png" width="936" /&gt;
+&lt;img src="AISMovementScience_files/figure-html/unnamed-chunk-6-1.png" width="936" /&gt;
  
 ---
 class: center, top
 
 # Issues with this plot?
 
-&lt;img src="AISMovementScience_files/figure-html/unnamed-chunk-6-1.png" width="936" /&gt;
+&lt;img src="AISMovementScience_files/figure-html/unnamed-chunk-7-1.png" width="936" /&gt;
 
  
 ---
@@ -1060,7 +1147,8 @@ class: center, top
 
 # (Sparking Even More Inclusive) Joy Plots of Example Data
 
-&lt;img src="AISMovementScience_files/figure-html/unnamed-chunk-8-1.png" width="936" /&gt;
+&lt;img src="AISMovementScience_files/figure-html/unnamed-chunk-9-1.png" width="936" /&gt;
+
 
 ---
 class: center, top
@@ -1102,6 +1190,28 @@ class: center, top
 ]
 
 &lt;img src="https://secure.meetupstatic.com/photos/event/4/e/c/d/600_470960173.jpeg" width="25%" align="bottom"/&gt;  
+
+---
+class: center, top
+# Resources on Visualising Data in R
+
+.left[
+* My number one for PhD scholars + sport scientists is [Fundamentals of Data Visualization](https://serialmentor.com/dataviz/).
+]
+
+.left[
+* Chapter 3 on Data Visualisation in [R for Data Science](https://r4ds.had.co.nz/data-visualisation.html).
+]
+
+.left[
+* Follow Alison Hill (Data Scientist) on [Twitter](https://twitter.com/apreshill) and her [(free) slides/ educational material](https://alison.rbind.io/projects/) including this fab talk at [RLadies Sydney on Data Visualisation](https://alison.netlify.com/rls-plot-twist/#1) 
+]
+
+.left[
+* Website [Data to Viz](https://www.data-to-viz.com/#story) provides a decision tree for visualisations based on your data. Each example is based on real-life data, compiled using R. 
+] 
+
+&lt;img src="https://www.data-to-viz.com/img/poster/poster_mockup_croped.jpg" width="55%" align="bottom"/&gt;  
 
 
 ---

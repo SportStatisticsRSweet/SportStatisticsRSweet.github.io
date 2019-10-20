@@ -83,7 +83,7 @@ class: center, top
 # Download Example Data
 
 .left[
-Visit [http://bit.ly/MovementScienceForumData](http://bit.ly/MovementScienceForumData) to download the example data.
+Visit [http://bit.ly/MovementScienceExampleData](http://bit.ly/MovementScienceExampleData) to download the example data.
 ]
 <br>
 <img src="https://media.giphy.com/media/3o7WTAkv7Ze17SWMOQ/giphy.gif" align="middle" width="70%"/>
@@ -94,7 +94,7 @@ Visit [http://bit.ly/MovementScienceForumData](http://bit.ly/MovementScienceForu
 class: inverse, center, top
 background-image: url(https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/AFL_Tackle.JPG)
 background-size: cover
-# Open Example Data in Excel
+# View Example Data in Excel
 
 ---
 
@@ -477,12 +477,12 @@ class: center, top
 # Interrogating the Data 
 
 .left[
-* How many different athlete are there?
+* How many different athletes are in the example data?
 ]
 --
 .left[
 ``` {r InspectLevels}
-# Inspect levels of exercise column
+# Inspect levels of athlete column
 levels(RawData$Athlete)
 ```
 ]
@@ -490,7 +490,7 @@ levels(RawData$Athlete)
 --
 .left[
 ``` {r InspectLevels2}
-# Make exercise column a factor
+# Make athlete column a factor
 RawData$Athlete <- as.factor(RawData$Athlete)
 ```
 ]
@@ -514,7 +514,7 @@ class: center, top
 --
 .left[
 ``` {r MaxmimumLift}
-# Maximum force
+# Maximum force - left leg
 max(RawData$LeftLeg)
 ```
 ]
@@ -527,7 +527,7 @@ max(RawData$LeftLeg)
 --
 .left[
 ``` {r  MaxmimumLift2}
-# Minimum force
+# Minimum force - left leg
 min(RawData$LeftLeg)
 ```
 ]
@@ -542,7 +542,7 @@ class: center, top
 ]
 .left[
 ``` {r MaxmimumLift3}
-# Maximum force
+# Maximum force - left leg
 max(RawData$LeftLeg)
 ```
 ]
@@ -555,7 +555,7 @@ max(RawData$LeftLeg)
 
 .left[
 ``` {r  MaxmimumLift4}
-# Minimum force
+# Minimum force - left leg
 min(RawData$LeftLeg)
 ```
 ]
@@ -617,41 +617,10 @@ RawData_Long <- gather(RawData, Limb, Force, LeftLeg:RightLeg)
 tail(RawData_Long, 10)
 ```
 ]
-
----
-
-class: center, top
-
-# Obtaining Summary Statistics 
-
-.left[
-* What is the maximum force, for the left and right leg, by athlete?
-* What is the minimumm force, for the left and right leg, by athlete?
-* What is the mean force, for the left and right leg, by athlete?
-]
---
-.left[
-```{r UsingTidyverse}
-library(tidyverse)
-SummaryData <- RawData_Long  %>%
-  group_by(Athlete, Limb) %>%
-  summarise(Maximum = max(Force), 
-            Minimum = min(Force), 
-            Mean = mean(Force))
-
-```
-]
---
-.left[
-```{r UsingTidyverse2}
-head(SummaryData, 4)
-```
-]
-
 ---
 class: center, top
 
-# Filtering Data 
+# Filtering Data - Individual Athlete 
 
 .left[
 ``` {r FilteringData}
@@ -691,6 +660,39 @@ BobbyData <-  RawData_Long  %>%
 tail(BobbyData, 15)
 ```
 ]
+
+
+---
+
+class: center, top
+
+# Obtaining Summary Statistics 
+
+.left[
+* What is the maximum force, for the left and right leg, by athlete?
+* What is the minimumm force, for the left and right leg, by athlete?
+* What is the mean force, for the left and right leg, by athlete?
+]
+--
+.left[
+```{r UsingTidyverse}
+library(tidyverse)
+SummaryData <- RawData_Long  %>%
+  group_by(Athlete, Limb) %>%
+  summarise(Maximum = max(Force), 
+            Minimum = min(Force), 
+            Mean = mean(Force),
+            SD = sd(Force))
+
+```
+]
+--
+.left[
+```{r UsingTidyverse2}
+head(SummaryData, 4)
+```
+]
+
 
 ---
 
@@ -790,6 +792,92 @@ class: center, top
 ```{r ref.label = 'Plot3', echo = FALSE,fig.height = 7, fig.width = 13}
 
 ```
+
+---
+class: center, top
+
+# Plotting Summary Data - Bar Plots
+.left[
+``` {r BarPlot, fig.show = 'hide'}
+ggplot(SummaryData, 
+       aes(x = Athlete, y = Mean, fill = Limb)) + 
+  geom_bar(position = position_dodge(), stat = "identity") +
+  geom_errorbar(aes(ymin = Mean-SD, ymax = Mean+SD),
+                width=.2,                    
+                position=position_dodge(.9)) +
+  ggtitle("Mean Max Force (N) By Athlete \n") +
+  ylab("Max Force (N) \n") +
+  scale_y_continuous(expand = c(0, 0)) +
+  theme_classic() +
+  theme(axis.line.x = element_line(size = .5, colour = "black"),
+        axis.line.y = element_line(size = .5, colour = "black"),
+        axis.ticks.x = element_line(size = .5, colour = "black"),
+        axis.ticks.y = element_line(size = .5, colour = "black"),
+        axis.text.x = element_text(size = 10, colour = "black", angle = 35, hjust = 1, vjust = 1.15),
+        axis.text.y = element_text(size = 10, colour = "black"),
+        axis.title.x = element_blank(), 
+        axis.title.y = element_text(face = "bold", size = 12, colour = "black"), 
+        legend.position = "bottom",
+        plot.title = element_text(face = "bold", size = 14, colour = "black", hjust = 0.5))
+```
+]
+
+---
+class: center, top
+
+# Plotting Summary Data - Bar Plots
+
+```{r ref.label = 'BarPlot', echo = FALSE,fig.height = 7, fig.width = 13}
+
+```
+
+---
+class: center, top
+
+# Issues with Bar Plots?
+
+--
+<img src="https://pbs.twimg.com/media/DxgVz3KWsAEoq74?format=jpg&name=small" width="65%" align="bottom"/>  
+
+---
+class: center, top
+# Why You Shouldn't Use A Bar Plot...
+
+.left[
+* Do not allow us to critically evaluate continuous data (should be reserved for counts or proportions)
+]
+
+--
+.left[
+* Bottom part of the bar plot is wasted space
+]
+
+--
+.left[
+* Top part of the bar plot is invisible/ hard for human eye to distinguish space
+]
+
+--
+.left[
+* We (humans) assign importance to the height of bars, rather than difference between means/ comparing variability
+]
+--
+<img src="https://pbs.twimg.com/media/DxgWGHAWwAAIBIW?format=jpg&name=small" width="60%" align="bottom"/>  
+
+---
+class: center, top
+
+<img src="https://pbs.twimg.com/media/DxgWMN8W0AEhRZa?format=jpg&name=900x900" width="80%" align="middle"/>  
+
+---
+class: center, top
+
+# Sparking Joy... with joy (or ridgeline) plots! 
+
+<br>
+<br>
+<img src="https://media.giphy.com/media/PmABbbUe3IqUKSOIBV/giphy.gif" align="middle" width="70%"/>
+
 
 ---
 class: center, top
@@ -949,6 +1037,7 @@ class: center, top
 
 ```
 
+
 ---
 class: center, top
 # Resources on Visualising Data in R
@@ -989,6 +1078,28 @@ class: center, top
 ]
 
 <img src="https://secure.meetupstatic.com/photos/event/4/e/c/d/600_470960173.jpeg" width="25%" align="bottom"/>  
+
+---
+class: center, top
+# Resources on Visualising Data in R
+
+.left[
+* My number one for PhD scholars + sport scientists is [Fundamentals of Data Visualization](https://serialmentor.com/dataviz/).
+]
+
+.left[
+* Chapter 3 on Data Visualisation in [R for Data Science](https://r4ds.had.co.nz/data-visualisation.html).
+]
+
+.left[
+* Follow Alison Hill (Data Scientist) on [Twitter](https://twitter.com/apreshill) and her [(free) slides/ educational material](https://alison.rbind.io/projects/) including this fab talk at [RLadies Sydney on Data Visualisation](https://alison.netlify.com/rls-plot-twist/#1) 
+]
+
+.left[
+* Website [Data to Viz](https://www.data-to-viz.com/#story) provides a decision tree for visualisations based on your data. Each example is based on real-life data, compiled using R. 
+] 
+
+<img src="https://www.data-to-viz.com/img/poster/poster_mockup_croped.jpg" width="55%" align="bottom"/>  
 
 
 ---
