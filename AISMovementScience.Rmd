@@ -1,0 +1,1011 @@
+---
+output:
+  xaringan::moon_reader:
+    css: ["VictoriaUniversity.css", "rladies-fonts"]
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: 16:9 
+      
+---
+class: title-slide
+background-image: url(https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/WhittenOval.jpg)
+background-size: cover 
+.center[ 
+# Programming & Visualising Sport Science Data in R   
+## Alice Sweeting, PhD  
+]
+ 
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE, knitr.table.format = "html")
+knitr::opts_chunk$set(fig.retina = 3, warning = FALSE, message = FALSE)
+library(icon)      
+library(tidyverse) 
+```
+
+---
+class: right, middle
+<img src="https://www.versionmuseum.com/images/applications/microsoft-excel/microsoft-excel%5E2016%5Eexcel-logo-new.png" width="40%" align="left"/>
+
+# Today's Session
+
+ Pitfalls of analysing and visualising data in Excel
+ 
+---
+class: right, middle
+<img src="https://www.versionmuseum.com/images/applications/microsoft-excel/microsoft-excel%5E2016%5Eexcel-logo-new.png" width="40%" align="left"/>
+
+# Today's Session
+
+ Pitfalls of analysing and visualising data in Excel
+
+ Benefits of learning a programming language
+
+---
+class: right, middle
+<img src="https://www.versionmuseum.com/images/applications/microsoft-excel/microsoft-excel%5E2016%5Eexcel-logo-new.png" width="40%" align="left"/>
+
+# Today's Session
+
+ Pitfalls of analysing and visualising data in Excel
+
+ Benefits of learning a programming language
+
+ Download, install and setup R/ RStudio
+ 
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/R_logo.svg/724px-R_logo.svg.png" width="30%" align="left"/>
+
+---
+class: right, middle
+<img src="https://www.versionmuseum.com/images/applications/microsoft-excel/microsoft-excel%5E2016%5Eexcel-logo-new.png" width="40%" align="left"/>
+
+# Today's Session
+
+ Pitfalls of analysing and visualising data in Excel
+
+ Benefits of learning a programming language
+
+ Download, install and setup R/ RStudio
+ 
+ Analyse and visualise example data in R
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/R_logo.svg/724px-R_logo.svg.png" width="30%" align="left"/>
+
+<br>
+<img src="https://media.giphy.com/media/l3vR5DQFURvrVNuj6/giphy.gif" align="right" width="40%"/>
+
+
+---
+class: center, top
+
+# Download Example Data
+
+.left[
+Visit [http://bit.ly/MovementScienceForumData](http://bit.ly/MovementScienceForumData) to download the example data.
+]
+<br>
+<img src="https://media.giphy.com/media/3o7WTAkv7Ze17SWMOQ/giphy.gif" align="middle" width="70%"/>
+
+
+---
+
+class: inverse, center, top
+background-image: url(https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/AFL_Tackle.JPG)
+background-size: cover
+# Open Example Data in Excel
+
+---
+
+class: center, top
+
+# Advantages of Excel
+
+.left[
+* Easy to download, install, open.
+]
+
+--
+.left[
+* Interactive, (fairly) friendly to save, send, open and edit
+]
+--
+.left[
+* Point and click to enter data, create figures, calculate math
+]
+--
+.left[
+* Many tabs = data entry, analysis, visualisation, (dashboard) reporting
+]
+--
+.left[
+* Can even run (basic to advanced) statistics!
+]
+--
+.left[
+* Help is never far away...
+]
+ 
+<img src="https://media.giphy.com/media/eCz0zwSl7qxB6/giphy.gif" width="40%", align="middle"/>
+
+---
+
+class: center, top
+
+# But before long...
+
+<img src="https://media.giphy.com/media/l1IY5NRhxdCJYxsmA/giphy.gif" align="middle" width="85%%"/>
+
+---
+
+class: center, top
+
+# We end up here!
+
+<img src="https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/ExcelStoppedWorking.png" align="middle" width="75%"/>
+
+.footnote[
+Credit: [**Dr Jacquie Tran, ESSA Forum, 2019**](https://github.com/jacquietran/2019_essa_forum)
+]
+
+---
+
+class: center, top
+
+# Working with Data in Elite Sport (and Excel)
+
+.left[
+* Abundance of data, from varying technologies at differing sample rates, stored in multiple formats.
+]
+
+--
+
+.left[
+* Large datasets, that often need cleaning and merging, which is likely performed manually.
+]
+
+--
+
+.left[
+* Need to ensure accurate, stringent and reproducible work. 
+]
+
+<img src="https://www.sciencemag.org/sites/default/files/styles/article_main_large/public/Science53-color-1%20horizontal.jpg?itok=GQb_KAEe" align="middle" width="65%"/>
+
+---
+class: center
+
+<img src="https://www.researchgate.net/profile/Keith_Lewis11/publication/322492965/figure/fig1/AS:601660149747739@1520458366825/A-conceptual-framework-for-open-science-and-reproducible-research-in-wildlife-biology.png" width="80%"/>
+.right[
+[Wildlife biology, big data, and reproducible research](https://wildlife.onlinelibrary.wiley.com/doi/10.1002/wsb.847)
+]
+---
+
+class: center, top
+
+# Programming Languages
+
+.left[
+* Type a line of code, run and see output 
+]
+--
+.left[
+* Create a project, run analysis, create a dashboard and/ or report 
+]
+--
+.left[
+* Reproducibility = Create a GitHub repo, clone, commit, push, push
+]
+--
+.left[
+* Hard to manipulate raw data 
+]
+--
+.left[
+* Automate reporting processes in .pdf or .html output
+]
+
+---
+
+class: center, top
+
+# Programming Languages
+
+.left[
+* Type a line of code, run and see output 
+]
+
+.left[
+* Create a project, run analysis, create a dashboard and/ or report 
+]
+
+.left[
+* Reproducibility = Create a GitHub repo, clone, commit, push, push
+]
+
+.left[
+* Hard to manipulate raw data 
+]
+
+.left[
+* Automate reporting processes in .pdf or .html output
+]
+.right[
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVTxeCggv7BO3dg2V89vPn3zeGqpbyVVmw2qPd9yjQIE6ooHKsvQ"  width="40%"/>
+]
+---
+
+class: center, top
+
+# Programming Languages
+
+.left[
+* Type a line of code, run and see output 
+]
+
+.left[
+* Create a project, run analysis, create a dashboard and/ or report 
+]
+
+.left[
+* Reproducibility = Create a GitHub repo, clone, commit, push, push
+]
+
+.left[
+* Hard to manipulate raw data 
+]
+
+.left[
+* Automate reporting processes in .pdf or .html output
+]
+<br>
+<br>
+<img src="https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/RLogo.jpg" width="30%"/>
+
+---
+class: center, top
+
+# Why Learn to Program in R? 
+
+.left[
+* Named (partly) after the first two authors convinced the project in 1992, then released (fully) in 2000.  
+]
+
+--
+.left[
+* Free, powerful, open-source and developed with data science/ statistics in mind.   
+]
+
+--
+.left[
+* Not only a programming language but can compile apps, reports and presentations (like this one!).
+]
+
+--
+.left[
+* User-created packages that allow for data cleaning, manipulation, visualisation and reporting.
+]
+
+--
+.left[
+* Annual [UseR!](https://www.r-project.org/conferences/) Conferences, [The R Journal](https://journal.r-project.org/), local and online [communities](https://blog.revolutionanalytics.com/local-r-groups.html), that also support diversity: [RLadies](https://www.meetup.com/en-AU/rladies-melbourne/)
+]
+--
+<img src="https://coderseye.com/wp-content/uploads/Benefits-of-everyone-learning-programming.jpeg" align="middle"/>
+ 
+---
+class: center, top
+
+# Today - a (quick) overview on how to setup and use R 
+
+<br>
+<br>
+<img src="https://media.giphy.com/media/MOTkF7sT8u2Z2/giphy.gif" align="middle" width="45%"/>
+
+---
+
+class: center, top
+
+# Starting out in R
+
+.left[
+* First, install [R](https://www.r-project.org/) (required) from your local CRAN.
+]
+
+--
+.left[
+* Next, install [RStudio](https://www.rstudio.com/products/rstudio/), as it is a friendly interface to learn and use R.
+]
+
+--
+.left[
+* Plenty of free, online resources to help learn, including [RStudio Education](https://education.rstudio.com/).
+]
+--
+.left[
+* Online Q&A forum [Stack Overflow](https://stackoverflow.com/) also contains a community of help. 
+]
+--
+.left[
+* My number 1 resource for beginners: [R for Data Science](https://r4ds.had.co.nz/) by Garrett Grolemund and Hadley Wickham
+]
+--
+<img src="http://m.quickmeme.com/img/c1/c16c94b2aa0b5deaf6e6ff04f117c665c1edde074d751383adf02d184941e4c0.jpg" align="middle" width="50%"/>
+
+---
+class: center, top
+
+# How RStudio Works
+<img src="https://pbs.twimg.com/media/D83d2-dW4AULriR?format=jpg&name=medium" align="middle" width="85%"/>
+
+---
+
+class: center, top
+
+# Creating A Project in RStudio
+
+.left[
+**Using RStudio to Your Advantage**
+]
+
+.left[
+* Create a project and name the folder appropriately
+]
+--
+.left[
+* In RStudio, click `File -> New Project -> New Directory -> New Project`
+]
+--
+.left[
+* Using this approach will contain all your files in one location
+]
+--
+.left[
+* Avoids having multiple .R and .RData files scattered on Dropbox!
+]
+--
+.left[
+* Working directory will fire when the project is opened
+]
+
+<img src="https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/CreateNewProject.png" width="40%"/>
+
+---
+
+class: center, top
+
+# Setting up the R Environment
+
+.left[
+Ensure R and RStudio are downloaded. 
+<br>
+<br>
+Create a new project in RStudio: `File -> New Project -> New Directory -> New Project (MovementScienceWorkshop)`. 
+]
+--
+<br>
+.left[
+Create a folder within this project named "Data"
+]
+--
+.left[
+Copy the example data (.xlsx) file into the "Data" folder
+]
+--
+<br>
+.left[
+Ensure the packages below are up-to-date and installed:
+
+```{r LoadPackagesForWorkshop, eval = FALSE}
+MovementSciencePackages <- c(
+    'readxl',
+    'here',
+    'ggridges',
+    'tidyverse')
+
+install.packages(MovementSciencePackages)
+
+```
+]<br>
+
+---
+class: center, top
+
+# Example Data  
+
+.left[
+Import our example data, using the `readxl` package, which loads Excel (.xlsx) data into R
+
+``` {r ImportingData, include=TRUE}
+library(readxl)
+RawData  <- read_excel("Data/ExampleAthleteData.xlsx")
+```
+]
+
+---
+
+class: inverse, center, top
+background-image: url(https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/AFLW2_WhittenOval.jpg)
+background-size: cover
+# First Step - How to Assess Example Data?
+
+---
+
+class: center, top
+
+# Assessing Example Data
+
+.left[
+``` {r AssessStructureData, include=TRUE}
+# Assess the structure of the data.frame
+str(RawData)
+```
+]
+
+---
+
+class: center, top
+
+# Cleaning Example Data
+
+.left[
+``` {r MakeDataFrame}
+# Ensure example data is a data.frame
+RawData <- as.data.frame(RawData)
+```
+]
+--
+.left[
+```{r MakeDataFrame2}
+# View the top five rows
+head(RawData, 5)
+```
+] 
+--
+.left[
+``` {r RenameColumnHeaders}
+# Rename columns - make them tidier
+colnames(RawData) <- c("Date", "Athlete", "LeftLeg", "RightLeg") 
+```
+]
+
+---
+
+class: center, top
+
+# Interrogating the Data 
+
+.left[
+* How many different athlete are there?
+]
+--
+.left[
+``` {r InspectLevels}
+# Inspect levels of exercise column
+levels(RawData$Athlete)
+```
+]
+
+--
+.left[
+``` {r InspectLevels2}
+# Make exercise column a factor
+RawData$Athlete <- as.factor(RawData$Athlete)
+```
+]
+--
+.left[
+``` {r InspectLevels3}
+# Now inspect levels
+levels(RawData$Athlete)
+```
+]
+
+---
+
+class: center, top
+
+# Interrogating the Data
+
+.left[
+* What is the maximum force, for the left leg?
+]
+--
+.left[
+``` {r MaxmimumLift}
+# Maximum force
+max(RawData$LeftLeg)
+```
+]
+--
+<br>
+<br>
+.left[
+* What about the minimum force, for the left leg?
+]
+--
+.left[
+``` {r  MaxmimumLift2}
+# Minimum force
+min(RawData$LeftLeg)
+```
+]
+---
+
+class: center, top
+
+# Interrogating the Data
+
+.left[
+* What is the maximum force, for the left leg?
+]
+.left[
+``` {r MaxmimumLift3}
+# Maximum force
+max(RawData$LeftLeg)
+```
+]
+
+<br>
+<br>
+.left[
+* What about the minimum force, for the left leg?
+]
+
+.left[
+``` {r  MaxmimumLift4}
+# Minimum force
+min(RawData$LeftLeg)
+```
+]
+<br>
+#### How can we easily calculate the above, over time?
+
+---
+
+background-image: url(https://www.tidyverse.org/images/tidyverse-default.png)
+background-size: cover
+
+---
+
+class: center, top
+
+# The Tidyverse
+.left[
+Install the complete package collection with:
+```{r InstallTidyverse2, eval = FALSE}
+install.packages("tidyverse")
+```
+]
+<img src="https://lsru.github.io/tv_course/img/01_tidyverse_data_science.png" width="50%"/>
+
+.footnote[
+Image Credit: [University of Luxemborg, **Life Sciences Research Unit**](https://lsru.github.io/tv_course/lecture01_intro.html#1)
+]
+
+---
+class: center, top
+
+# From Wide to Long Format
+
+.left[
+``` {r ReshapeData2, eval = TRUE}
+# Move from many columns to many rows
+library(tidyr)
+RawData_Long <- gather(RawData, Limb, Force, LeftLeg:RightLeg)
+```
+]
+
+---
+class: center, top
+
+# From Wide to Long Format
+
+.left[
+``` {r ReshapeData3, eval = TRUE}
+# Move from many columns to many rows
+library(tidyr)
+RawData_Long <- gather(RawData, Limb, Force, LeftLeg:RightLeg)
+```
+]
+
+
+.left[
+``` {r ViewTailLongData4, eval = TRUE}
+# Inspect data.frame now
+tail(RawData_Long, 10)
+```
+]
+
+---
+
+class: center, top
+
+# Obtaining Summary Statistics 
+
+.left[
+* What is the maximum force, for the left and right leg, by athlete?
+* What is the minimumm force, for the left and right leg, by athlete?
+* What is the mean force, for the left and right leg, by athlete?
+]
+--
+.left[
+```{r UsingTidyverse}
+library(tidyverse)
+SummaryData <- RawData_Long  %>%
+  group_by(Athlete, Limb) %>%
+  summarise(Maximum = max(Force), 
+            Minimum = min(Force), 
+            Mean = mean(Force))
+
+```
+]
+--
+.left[
+```{r UsingTidyverse2}
+head(SummaryData, 4)
+```
+]
+
+---
+class: center, top
+
+# Filtering Data 
+
+.left[
+``` {r FilteringData}
+# Filter by one athlete, Bobby Lewis
+BobbyData <-  RawData_Long  %>%
+  filter(Athlete == "Bobby Lewis")
+```
+]
+
+--
+
+.left[
+```{r PrintMay30}
+# Inspect the first 15 rows
+head(BobbyData, 15)
+```
+]
+
+---
+class: center, top
+
+# Filtering Data 
+
+.left[
+``` {r FilteringData2}
+# Filter by one athlete, Bobby Lewis
+BobbyData <-  RawData_Long  %>%
+  filter(Athlete == "Bobby Lewis")
+```
+]
+
+
+
+.left[
+```{r PrintMay32}
+# Inspect the last 15 rows
+tail(BobbyData, 15)
+```
+]
+
+---
+
+class: center, top
+
+# Visual Inspection of Example Data
+
+.left[
+```{r Plot1, fig.show = 'hide', fig.height = 7, fig.width = 13}
+# Basic plot
+library(ggplot2)
+ggplot(RawData_Long, aes(x = Date, y = Force)) +
+  geom_point()
+```
+]
+
+---
+
+class: center, top
+
+# Visual Inspection of Example Data
+
+```{r ref.label = 'Plot1', echo = FALSE,fig.height = 7, fig.width = 13}
+
+```
+
+
+---
+
+class: center, top
+
+# (Better) Visual Inspection of Example Data
+
+.left[
+``` {r Plot2, fig.show = 'hide'}
+# Create many plots, by athlete and limb, over time
+library(ggplot2)
+ggplot(RawData_Long, 
+       aes(x = Date, y = Force, colour = Limb)) +
+  geom_point() +
+  ylab("\n Max Force (N)") +
+  ggtitle("Example Athlete Data") +
+  scale_y_continuous(expand = c(0, 0)) +
+  facet_wrap(~Athlete)
+```
+]
+
+---
+class: center, top
+
+# (Better) Visual Inspection of Example Data
+
+```{r ref.label = 'Plot2', echo = FALSE,fig.height = 7, fig.width = 13}
+
+```
+
+---
+class: center, top
+
+# (Even Better) Visual Inspection of Example Data
+
+.left[
+``` {r Plot3, fig.show = 'hide'}
+# Add a time stamp column
+RawData_Long$TimeStamp <- as.POSIXct(paste(RawData_Long$Date), format="%d/%m/%Y")
+
+# Create many plots, by athlete and limb, over time
+library(ggplot2)
+ggplot(RawData_Long, 
+       aes(x = TimeStamp, y = Force, colour = Limb)) +
+  geom_point() +
+  ggtitle("Example Athlete Data \n") +
+  ylab("Max Force (N) \n") +
+  scale_x_datetime(date_labels = "%b") +
+  scale_y_continuous(expand = c(0, 0)) +
+  theme_classic() +
+  theme(axis.line.x = element_line(size = .5, colour = "black"),
+        axis.line.y = element_line(size = .5, colour = "black"),
+        axis.ticks.x = element_line(size = .5, colour = "black"),
+        axis.ticks.y = element_line(size = .5, colour = "black"),
+        axis.text.x = element_text(size = 10, colour = "black", angle = 35, hjust = 1, vjust = 1.15),
+        axis.text.y = element_text(size = 10, colour = "black"),
+        axis.title.x = element_blank(), 
+        axis.title.y = element_text(face = "bold", size = 12, colour = "black"), 
+        legend.position = "bottom",
+        panel.spacing = unit(1, "lines"),
+        plot.title = element_text(face = "bold", size = 14, colour = "black", hjust = 0.5)) +
+  facet_wrap(~Athlete, scales = "free_x")
+```
+]
+
+---
+class: center, top
+
+# (Even Better) Visual Inspection of Example Data
+
+```{r ref.label = 'Plot3', echo = FALSE,fig.height = 7, fig.width = 13}
+
+```
+
+---
+class: center, top
+
+# (Sparking) Joy Plots of Example Data
+
+.left[
+``` {r Plot4, fig.show = 'hide'}
+library(ggridges)
+ggplot(RawData_Long, 
+       aes(x = Force, y = Athlete)) + 
+  geom_density_ridges(scale = 3) + 
+  ggtitle("Example Athlete Data \n") +
+  ylab("Athlete \n") +
+  xlab("\n Force (N)") +
+  theme_classic() +
+  theme(axis.line.x = element_line(size = .5, colour = "black"),
+        axis.line.y = element_line(size = .5, colour = "black"),
+        axis.ticks.x = element_line(size = .5, colour = "black"),
+        axis.ticks.y = element_line(size = .5, colour = "black"),
+        axis.text.x = element_text(size = 10, colour = "black"),
+        axis.text.y = element_text(size = 10, colour = "black"),
+        axis.title.x =element_text(face = "bold", size = 12, colour = "black"), 
+        axis.title.y = element_blank(),
+        plot.title = element_text(face = "bold", size = 14, colour = "black", hjust = 0.5)) +
+  facet_wrap(~Limb, scales = "free_x")
+```
+]
+
+---
+class: center, top
+
+# (Sparking) Joy Plots of Example Data
+
+```{r ref.label = 'Plot4', echo = FALSE,fig.height = 7, fig.width = 13}
+
+```
+
+---
+class: center, top
+
+#(Sparking More) Joy Plots of Example Data
+
+.left[
+``` {r Plot5, fig.show = 'hide'}
+# Add colour to distinguish 
+ggplot(RawData_Long, 
+       aes(x = Force, y = Athlete, fill = Athlete)) + 
+  geom_density_ridges(scale = 3) + 
+  scale_fill_cyclical(values = c("red", "green")) +
+  ggtitle("Example Athlete Data \n") +
+  ylab("Athlete \n") +
+  xlab("\n Force (N)") +
+  theme_classic() +
+  theme(axis.line.x = element_line(size = .5, colour = "black"),
+        axis.line.y = element_line(size = .5, colour = "black"),
+        axis.ticks.x = element_line(size = .5, colour = "black"),
+        axis.ticks.y = element_line(size = .5, colour = "black"),
+        axis.text.x = element_text(size = 10, colour = "black"),
+        axis.text.y = element_text(size = 10, colour = "black"),
+        axis.title.x =element_text(face = "bold", size = 12, colour = "black"), 
+        axis.title.y = element_blank(),
+        plot.title = element_text(face = "bold", size = 14, colour = "black", hjust = 0.5)) +
+  facet_wrap(~Limb, scales = "free_x")
+``` 
+]
+---
+class: center, top
+
+# (Sparking More) Joy Plots of Example Data
+
+```{r ref.label = 'Plot5', echo = FALSE,fig.height = 7, fig.width = 13}
+
+```
+ 
+---
+class: center, top
+
+# Issues with this plot?
+
+```{r ref.label = 'Plot5', echo = FALSE,fig.height = 7, fig.width = 13}
+
+```
+
+ 
+---
+class: center, top
+
+# Not Designing for Color-Vision Deficiency
+
+.left[
+* A proportion population may have some form of color-vision deficiency (i.e., are colorblind). 
+<br>
+<br>
+* These people may not be able to distinguish colors that look clearly different to most other people.
+]
+
+--
+.left[
+<br>
+<br>
+* We should make slight modifications in ALL visuals so they safe for color-vision deficiency
+<br>
+<br>
+* Should probably not color-code more than eight different items in a plot
+]
+--
+<br>
+<br>
+.left[
+``` {r eval = FALSE}
+# Colourblind palette:
+cbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+```
+]
+ 
+---
+class: center, top
+
+# (Sparking Even More Inclusive) Joy Plots of Example Data
+
+.left[
+``` {r Plot6, fig.show = 'hide'}
+# The palette with grey:
+cbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+# Plot
+ggplot(RawData_Long, 
+       aes(x = Force, y = Athlete, fill = Athlete)) + 
+  geom_density_ridges(scale = 3) + 
+  scale_fill_cyclical(values = cbPalette) +
+  ggtitle("Example Athlete Data \n") +
+  ylab("Athlete \n") +
+  xlab("\n Force (N)") +
+  theme_classic() +
+  theme(axis.line.x = element_line(size = .5, colour = "black"),
+        axis.line.y = element_line(size = .5, colour = "black"),
+        axis.ticks.x = element_line(size = .5, colour = "black"),
+        axis.ticks.y = element_line(size = .5, colour = "black"),
+        axis.text.x = element_text(size = 10, colour = "black"),
+        axis.text.y = element_text(size = 10, colour = "black"),
+        axis.title.x =element_text(face = "bold", size = 12, colour = "black"), 
+        axis.title.y = element_blank(),
+        plot.title = element_text(face = "bold", size = 14, colour = "black", hjust = 0.5)) +
+  facet_wrap(~Limb, scales = "free_x")
+
+ 
+``` 
+]
+
+---
+
+class: center, top
+
+# (Sparking Even More Inclusive) Joy Plots of Example Data
+
+```{r ref.label = 'Plot6', echo = FALSE,fig.height = 7, fig.width = 13}
+
+```
+
+---
+class: center, top
+# Resources on Visualising Data in R
+
+.left[
+* My number one for PhD scholars + sport scientists is [Fundamentals of Data Visualization](https://serialmentor.com/dataviz/).
+]
+<img src="https://serialmentor.com/dataviz/cover.png" width="30%" align="bottom"/>
+
+---
+class: center, top
+# Resources on Visualising Data in R
+
+.left[
+* My number one for PhD scholars + sport scientists is [Fundamentals of Data Visualization](https://serialmentor.com/dataviz/).
+]
+
+.left[
+* Chapter 3 on Data Visualisation in [R for Data Science](https://r4ds.had.co.nz/data-visualisation.html).
+]
+<img src="https://d33wubrfki0l68.cloudfront.net/b88ef926a004b0fce72b2526b0b5c4413666a4cb/24a30/cover.png" width="25%" align="bottom"/>   
+
+
+---
+class: center, top
+# Resources on Visualising Data in R
+
+.left[
+* My number one for PhD scholars + sport scientists is [Fundamentals of Data Visualization](https://serialmentor.com/dataviz/).
+]
+
+.left[
+* Chapter 3 on Data Visualisation in [R for Data Science](https://r4ds.had.co.nz/data-visualisation.html).
+]
+
+.left[
+* Follow Alison Hill (Data Scientist) on [Twitter](https://twitter.com/apreshill) and her [(free) slides/ educational material](https://alison.rbind.io/projects/) including this fab talk at [RLadies Sydney on Data Visualisation](https://alison.netlify.com/rls-plot-twist/#1) 
+]
+
+<img src="https://secure.meetupstatic.com/photos/event/4/e/c/d/600_470960173.jpeg" width="25%" align="bottom"/>  
+
+
+---
+class: inverse, right
+background-image: url(https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/Questions.JPG)
+background-size: cover 
+
+# Any Questions?
+
+<br>
+<br>
+<span style = 'font-size: 50%;'>
+.right[
+`r icon::fa("link")` [http://sportstatisticsrsweet.rbind.io/](http://sportstatisticsrsweet.rbind.io/)<br><br>
+`r icon::fa("envelope")` [Alice.Sweeting@vu.edu.au](mailto:Alice.Sweeting@vu.edu.au)<br><br>
+`r icon::fa("twitter")` [alicesweeting](https://twitter.com/alicesweeting)<br><br>
+`r icon::fa("linkedin")` [/alicejsweeting](https://www.linkedin.com/in/alicejsweeting/)<br><br>
+]
+<br>
+<img src="http://www.sportandrecreationspatial.com.au/images/vu-institute-health-sport.png", align="right" width="30%">
