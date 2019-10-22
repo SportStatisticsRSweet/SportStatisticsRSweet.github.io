@@ -14,7 +14,7 @@ class: title-slide
 background-image: url(https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/WhittenOval.jpg)
 background-size: cover 
 .center[ 
-# Programming &amp; Visualising Sport Science Data in R   
+# Analysing &amp; Visualising Sport Science Data in R   
 ## Alice Sweeting, PhD  
 ]
  
@@ -306,12 +306,12 @@ class: center, top
 # Starting out in R
 
 .left[
-* First, install [R](https://www.r-project.org/) (required) from your local CRAN.
+* First, install [R](https://cran.ms.unimelb.edu.au/) (required) from our local CRAN - University of Melbourne.
 ]
 
 --
 .left[
-* Next, install [RStudio](https://www.rstudio.com/products/rstudio/), as it is a friendly interface to learn and use R.
+* Next, install [RStudio](https://rstudio.com/products/rstudio/download/), as it is a friendly interface to learn and use R.
 ]
 
 --
@@ -328,12 +328,6 @@ class: center, top
 ]
 --
 &lt;img src="http://m.quickmeme.com/img/c1/c16c94b2aa0b5deaf6e6ff04f117c665c1edde074d751383adf02d184941e4c0.jpg" align="middle" width="50%"/&gt;
-
----
-class: center, top
-
-# How RStudio Works
-&lt;img src="https://pbs.twimg.com/media/D83d2-dW4AULriR?format=jpg&amp;name=medium" align="middle" width="85%"/&gt;
 
 ---
 
@@ -693,6 +687,8 @@ class: center, top
 .left[
 
 ```r
+# Load dplyr package
+library(dplyr)
 # Filter by one athlete, Bobby Lewis
 BobbyData &lt;-  RawData_Long  %&gt;%
   filter(Athlete == "Bobby Lewis")
@@ -980,7 +976,10 @@ class: center, top
 * We (humans) assign importance to the height of bars, rather than difference between means/ comparing variability
 ]
 --
-&lt;img src="https://pbs.twimg.com/media/DxgWGHAWwAAIBIW?format=jpg&amp;name=small" width="60%" align="bottom"/&gt;  
+.left[
+* Great Twitter thread and image below, from [Tracey Weissgerber](https://twitter.com/T_Weissgerber)
+]
+&lt;img src="https://pbs.twimg.com/media/DxgWGHAWwAAIBIW?format=jpg&amp;name=small" width="53%" align="bottom"/&gt;   
 
 ---
 class: center, top
