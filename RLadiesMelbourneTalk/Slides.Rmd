@@ -54,6 +54,13 @@ xaringanExtra::use_tachyons()
 xaringanExtra::use_panelset()
 ```
 
+```{r xaringan-extra-styles, echo=FALSE}
+xaringanExtra::use_extra_styles(
+  hover_code_line = TRUE,         #<<
+  mute_unhighlighted_code = TRUE  #<<
+)
+```
+
 ---
 class: inverse, centre, bottom
 background-image: url(https://www.yarracity.vic.gov.au/-/media/all-images/yarra-city-council-images/events/events-2020/january/_bpp9388.jpg)
@@ -64,9 +71,6 @@ background-size: cover
 Image source: [Yarra City Council](https://aboriginalhistoryofyarra.com.au/)
 ]]
 
-???
-
-I’d like to begin by acknowledging the Traditional Owners of the land on which we meet today, which for me in Richmond, Victoria, are the Wurundjeri-willam people of the Kulin Nation. I also wish to pay my respects to Elders past, present and emerging. Pictured is the beautiful Birrarung.
 
 ---
 <br>
@@ -107,14 +111,6 @@ class: inverse
 background-image: url(https://www.vu.edu.au/sites/default/files/images/mitch-wallis-large.jpg)
 background-size: cover
 
-???
-
-* Victoria University (VU) is ranked in the top 20 globally for sport science education. VU has strong ambitions to be Australia’s leading sport university and a global leader in sport.  
-* One of the seven key areas of the VU sport strategy is to maximise engagement with the sporting industry, through strategic partnerships. 
-* One of these partnerships is with the Western Bulldogs Football Club, under which my role is embedded.
-* VU's association with the Western Bulldogs began in the 1980's and has now grown to include a multi-faceted partnership with all four AFL, AFLW, VFL and VFLW WB teams. 
-* The sport science partnership comprises workplace learning opportunities for students, joint staff appointments and professional development, WB staff and athlete access to VU facilities and expertise. 
-* Another major facet of the strategic sport science partnership is collaborative research, including HDR student projects. I work side-by-side with the Bulldogs' coaching, medical and performance teams as part of a structured research program, with the ultimate goal of helping to improve on-field performance.
 
 ---
 class: inverse, bottom, right
@@ -125,11 +121,6 @@ background-size: cover
 <br>
 .caption[
 Image: [Moneyball]()]
-???
-* The benefits of using data and analytics to recruit and develop players was explored in the 2003 book by Michael Lewis, later adapted into a film starring the one and only Brad Pitt. 
-* If you haven't read the book or seen the film, Moneyball is a nonfictional story of how Billy Beane, a general manager with Oakland A used sabermetrics to recruit players that were undervalued, in order to compete with the more wealthier teams in the baseball league. 
-* Beane's assistant (fictional) GM Peter Brand (famously played by Jonah Hill) is a young Yale economics graduate with radical ideas about how to assess player value. Peter Brand is supposedly based upon a collection of people, although the character is certainly about Paul DePodesta, an economics grad from Harvard.
-
 
 ---
 class: inverse, bottom, right
@@ -141,56 +132,30 @@ background-size: cover
 .caption[
 Image source: [AMSI](https://careers.amsi.org.au/search-careers/)]
 
-???
-* However, when the word sports analytics is mentioned, this is what I think of! 
-* Illustration demonstrates a female scientist, capturing data from a female athlete and this data may include wearable sensors.
-* Data forms a large part of sport research. For example, we use data to measure and monitor performance during a drill, training session, week of training, match and a competitive season/ pre-season period. 
-* Thanks to the adoption of new technologies by sporting organisations, combined with greater financial resources, data is produced at record rates. Faster, cheaper and increased access to this data means that the manner in which decisions can now be made compared to previously is vastly different.
-* However, these drivers have also created new challenges such as how to handle incompatible data formatting, understanding the increased complexity of applied environments, as well as developing methods to integrate humans and machines in decision-making processes. As sport scientists, we must know how to learn and work with data, in order to help tackle some complex, non-linear problems that we face in sport.
-* I'll now take you through some different types of data we capture at the WB, as part of this strategic research partnership at VU-WB, to help improve on-field performance.
 
 ---
 class: left, top
 # Data Sources in Australian Rules Football
 
 ### `r fa("question-circle", fill = "black")` [Monitor how an athlete rates their perceived exertion from a training session.](https://journals.humankinetics.com/view/journals/ijspp/12/2/article-p230.xml)
-???
-* Monitoring how an athlete responds to a training stimulus, such as a weights session or a training session with the team, is an important data source for sport scientists. 
-* Termed internal load, measuring the perceived load of training helps give more context. For example, all athletes on a team may complete the same training session, running for the same total time 60mins. Although the external load is the samee, each athlete may perceive how "hard" the session is differently. 
-* By tracking how this percevied rating is over time, we can start to gain more context of how an athlete is responding to and subsequently, ready for the next session. Work out of the VU-WB partnership, viewable by clicking the hyperlink here, used linear and non-linear analysis to predict this rating of perceived exertion, by athletes. It was found that independent of analysis approach, distance covered by an athlete during a training session or match is most strongly associated with RPE.
 --
 <br>
 ### `r fa("laptop-code", fill = "black")` [Detect biomechanical characteristics, using wearable technology, during skilled actions.](http://vuir.vu.edu.au/39871/1/icSPORTS_2019_15.pdf)
-???
-* We can also collect data from wearable sensors, such as accelerometers, during training sessions. For example, by mounting an accelerometer to the ankle of an Australian Rules footballer, we are able to capture intertial data to estimate the number of kicks an athlete performs during a drill and training session. I'll talk a little bit more about this specific data source and research project a little later in the presentation.  
 --
 <br>
 ### `r fa("running", fill = "black")` [Collect an athlete's physical output during training and matches.](https://shapeamerica.tandfonline.com/doi/abs/10.1080/02640414.2019.1577941#.X2RNLWgzaUk)
-???
-* Wearable devices, including global positioning systems, also allow for the detection of where, how far and fast athletes move during training and matches. This data typically samples at 10 Hz. Some work from our team has examined how we can analyse this GPS data as a time series, which I will chat a little more about later in the presentation.
 --
 <br>
 ### `r fa("football-ball", fill = "black")` [Record the number of skilled involvements during drills and matches.](https://www.sciencedirect.com/science/article/abs/pii/S0167945719301939)
-???
-* We can also record the number of skilled involvements, such as kicks, handballs and tackles, during Australian Football training drills, sessions and matches. This data is typically manually recorded via notational analysis but I'll chat more about how our team is currently measuring the context surrounding this skilled involvements, to help design training, shortly.
 --
 <br>
 ### `r fa("users", fill = "black")` [Quantify the interactions between team-members during training and matches.](https://www.tandfonline.com/doi/abs/10.1080/02640414.2019.1586077)
-???
-* Another data source that we can capture is the collective behaviour, or how team-members interact with one another to change their positon on the field during different phases of play. For example, during attack or defence. We use GPS or positional data to quantify how team collective behaviour changes relative to match events. I'll chat more about this research later in the presentation.
 --
 <br>
 ### `r fa("chart-line", fill = "black")` [Track the performance of potential recruits and draft selections.](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0220901)
-???
-* Player evaluation plays a fundamental role in the decision-making processes of professional sporting organisations. In the Australian Football League, both subjective and objective evaluations of player match performance are commonplace. 
-* For example, there are performance indicators collected on Australian Football players and subjective evaluations by coaches or recruiting scouts. * Work from within the VU-WB partnership concluded that a select few features account for a majority of the variance when explaining subjective ratings of player performance, and that these vary by player role. 
-* Organisations should utilise both subjective and objective assessments of performance to gain a better understanding of the differences associated with subjective performance assessment. utilising both 
 --
 <br>
 ### `r fa("utensils", fill = "black")` [Estimate the energy expenditure of athletes during training and matches.](https://www.sciencedirect.com/science/article/abs/pii/S1440244015000390)
-???
-* Wearable sensors, such as accelerometers, can measure acceleration in three dimensions. This data source can also be used to estimate energy expenditure during training and matches, by providing a practical, non-invasive and effective method to do so. 
-* For example, by knowing how much energy an athlete expends during training and matches, dietitians are able to develop more individualised nutrition programming to enhance performance and achieve body composition goals.
 
 ---
 class: inverse, center, top
@@ -198,8 +163,6 @@ background-image: url(https://raw.githubusercontent.com/SportStatisticsRSweet/WC
 background-size: cover
 # VU-WB Research (Data Analytics) Projects
 
-???
-* I will now talk through how we are using data analytics, and the abovementioned data sources, in research projects at VU-WB. Where possible, we try to really align these research projects in having a direct impact on training or match performance at the WB. For example, capturing data on the skilled involvements during training sessions, analysing this data for research but also helping coaches to evaluate how training went and to plan the next session.
 
 ---
 class: left, top
@@ -213,9 +176,6 @@ class: left, top
 Image source: [afl.com.au](https://www.afl.com.au/matches/2889#team-stats)]
 ]
 
-???
-* Scores are exciting, as they tell us the live or end result. However, score doesn't tell us the whole picture
-* Here we have...
 ---
 class: left, top
 # Analysing Skilled Involvements
@@ -228,10 +188,6 @@ class: left, top
 Image source: [afl.com.au](https://www.afl.com.au/matches/2889#team-stats)]
 ]
 
-???
-* An important part of giving context to scores is by measuring the involvements or skilled actions matches.
-* Currently, events and outcomes are captured in statistical analysis of team sports performance. This is frequency count data where a human manually codes performance variables including kicks, tackles and handballs, live during a game or post-hoc via video 
-* Here we have...
 
 ---
 class: left, top
@@ -244,14 +200,6 @@ class: left, top
 Image source: [afl.com.au](https://www.afl.com.au/matches/2889#team-stats)]
 ]
 
-???
-* Kicking is an important action in AF, as it constitutes the predominant form of strategic ball movement and the sole manner in which a goal can be scored.
-* On average, each player executes a kick every ten minutes within an AFL match 
-* The completion of a successful kick is a resultant of multiple attributes of the game and the immediate constraints that emerge on the kick, such as opposition pressure, team mates’ availability and the current status of the ball carrier
-* Accounting for some of these constraints is really important, to give context to the skilled involvements or kicks that occur
-* For example, we can look at the source of the kick, so in an AFL context was it from a mark/ free kick or at a stoppage. Was the player on the run whilst kicking or stationary? Did they get rid of the ball in less than two seconds or was it six seconds? How long was the kick? Was the player being tackled whilst they were trying to kick the ball?
-* We can see that the image at the bottom here represents the disposal efficiency of both teams. So how many times was a successful handball or kick executed across the match.
-
 
 ---
 class: left, top
@@ -263,15 +211,6 @@ class: left, top
 .right[
 Figure from [Browne et al., (2019) in Human Movement Science.](https://www.sciencedirect.com/science/article/pii/S0167945719301939)]
 
-???
-* We can however analysis this disposal efficiency in more detail. Here on the very left hand side, we have average kicking efficiency at 54%
-* Work from Peter Browne's thesis, where he measured the context or constraints surrounding skilled involvements during Aussie Rules football.
-* So if we take a kick, as an example, we can assess the influence that these different constraints have together, on the likelihood of an effective kick. 
-* So we can see that as we move through the figure, from right to left, average kicking efficiency changes. It goes down when a player has less than two seconds to dispose of the ball and the kick is less than 40 metres in distance.
-* However, if no pressure is applied, in the form of no opponent running after/ tackling/ corralling, the average kick efficiency goes up. Similarly, if the player receives the ball via a handball and are an open target, the average kick efficiency increases.
-* We can do this through rule mining techniques, specifically in R, the arules package.
-* Percentage values indicate confidence level of an effective kick.
-
 ---
 class: center
 .left[
@@ -282,12 +221,6 @@ class: center
 
 .right[Image: [iMeasureU](https://imeasureu.com/wp-content/uploads/2019/10/Soccer-kick.jpg)]
 
-???
-* As mentioned, most of these skilled involvements are currently manually coded by humans during games and training, either live or post hoc.
-* New technologies such as accelerometers, may help us automate this currently manually laborious process.
-* Pictured here is an accelerometer in orange, worn around the ankle of an athlet,e which can be used to profile the number and type of kicks performed.
-* Emily Cust used these sensors in her PhD, to profile kicks during AFLW training drills, using machine learning techniques.
-* Emily's research could be of benefit to practitioners in linking targeted field coaching drills and conditioning programs tailored to identified kick skill and movement deficiencies.
 
 
 ---
@@ -300,13 +233,6 @@ background-size: cover
 Image source: [Catapult Sports](https://www.catapultsports.com/)
 ]]
 
-
-???
-* A common wearable technology in Australian Rules football is devices to measure how far and how fast a player moves on the field. 
-* Global Positioning Systems = Capture data on the position and displacement of players (outdoor use only)
-* Local Positioning Systems = Capture position and displacement with better accuracy than GPS (indoor and outdoor use)
-* Accelerometers = Capture changes in acceleration, orientation and direction (indoor and outdoor use)
-* Optical tracking systems = estimate the position of athletes on a court or field, in real time or post-hoc, using computer vision algorithms. Not as common in Aussie Rules due to ground size/ weather/ conditions/ large area to cover!
 
 ---
 class: center
@@ -333,12 +259,6 @@ DrillEventData %>%
 ```
 
 
-???
-* This is an example of the type of information we can get from GPS or LPS devices, in Australian Rules football.
-* These parameters can help give insight into specific drills, training as a whole and help to evaluate training sessions
-* Aggregate parameters don't give granular insights into physical output
-* Difficult to determine when output changes over time
-
 ---
 class: center
 .left[
@@ -347,11 +267,6 @@ class: center
 
 <img src="https://raw.githubusercontent.com/SportStatisticsRSweet/SportStatisticsRSweet.github.io/master/SportDataR/RawTrace.png", align="middle", width="75%">
 
-???
-* Capture the raw trace from a wearble sensor (here is GPS)
-* Analysing continious trace data can help to give us more insight into the why part of athlete physical output
-* This trace data could be from LPS, GPS or optical. We could also look at raw accelerometer data too
-* Here we have time on our x-axis and velocity on our y-axis, giving us a visual into an athlete's "active" time spent on the ground
 
 ---
 class: center
@@ -361,10 +276,6 @@ class: center
 
 <img src="https://raw.githubusercontent.com/SportStatisticsRSweet/SportStatisticsRSweet.github.io/master/SportDataR/RawTrace_Bands.png", align="middle", width="75%">
 
-???
-* Logical extension to seperate activity into low and high-intensity
-* Thresholds used are often arbitary 
-* Difficult still to determine how output changes throughout a team-sport match, as a function of time
 
 ---
 class: center
@@ -372,12 +283,6 @@ class: center
 # Analysing Athlete Physical Output
 ]
 <img src="https://raw.githubusercontent.com/SportStatisticsRSweet/SportStatisticsRSweet.github.io/master/SportDataR/RawTrace_TimeSeries.png", align="middle", width="75%">
-
-
-???
-* One way we can do this via time-series analysis, so here the vertical red bars represent different segements found in our continuous trace
-* Identify and describe segments of physical output in team-sport matches that are very different.
-* The methodology presented may have application in comparing the specificity of training to matches and designing match rotation strategies.
 
 ---
 class: center
@@ -389,11 +294,6 @@ class: center
 .right[
 Figure from [Corbett et al., (2019) in Journal of Sport Sciences.](https://www.tandfonline.com/doi/full/10.1080/02640414.2019.1577941)]
 
-???
-* Here we have an example of time series segmentation implemented during Australian Rules football matches. 
-* Red vertical lines indicate our time series segments, across a game (x-axis). So you can see our GPS trace which is similar to the one a few slides ago
-* The coloured dots represent skilled involvements, red for defensive so actions like tackling or bumping opponents and blue for offensive, so kicks and handballs.
-* This information can help us to better design how long a player should spend on the ground in a rotation and also potentially inform training drills for different roles/ player positions. 
 ---
 class: center
 .left[
@@ -404,12 +304,6 @@ class: center
 .right[
 Figure from [Alexander et al., (2019) in Journal of Sport Sciences.](https://www.tandfonline.com/doi/full/10.1080/02640414.2019.1586077)]
 
-???
-* From the same data source, of capturing an athlete's position over time relative to a court or field and team-mates/ opposition can help us examine tactical behaviours or collective team behavior
-* Collective team behaviour in invasion sports refers to how individual players position themselves across a field of play to form an overall group organisation. Determining collective team behaviour may provide a greater understanding of team tactics or game style.
-* Here we have an Aussie Rules football ground, with the blue dots representing the position of an athlete. We can measure the centroid, or the middle position of all the dots/ athletes and the maximum length and width of the team. This gives us an idea as to how teams spread and congest around the ball, during phases of play so in attack or defense or transitioning the ball from attack to defence.
-* This is work from Jeremy Alexander's PhD thesis, with the WB, investigated the influence of match phase and field position on collective team behaviour
-* Players were more inclined to re-position closer to their defensive end to restrict space when the ball was closer to their goal and conversely, press higher up the field when the ball was in their forward half
 
 ---
 class: center
@@ -417,14 +311,6 @@ class: center
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">📢Practitioners who determine athlete training availability in high performance sport❗️<br>Please participate in my research aimed at improving methods for making these decisions🏋️⛹️🏊<br>EOI➡️<a href="https://t.co/8pyJyullZj">https://t.co/8pyJyullZj</a><a href="https://twitter.com/hashtag/VUSportAnalyticsTech?src=hash&amp;ref_src=twsrc%5Etfw">#VUSportAnalyticsTech</a> <a href="https://twitter.com/TrackVU?ref_src=twsrc%5Etfw">@TrackVU</a> <a href="https://twitter.com/iHealthSportVU?ref_src=twsrc%5Etfw">@iHealthSportVU</a> <a href="https://t.co/wLN4yQ8IVs">pic.twitter.com/wLN4yQ8IVs</a></p>&mdash; Elissa Denton (@DentonElissa) <a href="https://twitter.com/DentonElissa/status/1278828510069415936?ref_src=twsrc%5Etfw">July 2, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 
-
-
-???
-* In the pursuit of evidence upon which to base sports science decision-making, new technologies have enabled the  collection  of  ever-increasing  volumes  of  data. Now have the  potential  to  deepen  insights  into  the complexities of sport science problems. However, this may create a tendency to believe that optimal solutions to many of these problems lies in the data that is currently collected. A bounded rationality approach suggests that  for  many  of  these  problems,  optimal  is  unattainable.  
-* Bounded rationality is a potential theoretical framework  to understand  processes  of  decision-making  in  applied  sport  science.    The  nature  of  these decisions will continue to change as data quality and volume increases. For example, we now have more data than ever before on how athletes are feeling, responding and performing during training and matches. However, in order to ensure that an athlete is ready for their next training stimulus or match, their availability including how much and how often they should be training/ playing is known as athlete training availbility. For example, an athlete who is sick with the flu cannot train, an athlete who is recovering from a lower limb injury may be modified and an athlete with no injury or health concerns is fully available to train.
-* Athlete training availability is known to play a significant role in team and athlete success, especially in the high performance sport context. Therefore, investigating how sports practitioners determine athlete training availability is of great importance. However, no investigations of this decision-making process have taken place to date.
-* Elissa's research uses a survey method to explore sport practitioner’s current decision-making processes, in addition to factors relating to how they determine athlete training availability. Questions have a specific focus on information availability, uncertainty, and use of injury risk visualisations. This project will increase our understanding of how these factors affect sports practitioner’s methods for determining athlete training availability. 
- 
 
 ---
 class: left
@@ -529,299 +415,145 @@ devtools::install_github("stevelane/superNetballR")
 
 ---
 class: left
-# Analysing Suncorp Super Netball Data
+# Analysing Suncorp Super Netball (Team) Data
 
-```{r LoadPackages, eval = FALSE}
+.panelset[
+.panel[.panel-name[R Code - Data Import]
+    
+```{r panel-chunk, eval = FALSE}
 # Load required packages
 library(superNetballR)
 library(tidyverse)
 library(ggdark)
 # 2020 season ID
-SeasonID = "11108"
+SeasonID = "11108" 
 # Download the Firebirds versus Vixens Rd13 match
 FirebirdsVixens_Rd13 <- downloadMatch(SeasonID, 13, 4)
 # Tidy the match
 FirebirdsVixens <- tidyMatch(FirebirdsVixens_Rd13)
 # Inspect the first few rows
-head(FirebirdsVixens, 8)
+head(FirebirdsVixens, 12)
 ```
---
-```{r LoadPackages2, eval = TRUE, echo=FALSE}
-# Load required packages
-library(superNetballR)
-library(tidyverse)
-library(ggdark)
-# 2020 season ID
-SeasonID = "11108"
-# Download the Firebirds versus Vixens Rd13 match
-FirebirdsVixens_Rd13 <- downloadMatch(SeasonID, 13, 4)
-# Tidy the match
-FirebirdsVixens <- tidyMatch(FirebirdsVixens_Rd13)
-# Inspect the first few rows
-head(FirebirdsVixens, 8)
+]
+    
+.panel[.panel-name[R Output - Data Import]
+```{r ref.label="panel-chunk", echo=FALSE}
 ```
- 
----
-class: left
-# Analysing Suncorp Super Netball Data
+]
 
-```{r LoadStats, eval = FALSE}
-# Inspect the different stats available
-unique(FirebirdsVixens$stat)
+.panel[.panel-name[R Code - Unique Stats]    
+```{r panel-chunk2, eval = FALSE}
+# Inspect the first 30 stats
+head(unique(FirebirdsVixens$stat), 30)
 ```
---
-```{r LoadStats2, eval = TRUE, echo=FALSE}
-unique(FirebirdsVixens$stat)
+]
+
+.panel[.panel-name[R Output - Unique Stats]
+```{r ref.label="panel-chunk2", echo=FALSE}
 ```
+]
+]
 
 ---
 class: left
-# Visualising Suncorp Super Netball Data
+# Visualising Suncorp Super Netball (Team) Data
 
-``` {r Plot1, fig.show = 'hide'}
+.panelset[
+.panel[.panel-name[R Code - Plot #1]
+    
+```{r panel-chunk4, eval = FALSE}
+# List of Super Netball colours that are CVD friendly
+SquadName_Colours <- c("#FDE725FF", "#73D055FF", "#27AD81FF", 
+ "#7E4E90FF", "#CC6A70FF", "#2D708EFF", "#C0C0C0", "#F68F46FF")
+names(SquadName_Colours) <- c("Sunshine Coast Lightning", "West Coast Fever", "Melbourne Vixens", 
+"Queensland Firebirds", "Adelaide Thunderbirds", "NSW Swifts", "Collingwood Magpies", "GIANTS Netball")
 # Plot - lets look at one stat to start with
 FirebirdsVixens %>% 
   filter(stat=="generalPlayTurnovers") %>% 
-  ggplot(aes(x = period, y = value, colour = squadNickname)) +
+  ggplot(aes(x = period, y = value, colour = squadName)) +
   geom_point() 
 ```
-
----
-class: left
-# Visualising Suncorp Super Netball Data
-
-``` {r ref.label = 'Plot1', echo = FALSE,fig.height = 6.5, fig.width = 13}
-
+]
+    
+.panel[.panel-name[Plot #1]
+```{r ref.label="panel-chunk4", fig.height = 5, fig.width = 15, echo=FALSE}
 ```
+]
 
----
-class: left
-# Visualising Suncorp Super Netball Data
-
-``` {r Plot2, fig.show = 'hide'}
-# OK, we can improve though!
-# List of Super Netball colours that are CVD friendly
-SSN_Colours <- c("#FDE725FF", "#73D055FF", "#27AD81FF", "#7E4E90FF", "#CC6A70FF", "#2D708EFF", "#C0C0C0", "#F68F46FF")
-names(SSN_Colours) <- c("Lightning", "Fever", "Vixens", "Firebirds", "Thunderbirds", "Swifts", "Magpies", "GIANTS")
-
-# Take two 
-FirebirdsVixens %>% 
-  filter(stat=="generalPlayTurnovers") %>% 
-  ggplot(aes(x = period, y = value, colour = squadNickname)) +
-  geom_point(size = 7) +
-  geom_text(aes(label = value), size = 3, colour = "black", check_overlap = TRUE) +
-  scale_colour_manual(values = SSN_Colours) 
-```
-
----
-class: left
-# Visualising Suncorp Super Netball Data
-
-``` {r ref.label = 'Plot2', echo = FALSE,fig.height = 6.5, fig.width = 13}
-
-```
-
----
-class: left
-# Visualising Suncorp Super Netball Data
-
-``` {r Plot3, fig.show = 'hide'}
+.panel[.panel-name[R Code - Plot #2]
+```{r panel-chunk5, eval = FALSE}
 # Make it even happier!
-FirebirdsVixens %>% 
-  filter(stat=="generalPlayTurnovers") %>% 
-  ggplot(aes(x = period, y = value, colour = squadNickname)) +
-  geom_line(linetype = "dashed") + geom_point(size = 8) +
+FirebirdsVixens %>% filter(stat=="generalPlayTurnovers") %>% 
+  ggplot(aes(x = period, y = value, colour = squadName)) + geom_line(linetype = "dashed") + geom_point(size = 8) +
   geom_text(aes(label = value), size = 4, colour = "black", check_overlap = TRUE) +
-  scale_colour_manual(values = SSN_Colours) + scale_fill_manual(values = SSN_Colours) +
-  scale_x_continuous(limits = c(1,4), breaks = c(1:4), 
-                     labels = function(x) paste0("Quarter ", x)) +
+  scale_colour_manual(values = SquadName_Colours) + scale_fill_manual(values = SquadName_Colours) +
+  scale_x_continuous(limits = c(1,4), breaks = c(1:4), labels = function(x) paste0("Quarter ", x)) +
   scale_y_continuous(expand = c(0,0), limits = c(0, 10), breaks = seq(0,10, by = 2)) +
-  labs(x = NULL, y = "Number of General Play Turnovers \n", 
-       title = "\n Rd13 - Firebirds v Vixens \n General Play Turnovers \n") +
-  dark_theme_gray()  + 
-  theme(plot.title = element_text(size = 14, face = "bold", hjust = 0.5),
-        plot.background = element_rect(fill = "grey10"), panel.background = element_blank(),
-        panel.grid.major = element_blank(), panel.grid.minor = element_blank(), legend.background = element_blank(),
-        axis.title.y = element_text(size = 12, face = "bold"),
-        axis.ticks.x =  element_line(color = "grey30", size = 0.1),
-        axis.line.x =  element_line(color = "grey30", size = 0.1),
-        axis.text.x = element_text(size = 12, face = "bold"),
-        axis.ticks.y =  element_line(color = "grey30", size = 0.1),
-        axis.line.y =  element_line(color = "grey30", size = 0.1),
-        axis.text.y = element_text(size = 10, face = "bold"),
-        legend.title = element_blank(), legend.position = "bottom") 
-```
-
----
-class: left
-# Visualising Suncorp Super Netball Data
-
-``` {r ref.label = 'Plot3', echo = FALSE,fig.height = 6.5, fig.width = 13}
-
-```
-
----
-class: left
-# Analysing Suncorp Super Netball Data
-
-```{r PlayerData, eval = FALSE}
-# Tidy individual player data
-PlayerData <- tidyPlayers(FirebirdsVixens_Rd13)
-# Inspect first 10 rows
-head(PlayerData, 15)
-```
---
-```{r PlayerData2, eval = TRUE, echo=FALSE}
-# Tidy individual player data
-PlayerData <- tidyPlayers(FirebirdsVixens_Rd13)
-# Inspect first 10 rows
-head(PlayerData, 15)
-```
-
----
-class: left
-# Analysing Suncorp Super Netball Data
-
-```{r PlayerData3, eval = FALSE}
-# Examine the dataframe closer
-str(PlayerData)
-```
---
-```{r PlayerData4, eval = TRUE, echo=FALSE}
-# Examine the dataframe closer
-str(PlayerData)
-```
-
----
-class: left
-# Analysing Suncorp Super Netball Data
-
-```{r PlayerData5, eval = FALSE}
-# Call out the stats that are giving us issues
-PlayerData %>% 
-  filter((stat %in% c("startingPositionCode", "currentPositionCode")))
-```
---
-```{r PlayerData6, eval = TRUE, echo=FALSE}
-# Call out the stats that are giving us issues
-PlayerData %>% 
-  filter((stat %in% c("startingPositionCode", "currentPositionCode")))
-```
-
----
-class: left
-# Analysing Suncorp Super Netball Data
-
-```{r PlayerData7, eval = FALSE}
-# Now remove that issue, call out GPT & arrange by who has the most.
-PlayerData %>% 
-  filter(!(stat %in% c("startingPositionCode", "currentPositionCode"))) %>% 
-  mutate_at("value", as.numeric) %>% 
-  filter(stat=="generalPlayTurnovers") %>% 
-  group_by(shortDisplayName) %>% 
-  summarise(Total = sum(value)) %>% 
-  arrange(desc(Total))
-```
---
-```{r PlayerData8, eval = TRUE, echo=FALSE}
-# Call out the stats that are giving us issues
-PlayerData %>% 
-  filter(!(stat %in% c("startingPositionCode", "currentPositionCode"))) %>% 
-  mutate_at("value", as.numeric) %>% 
-  filter(stat=="generalPlayTurnovers") %>% 
-  group_by(shortDisplayName) %>% 
-  summarise(Total = sum(value)) %>% 
-  arrange(desc(Total))
-```
-
----
-class: left
-# Analysing Suncorp Super Netball Data
-
-```{r PlayerData9, eval = FALSE}
-# Keen on data from all of Rd13?
-# First, create an empty data.frame
-SSN_Rd13 <- FirebirdsVixens[0,]
-# Call out the round we are after, can change this to whatever round you are interested in!
-getRound = 13
-# Run a loop to grab data for Rd13
-for (mm in 1:4) {
-  # Download match
-  matchData <- downloadMatch(SeasonID,getRound,mm)
-  # Tidy data
-  tidy_match <- tidyMatch(matchData)
-  # Append
-  SSN_Rd13 <- rbind(tidy_match,SSN_Rd13)
-}
-# Inspect
-head(SSN_Rd13, 5)
-```
---
-```{r PlayerData10, eval = TRUE, echo=FALSE}
-# Keen on data from all of Rd13?
-# First, create an empty data.frame
-SSN_Rd13 <- FirebirdsVixens[0,]
-# Call out the round we are after, can change this to whatever round you are interested in!
-getRound = 13
-# Run a loop to grab data for Rd13
-for (mm in 1:4) {
-  # Download match
-  matchData <- downloadMatch(SeasonID,getRound,mm)
-  # Tidy data
-  tidy_match <- tidyMatch(matchData)
-  # Append
-  SSN_Rd13 <- rbind(tidy_match,SSN_Rd13)
-}
-# Inspect
-head(SSN_Rd13, 5)
-```
- 
----
-class: left
-# Visualising Suncorp Super Netball Data
-
-``` {r Plot4, fig.show = 'hide'}
-# Now plot GPT for each team
-SSN_Rd13 %>% 
-  filter(stat=="generalPlayTurnovers") %>% 
-  group_by(squadNickname) %>% 
-  summarise(Total = sum(value)) %>% 
-  arrange(desc(Total)) %>% 
-  ggplot(aes(x = reorder(squadNickname, -Total), y = Total, colour = squadNickname)) +
-  geom_point(size = 10) +
-  geom_segment(aes(x = squadNickname, y = 0, xend = squadNickname, yend = Total, colour = squadNickname), linetype = "dashed") +
-  geom_text(aes(label = Total), size = 4, colour = "black", check_overlap = TRUE) +
-  scale_colour_manual(values = SSN_Colours) + scale_fill_manual(values = SSN_Colours) +
-  scale_y_continuous(expand = c(0,0), limits = c(0, 40), breaks = seq(0,40, by = 10)) +
-  labs(x = NULL, y = "Number of General Play Turnovers \n", 
-       title = "\n Suncorp Super Netball 2020 \n Rd13 - General Play Turnovers \n") +
+  labs(x = NULL, y = "Number of General Play Turnovers \n", title = "\n Rd13 - Firebirds v Vixens \n General Play Turnovers \n") +
   dark_theme_gray()  + 
   theme(plot.title = element_text(size = 14, face = "bold", hjust = 0.5),
         plot.background = element_rect(fill = "grey10"), panel.background = element_blank(),
         panel.grid.major = element_blank(), panel.grid.minor = element_blank(), legend.background = element_blank(),
         axis.title.y = element_text(size = 12, face = "bold"), axis.ticks.x =  element_line(color = "grey30", size = 0.1),
-        axis.line.x =  element_line(color = "grey30", size = 0.1), 
-        axis.text.x = element_text(size = 12, face = "bold", angle = 45, vjust = 1, hjust = 1),
+        axis.line.x =  element_line(color = "grey30", size = 0.1), axis.text.x = element_text(size = 12, face = "bold"),
         axis.ticks.y =  element_line(color = "grey30", size = 0.1), axis.line.y =  element_line(color = "grey30", size = 0.1),
-        axis.text.y = element_text(size = 10, face = "bold"),legend.title = element_blank(), legend.position = "none") 
+        axis.text.y = element_text(size = 10, face = "bold"), legend.title = element_blank(), legend.position = "bottom") 
 ```
+]
+
+.panel[.panel-name[Plot #2]
+```{r ref.label="panel-chunk5", fig.height = 5, fig.width = 15, echo=FALSE}
+```
+]
+]
 
 ---
 class: left
-# Visualising Suncorp Super Netball Data
+# Analysing Suncorp Super Netball (Athlete) Data
 
-``` {r ref.label = 'Plot4', echo = FALSE,fig.height = 6.5, fig.width = 13}
-
+.panelset[
+.panel[.panel-name[R Code - Data Import]
+    
+```{r panel-chunk6, eval = FALSE}
+# Tidy individual player data
+PlayerData <- tidyPlayers(FirebirdsVixens_Rd13)
+# Inspect first 12 rows
+head(PlayerData, 12)
 ```
+]
+    
+.panel[.panel-name[R Output - Data Import]
+```{r ref.label="panel-chunk6", echo=FALSE}
+```
+]
+
+
+.panel[.panel-name[R Code - Data Tidy]
+    
+```{r panel-chunk7, eval = FALSE}
+# Call out the stats that are giving us issues
+PlayerData %>% 
+  filter((stat %in% c("startingPositionCode", "currentPositionCode"))) %>% 
+  head(12)
+```
+]
+    
+.panel[.panel-name[R Output - Data Tidy]
+```{r ref.label="panel-chunk7", echo=FALSE}
+```
+]
+]
 
 ---
 class: left
-# Analysing Suncorp Super Netball Data
+# Analysing Suncorp Super Netball (League - Team) Data
 
-```{r PlayerData11, eval = FALSE}
-# Keen on data from all of Rd13, for each player?
+.panelset[
+.panel[.panel-name[R Code - Import All Teams]
+
+```{r panel-chunk8, eval = FALSE}
 # First, create an empty data.frame
-SSN_Rd13_Players <- PlayerData[0,]
+SSN_Rd13 <- FirebirdsVixens[0,]
 # Call out the round we are after, can change this to whatever round you are interested in!
 getRound = 13
 # Run a loop to grab data for Rd13
@@ -829,55 +561,91 @@ for (mm in 1:4) {
   # Download match
   matchData <- downloadMatch(SeasonID,getRound,mm)
   # Tidy data
-  tidy_player <- tidyPlayers(matchData)
+  tidy_match <- tidyMatch(matchData)
   # Append
-  SSN_Rd13_Players <- rbind(tidy_player,SSN_Rd13_Players)
+  SSN_Rd13 <- rbind(tidy_match,SSN_Rd13)
 }
 # Inspect
-head(SSN_Rd13_Players, 5)
+tail(SSN_Rd13, 12)
 ```
---
-```{r PlayerData12, eval = TRUE, echo=FALSE}
-# Keen on data from all of Rd13, for each player?
-# First, create an empty data.frame
-SSN_Rd13_Players <- PlayerData[0,]
-# Call out the round we are after, can change this to whatever round you are interested in!
-getRound = 13
-# Run a loop to grab data for Rd13
-for (mm in 1:4) {
-  # Download match
-  matchData <- downloadMatch(SeasonID,getRound,mm)
-  # Tidy data
-  tidy_player <- tidyPlayers(matchData)
-  # Append
-  SSN_Rd13_Players <- rbind(tidy_player,SSN_Rd13_Players)
-}
-# Inspect
-head(SSN_Rd13_Players, 5)
-```
- 
----
-class: left
-# Visualising Suncorp Super Netball Data
+]
 
-``` {r Plot5, fig.show = 'hide'}
-# NowList of Super Netball colours that are CVD friendly
-SquadName_Colours <- c("#FDE725FF", "#73D055FF", "#27AD81FF", "#7E4E90FF", "#CC6A70FF", "#2D708EFF", "#C0C0C0", "#F68F46FF")
-names(SquadName_Colours) <- c("Sunshine Coast Lightning", "West Coast Fever", "Melbourne Vixens", "Queensland Firebirds", "Adelaide Thunderbirds", "NSW Swifts", "Collingwood Magpies", "GIANTS Netball")
-#  plot top 10 feedWithAttempt
-SSN_Rd13_Players %>% filter(!(stat %in% c("startingPositionCode", "currentPositionCode"))) %>% 
-  mutate_at("value", as.numeric) %>% filter(stat=="feedWithAttempt") %>% group_by(shortDisplayName, squadName) %>% 
-  summarise(Total = sum(value)) %>% arrange(desc(Total)) %>% head(10) %>% 
-  ggplot(aes(x = reorder(shortDisplayName, -Total), y = Total, colour = squadName)) +
-  geom_point(size = 10) +
-  geom_segment(aes(x = shortDisplayName, y = 0, xend = shortDisplayName, yend = Total, colour = squadName), linetype = "dashed") +
+.panel[.panel-name[R Ouput - Import All Teams]
+```{r ref.label="panel-chunk8", echo=FALSE}
+```
+]
+
+.panel[.panel-name[R Code - Plot #3]
+
+```{r panel-chunk9, eval = FALSE}
+# Now plot GPT for each team
+SSN_Rd13 %>% filter(stat=="generalPlayTurnovers") %>% group_by(squadName) %>% summarise(Total = sum(value)) %>% 
+  arrange(desc(Total)) %>% ggplot(aes(x = reorder(squadName, -Total), y = Total, colour = squadName)) +
+  geom_point(size = 10) + geom_segment(aes(x = squadName, y = 0, xend = squadName, yend = Total, colour = squadName), linetype = "dashed") +
   geom_text(aes(label = Total), size = 4, colour = "black", check_overlap = TRUE) +
   scale_colour_manual(values = SquadName_Colours) + scale_fill_manual(values = SquadName_Colours) +
   scale_y_continuous(expand = c(0,0), limits = c(0, 40), breaks = seq(0,40, by = 10)) +
-  labs(x = NULL, y = "Number of Feeds with Attempt \n", 
-       title = "\n Suncorp Super Netball 2020 \n Rd13 - Feeds with Attempt (Individual Players) \n") +
-  dark_theme_gray()  + 
-  theme(plot.title = element_text(size = 14, face = "bold", hjust = 0.5),
+  labs(x = NULL, y = "Number of General Play Turnovers \n", title = "\n Suncorp Super Netball 2020 \n Rd13 - General Play Turnovers \n") +
+  dark_theme_gray()  + theme(plot.title = element_text(size = 14, face = "bold", hjust = 0.5),
+        plot.background = element_rect(fill = "grey10"), panel.background = element_blank(),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(), legend.background = element_blank(),
+        axis.title.y = element_text(size = 12, face = "bold"), axis.ticks.x =  element_line(color = "grey30", size = 0.1),
+        axis.line.x =  element_line(color = "grey30", size = 0.1), 
+        axis.text.x = element_text(size = 12, face = "bold", angle = 45, vjust = 1, hjust = 1),
+        axis.ticks.y =  element_line(color = "grey30", size = 0.1), axis.line.y =  element_line(color = "grey30", size = 0.1),
+        axis.text.y = element_text(size = 10, face = "bold"),legend.title = element_blank(), legend.position = "none")
+```
+]
+
+.panel[.panel-name[Plot #3 - Team Data]
+```{r ref.label="panel-chunk9", fig.height = 5, fig.width = 15, echo=FALSE}
+```
+]
+]
+
+---
+class: left
+# Analysing Suncorp Super Netball (League - Athlete) Data
+
+.panelset[
+.panel[.panel-name[R Code - Import All Athletes]
+
+```{r panel-chunk10, eval = FALSE}
+# First, create an empty data.frame
+SSN_Rd13_Players <- PlayerData[0,]
+# Call out the round we are after, can change this to whatever round you are interested in!
+getRound = 13
+# Run a loop to grab data for Rd13
+for (mm in 1:4) {
+  # Download match
+  matchData <- downloadMatch(SeasonID,getRound,mm)
+  # Tidy data
+  tidy_player <- tidyPlayers(matchData)
+  # Append
+  SSN_Rd13_Players <- rbind(tidy_player,SSN_Rd13_Players)
+}
+# Inspect
+tail(SSN_Rd13_Players, 12)
+```
+]
+
+.panel[.panel-name[R Ouput - All Athletes]
+```{r ref.label="panel-chunk10", echo=FALSE}
+```
+]
+
+.panel[.panel-name[R Code - Plot #4]
+
+```{r panel-chunk11, eval = FALSE}
+#  Plot the top 10 athletes for stat = feedWithAttempt
+SSN_Rd13_Players %>% filter(!(stat %in% c("startingPositionCode", "currentPositionCode"))) %>% mutate_at("value", as.numeric) %>% filter(stat=="feedWithAttempt") %>% group_by(shortDisplayName, squadName) %>%  summarise(Total = sum(value)) %>% 
+  arrange(desc(Total)) %>% head(10) %>% ggplot(aes(x = reorder(shortDisplayName, -Total), y = Total, colour = squadName)) +
+  geom_point(size = 10) + geom_segment(aes(x = shortDisplayName, y = 0, xend = shortDisplayName, yend = Total, colour = squadName), linetype = "dashed") +
+  geom_text(aes(label = Total), size = 4, colour = "black", check_overlap = TRUE) +
+  scale_colour_manual(values = SquadName_Colours) + scale_fill_manual(values = SquadName_Colours) +
+  scale_y_continuous(expand = c(0,0), limits = c(0, 40), breaks = seq(0,40, by = 10)) +
+  labs(x = NULL, y = "Number of Feeds with Attempt \n", title = "\n Suncorp Super Netball 2020 \n Rd13 - Feeds with Attempt (Individual Players) \n") +
+  dark_theme_gray()  + theme(plot.title = element_text(size = 14, face = "bold", hjust = 0.5),
         plot.background = element_rect(fill = "grey10"), panel.background = element_blank(),
         panel.grid.major = element_blank(), panel.grid.minor = element_blank(), legend.background = element_blank(),
         axis.title.y = element_text(size = 12, face = "bold"), axis.ticks.x =  element_line(color = "grey30", size = 0.1),
@@ -886,15 +654,13 @@ SSN_Rd13_Players %>% filter(!(stat %in% c("startingPositionCode", "currentPositi
         axis.ticks.y =  element_line(color = "grey30", size = 0.1), axis.line.y =  element_line(color = "grey30", size = 0.1),
         axis.text.y = element_text(size = 10, face = "bold"),legend.title = element_blank(), legend.position = "none") 
 ```
+]
 
----
-class: left
-# Visualising Suncorp Super Netball Data
-
-``` {r ref.label = 'Plot5', echo = FALSE,fig.height = 6.5, fig.width = 13}
-
+.panel[.panel-name[Plot #4]
+```{r ref.label="panel-chunk11", fig.height = 5, fig.width = 15, echo=FALSE}
 ```
-
+]
+]
 
 ---
 class: left
@@ -921,56 +687,19 @@ class: left
 
 
 <img src="https://raw.githubusercontent.com/jimmyday12/fitzRoy/master/man/figures/fitz_hex.png" width="15%"/>
-
-???
-The goal of fitzRoy is to provide a set of functions that allows for users to easily get access to AFL data from sources such as afltables.com and footywire.com. There are also tools for processing and cleaning that data.
 --
 <img src="https://camo.githubusercontent.com/286e689828c5f9efe22041bf33ed1b61aafafc0c/68747470733a2f2f617362636c6c632e636f6d2f6c6f676f732f6e626173746174522e706e67" width="15%"/>
-
-???
-A package to help you master the NBA data universe in R.
-
-Wrappers
-NBA Stats API
-Basketball-Reference
-HoopsHype
-nbadraft.net
-realgm
-Basketball Insiders
-
 --
 <img src="https://mrcaseb.github.io/nflfastR/reference/figures/logo.png" width="15%"/>
-
-???
-nflfastR is a set of functions to efficiently scrape NFL play-by-play data. nflfastR expands upon the features of nflscrapR:
-
-The package contains NFL play-by-play data back to 1999
-As suggested by the package name, it obtains games much faster
-Includes completion probability (cp) and completion percentage over expected (cpoe) in play-by-play going back to 2006
-Includes drive information, including drive starting position and drive result
-Includes series information, including series number and series success
-Hosts a repository of play-by-play data going back to 1999 for very quick access
-Features new and enhanced models for Expected Points, Win Probability, and Completion Probability (see section below)
-
 --
 <br>
 [BaseballR](http://billpetti.github.io/baseballr/)
-
-???
-baseballr is a package written for R focused on baseball analysis. It includes functions for scraping various data from websites, such as FanGraphs.com and Baseball-Reference.com. It also includes functions for calculating metrics, such as wOBA, FIP, and team-level consistency over custom time frames.
 --
 <br>
 [collegeballR](https://github.com/meysubb/collegeballR)
-
-???
-provides easy access to college sports (NCAA) data via stats.ncaa.org.
 --
 <br>
 [cricketR](https://github.com/tvganesh/cricketr)
-
-???
-used to analyze performances of cricketers based on stats from ESPN Cricinfo.
-
 --
 .pull-right[
 <img src="https://media.giphy.com/media/3oz8xAIWSf6s8aFkdO/giphy.gif" align="middle" width="65%"/> 
