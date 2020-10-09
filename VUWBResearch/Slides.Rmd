@@ -1,0 +1,321 @@
+---
+output:
+  xaringan::moon_reader:
+    css: [default, "VictoriaUniversity.css", "VictoriaUniversity-fonts.css"]
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: 16:9 
+      beforeInit: "https://platform.twitter.com/widgets.js"
+      
+---
+class: title-slide
+background-image: url(https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/WhittenOval.jpg)
+background-size: cover 
+.left[ 
+# Research At VU-WB
+   
+## Alice Sweeting, PhD  
+
+#### Finance Business Services Meeting <br> Thursday 15th October, 2020
+] 
+
+<img class="logoposR", src="WBLogo.png", width=3.5%> 
+<br>
+<img class="logoposRB", src="VU_iHES.png", width=20%>
+ 
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE, knitr.table.format = "html")
+knitr::opts_chunk$set(fig.retina = 3, warning = FALSE, message = FALSE)
+library(icon)      
+library(tidyverse) 
+library(emo) 
+library(fontawesome)
+
+# <img class="logoposLB" src="TrackLogo.png", width=16%>   
+```
+
+
+```{r xaringan-logo, echo=FALSE}
+xaringanExtra::use_logo(
+  image_url = "https://raw.githubusercontent.com/SportStatisticsRSweet/SportStatisticsRSweet.github.io/master/VU_iHES.png",
+   width = "200px",
+  height = "200px",
+  link_url = "https://www.vu.edu.au/research/institute-for-health-sport"
+)
+```
+
+```{r xaringan-tachyons, echo=FALSE}
+xaringanExtra::use_tachyons()
+```
+
+---
+class: inverse, centre, bottom
+background-image: url(https://www.yarracity.vic.gov.au/-/media/all-images/yarra-city-council-images/events/events-2020/january/_bpp9388.jpg)
+background-size: cover
+
+.center[
+.caption[
+Image source: [Yarra City Council](https://aboriginalhistoryofyarra.com.au/)
+]]
+
+???
+
+I’d like to begin by acknowledging the Traditional Owners of the land on which we meet today, which for me in Richmond, Victoria, are the Wurundjeri-willam people of the Kulin Nation. I also wish to pay my respects to Elders past, present and emerging. Pictured is the beautiful Birrarung.
+
+---
+<br>
+.pull-left[
+<img src="https://raw.githubusercontent.com/SportStatisticsRSweet/SportStatisticsRSweet.github.io/master/AliceLemonade.jpg", align="middle", width="90%">
+]
+--
+.pull-right[
+<img src="https://static01.nyt.com/images/2017/12/06/arts/05rolton-obit-2/05rolton-obit-2-jumbo.jpg?quality=90&auto=webp", align="middle", width="100%"> .caption[
+Image source: [Equestrian Australia](https://www.nytimes.com/2017/12/04/obituaries/gillian-rolton-australian-who-won-gold-despite-broken-bones-dies-at-61.html)]
+<img src="https://www.u-vet.com.au/__data/assets/image/0021/63309/UVet-Primary_Co-Branded_RGB_WEB.jpg", align="middle", width="70%"> 
+]
+
+---
+class: inverse, bottom, right
+background-image: url(https://www.vu.edu.au/sites/default/files/building-k-footscray-park-evening.jpg)
+background-size: cover
+
+---
+<br>
+.pull-left[
+<img src="https://static.ffx.io/images/$width_800%2C$height_450/t_crop_fill/q_86%2Cf_auto/7e5cde91e8445fa885a0dbde6b277817ee2bcab2", align="middle", width="150%">.caption[
+Image source: [Sydney Morning Herald](hthttps://www.smh.com.au/sport/cuttingedge-technology-put-australian-diamonds-on-track-20130521-2jzfu.html)]
+<br>
+### 2013 to 2016: PhD
+#### Victoria University <br> Netball Australia <br> Australian Institute of Sport]
+
+--
+.pull-right[
+<img src="https://resources.westernbulldogs.com.au/photo-resources/2019/12/01/a3e548cf-df01-4485-bd8f-b89b4da55937/utJEnQbI.jpg?width=952&height=592", align="middle", width="91%"> .caption[
+Image source: [Western Bulldogs](https://www.vu.edu.au/about-vu/news-events/news/bulldogs-vu-create-afl-first-partnership)]
+<br>
+### 2017 to present: Research Fellow 
+#### Victoria University <br> Western Bulldogs Football Club]
+
+---
+class: inverse, left, top
+background-image: url(https://raw.githubusercontent.com/SportStatisticsRSweet/SportStatisticsRSweet.github.io/master/SportDataR/VUSportStrategy.jpg)
+background-size: contain
+
+???
+
+Victoria University (VU) is ranked in the top 20 globally for sport science education. VU has strong ambitions to be Australia’s leading sport university and a global leader in sport. The VU Sport Strategy, 2019-2023 helps drive to achieve this ambition.
+
+---
+class: inverse
+background-image: url(https://raw.githubusercontent.com/SportStatisticsRSweet/SportStatisticsRSweet.github.io/master/vu-sport-strategy_Page_5.jpg)
+background-size: contain
+
+???
+
+* As you can see on this page, there is a rich history of sport expertise at VU.  
+* Over our history and particularly in the last decade, VU has been a leading local, national and global contributor in the field. 
+* One of the seven key areas of the sport strategy is to maximise engagement with the sporting industry, through strategic partnerships. 
+* One of these partnerships is with the Western Bulldogs Football Club, under which my role is embedded.
+
+
+---
+class: inverse
+background-image: url(https://www.vu.edu.au/sites/default/files/images/mitch-wallis-large.jpg)
+background-size: cover
+
+???
+
+* VU's association with the Western Bulldogs began in the 1980's and has now grown to include a multi-faceted partnership with all four AFL, AFLW, VFL and VFLW WB teams. 
+* The sport science partnership comprises workplace learning opportunities for students, joint staff appointments and professional development, WB staff and athlete access to VU facilities and expertise. 
+* Another major facet of the strategicsport science partnership is collaborative research, including HDR student projects. I work side-by-side with the Bulldogs' coaching, medical and performance teams as part of a structured research program, with the ultimate goal of helping to improve on-field performance. 
+* My role is embeded under this strategic partnership
+
+
+---
+class: inverse, bottom, right
+background-image: url(https://waydev.co/wp-content/uploads/2020/01/moneyball-git-analytics.jpg)
+background-size: cover
+<br>
+<br>
+<br>
+.caption[
+Image: [Moneyball]()]
+
+---
+class: inverse, bottom, right
+background-image: url(https://careers.amsi.org.au/wp-content/uploads/sites/59/2019/06/3_amsi-careers_careerssearch-lp_v3_11.jpg)
+background-size: cover
+<br>
+<br>
+<br>
+.caption[
+Image source: [AMSI](https://careers.amsi.org.au/search-careers/)]
+
+
+---
+class: left, top
+# Data Sources in Australian Rules Football
+
+### `r fa("question-circle", fill = "black")` [Monitor how an athlete rates their perceived exertion from a training session.](https://journals.humankinetics.com/view/journals/ijspp/12/2/article-p230.xml)
+--
+<br>
+### `r fa("laptop-code", fill = "black")` [Detect biomechanical characteristics, using wearable technology, during skilled actions.](http://vuir.vu.edu.au/39871/1/icSPORTS_2019_15.pdf)
+--
+<br>
+### `r fa("running", fill = "black")` [Collect an athlete's physical output during training and matches.](https://shapeamerica.tandfonline.com/doi/abs/10.1080/02640414.2019.1577941#.X2RNLWgzaUk)
+--
+<br>
+### `r fa("football-ball", fill = "black")` [Record the number of skilled involvements during drills and matches.](https://www.sciencedirect.com/science/article/abs/pii/S0167945719301939)
+--
+<br>
+### `r fa("users", fill = "black")` [Quantify the interactions between team-members during training and matches.](https://www.tandfonline.com/doi/abs/10.1080/02640414.2019.1586077)
+--
+<br>
+### `r fa("chart-line", fill = "black")` [Track the performance of potential recruits and draft selections.](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0220901)
+--
+<br>
+### `r fa("utensils", fill = "black")` [Estimate the energy expenditure of athletes during training and matches.](https://www.sciencedirect.com/science/article/abs/pii/S1440244015000390)
+
+---
+class: inverse, center, top
+background-image: url(https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/W02WBMe20DT993162838.JPG)
+background-size: cover
+# VU-WB Research (Data Analytics) Projects
+
+
+---
+class: center
+.left[
+# Wearables to Detect Skilled Involvements
+]
+
+<img src="https://imeasureu.com/wp-content/uploads/2019/10/Soccer-kick.jpg" width="65%"/>
+
+.right[Image: [iMeasureU](https://imeasureu.com/wp-content/uploads/2019/10/Soccer-kick.jpg)]
+
+
+
+---
+class: inverse, bottom
+background-image: url(https://images.catapultsports.com/wp-content/uploads/2018/05/Fundamentals.jpg)
+background-size: cover
+
+.left[
+.caption[
+Image source: [Catapult Sports](https://www.catapultsports.com/)
+]]
+
+
+---
+class: center
+.left[
+# Analysing Athlete Physical Output
+]
+
+``````{r CreateDrillTable2, echo = FALSE}
+library(kableExtra)
+DrillEventData <- data.frame(Athlete = c("Warm Up", "Pair Kicks", "4v3 Game", "Stoppages"), 
+                             'Total Duration (mins)' = c(10, 6, 5, 9),
+                             'Total Distance (m)' = c(1026, 414, 849,921),
+                             'Total HIR (m)' = c(83, 12, 277, 362))
+DrillEventData$`Metres per Min (m/min)` <- DrillEventData$Total.Distance..m./DrillEventData$Total.Duration..mins.
+colnames(DrillEventData) <- c("Drill", "Total Duration (mins)", "Total Distance (m)", 
+                              "Total HIR (m)", "Metres per Min (m/min)")
+DrillEventData %>%
+  kable("html", escape = T, booktabs = T, align = "c",
+  digits = 0, table.attr = "style = \"color: black;\"")%>%
+  kable_styling(position = "center", font_size = 25, bootstrap_options = c("responsive","bordered"))%>%
+  row_spec(0, bold = T, color = "white", background = "#000000", extra_css = "border-right: 1px solid; padding: 15px")  %>%
+  #column_spec(1:6, border_left = T, border_right = T)  %>%
+  row_spec(nrow(DrillEventData), color = "black", extra_css = "border-bottom: 1px solid")
+```
+
+---
+class: center
+.left[
+# Analysing Athlete Physical Output
+]
+<img src="https://raw.githubusercontent.com/SportStatisticsRSweet/SportStatisticsRSweet.github.io/master/SportDataR/RawTrace_TimeSeries.png", align="middle", width="75%">
+
+---
+class: center
+.left[
+# Analysing Collective Team-Behaviour
+]
+<img src= "https://www.tandfonline.com/na101/home/literatum/publisher/tandf/journals/content/rjsp20/2019/rjsp20.v037.i15/02640414.2019.1586077/20190615/images/large/rjsp_a_1586077_f0001_oc.jpeg", align="middle", width="62%">
+
+.right[
+Figure from [Alexander et al., (2019) in Journal of Sport Sciences.](https://www.tandfonline.com/doi/full/10.1080/02640414.2019.1586077)]
+
+
+---
+class: left
+
+# How we Analyse Data in Sport Science at VU-WB
+
+
+<img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/readr.png" width="9%"/>
+<img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/readxl.png" width="9%"/>
+--
+<img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/tidyr.png" width="9%"/>
+<img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/lubridate.png" width="9%"/>
+<img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/hms.png" width="9%"/>
+--
+<img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/ggplot2.png" width="9%"/>
+--
+<img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/flexdashboard.png" width="9%"/>
+<img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/rmarkdown.png" width="9%"/>
+<img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/shiny.png" width="9%"/>
+<img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/xaringan.png" width="9%"/>
+
+--
+<br>
+### `r fa("weight", fill = "black")` Creating an interactive report for Club dietitian to see change in body mass
+--
+<br>
+### `r fa("chart-bar", fill = "black")` Visualising team performance indicators (live) during matches for coaching staff
+--
+<br>
+### `r fa("file-medical", fill = "black")` Communicating return to play data on an athlete during a physiological/ lab based test
+--
+<br>
+### `r fa("chalkboard-teacher", fill = "black")` Presenting physical output (GPS, LPS etc) data during post-season reviews
+--
+<br>
+### `r fa("graduation-cap", fill = "black")` Analysing and preparing data for academic publication/ presentations/ reports
+
+---
+class: left
+
+# Data Hurdles in Sport Science
+
+### `r fa("database", fill = "black")` Importing data from wearables/ different platforms and exports .csv/ .pdf/ .txt etc
+--
+<br>
+### `r fa("clock", fill = "black")` Synchronising data from different systems at differing sample rates
+--
+<br>
+### `r fa("asterisk", fill = "black")` Dealing with messy, manual, incomplete data sets!
+--
+<br>
+### `r fa("users-cog", fill = "black")` Dealing with breadth and depth (strength & conditioning, medical, coaching, recruiting etc)
+
+
+---
+class: left, top
+# Any Questions? 
+.pull-left[
+<img src="https://raw.githubusercontent.com/SportStatisticsRSweet/RLadiesMelbourneTalk/master/Dudley.jpg" width="70%"/> 
+]
+
+<span style = 'font-size: 50%;'>
+.pull-right[
+<br>
+<br>
+## `r fa("envelope", fill = "black")` [Alice.Sweeting@vu.edu.au](mailto:Alice.Sweeting@vu.edu.au)<br>
+## `r fa("twitter", fill = "black")` [alicesweeting](https://twitter.com/alicesweeting)<br>
+]  
+ 
+ 
