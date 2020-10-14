@@ -1,7 +1,7 @@
 ---
 title: "2020 Suncorp Super Netball Player Status"
 author: "Alice Sweeting <br>Research Fellow<br>Victoria University, Australia"
-date: "13/10/2020"
+date: "Updated on 14/10/2020"
 output: html_document
 ---
 
@@ -17,6 +17,8 @@ library(reactable)
 library(htmltools)
 library(readxl)
 library(forcats)
+library(kableExtra)
+library(tidyverse)
 
 # Read in data
 SSN <- read_excel("SSN_Player_Status.xlsx", sheet = "2021 Contracted Players")
@@ -31,9 +33,9 @@ SSN$Status <- fct_explicit_na(SSN$Status, "Unknown")
 ```
 
 
-### Data compiled here is with thanks to [Craig Moyle](https://twitter.com/Old_Rando) who has manually captured and input all records!
+### Data compiled here is with thanks to [Craig Moyle](https://twitter.com/Old_Rando) who has manually captured and input all records! {.tabset}
 
-
+#### Contracted Players in 2020
 ```{r MakeReactiveTable, echo = FALSE}
 # Make reactable
 reactable(SSN, 
@@ -81,6 +83,19 @@ reactable(SSN,
 
 ```
 
+
+#### Club Lists for 2021 SSN Season (to-date)
+```{r kableExtraTable, echo = FALSE}
+# Read in data
+SSN_2021 <- read_excel("SSN_Player_Status.xlsx", sheet = "ClubLists2021")
+
+# Use kableextra
+SSN_2021  %>%
+  kbl(booktabs = T) %>%
+  kable_material_dark(full_width = T) 
+ # row_spec(0, image = spec_image(c("Images/Fever.png", "Images/Fever.png","Images/Fever.png", "Images/Fever.png",
+#     "Images/Fever.png", "Images/Fever.png","Images/Fever.png", "Images/Fever.png")))
+```
 
 ```{css echo=FALSE}
 /* rmarkdown html documents */
