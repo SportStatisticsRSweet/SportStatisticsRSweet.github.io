@@ -1,7 +1,6 @@
 ---
 title: "2020 Suncorp Super Netball Player Status"
 author: "Alice Sweeting <br>Research Fellow<br>Victoria University, Australia"
-date: "Updated on 14/10/2020"
 output: html_document
 ---
 
