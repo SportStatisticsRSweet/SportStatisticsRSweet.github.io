@@ -23,7 +23,7 @@ library(tidyverse)
 # Read in data
 SSN <- read_excel("SSN_Player_Status.xlsx", sheet = "2021 Contracted Players")
 # We don't want the bottom bit with row numbers etc, so remove
-SSN <- SSN[c(1:82), ]
+# SSN <- SSN[c(1:82), ]
 # Rename columns, to make it easier for table
 colnames(SSN) <- c("Athlete", "Club", "Status", "Notes")
 # Make factor
