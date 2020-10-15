@@ -92,10 +92,12 @@ SSN_2021 <- read_excel("SSN_Player_Status.xlsx", sheet = "ClubLists2021")
 # Use kableextra
 SSN_2021  %>%
   kbl(booktabs = T) %>%
-  kable_material_dark(full_width = T) 
+  kable_material_dark(full_width = T)  
  # row_spec(0, image = spec_image(c("Images/Fever.png", "Images/Fever.png","Images/Fever.png", "Images/Fever.png",
 #     "Images/Fever.png", "Images/Fever.png","Images/Fever.png", "Images/Fever.png")))
+
 ```
+
 
 ```{css echo=FALSE}
 /* rmarkdown html documents */
@@ -128,4 +130,9 @@ SSN_2021  %>%
   color: hsl(350, 45%, 30%);
 }
 
+.status-departed {
+  background: hsl(360, 100%, 0%);
+  color: hsl(360, 100%, 100%);
+}
 ```
+
