@@ -105,7 +105,9 @@ missing_text = " "
     Swifts = html("<img src=\"Images/Swifts.png\" style=\"height:60px;\">"),
     Thunderbirds = html("<img src=\"Images/Thunderbirds.png\" style=\"height:60px;\">"),
     Vixens = html("<img src=\"Images/Vixens.png\" style=\"height:60px;\">")
-  )
+  ) %>% 
+  tab_options(
+    data_row.padding = px(10))
   table_html
 
 ```
