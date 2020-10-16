@@ -18,6 +18,7 @@ library(readxl)
 library(forcats)
 library(kableExtra)
 library(tidyverse)
+library(gt)
 
 # Read in data
 SSN <- read_excel("SSN_Player_Status.xlsx", sheet = "2021 Contracted Players")
@@ -84,16 +85,28 @@ reactable(SSN,
 
 
 #### Club Lists for 2021 SSN Season (to-date)
-```{r kableExtraTable, echo = FALSE}
+
+```{r gtTable, echo = FALSE}
 # Read in data
 SSN_2021 <- read_excel("SSN_Player_Status.xlsx", sheet = "ClubLists2021")
-
-# Use kableextra
-SSN_2021  %>%
-  kbl(booktabs = T) %>%
-  kable_material_dark(full_width = T)  
- # row_spec(0, image = spec_image(c("Images/Fever.png", "Images/Fever.png","Images/Fever.png", "Images/Fever.png",
-#     "Images/Fever.png", "Images/Fever.png","Images/Fever.png", "Images/Fever.png")))
+# Use gt
+table_html <- SSN_2021  %>%
+  gt() %>%
+  fmt_missing(
+columns = 1:8,
+missing_text = " "
+) %>% 
+  cols_label(
+    Fever = html("<img src=\"Images/Fever.png\" style=\"height:60px;\">"),
+    Firebirds = html("<img src=\"Images/Firebirds.png\" style=\"height:60px;\">"),
+    Giants = html("<img src=\"Images/Giants.png\" style=\"height:60px;\">"),
+    Lightning = html("<img src=\"Images/Lightning.png\" style=\"height:60px;\">"),
+    Magpies = html("<img src=\"Images/Magpies.png\" style=\"height:60px;\">"),
+    Swifts = html("<img src=\"Images/Swifts.png\" style=\"height:60px;\">"),
+    Thunderbirds = html("<img src=\"Images/Thunderbirds.png\" style=\"height:60px;\">"),
+    Vixens = html("<img src=\"Images/Vixens.png\" style=\"height:60px;\">")
+  )
+  table_html
 
 ```
 
@@ -101,6 +114,7 @@ SSN_2021  %>%
 ```{css echo=FALSE}
 /* rmarkdown html documents */
   
+
 .tag {
   display: inline-block;
   padding: 2px 12px;
