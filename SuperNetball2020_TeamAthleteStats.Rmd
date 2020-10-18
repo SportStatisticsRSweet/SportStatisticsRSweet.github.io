@@ -1,0 +1,172 @@
+---
+title: "Suncorp Super Netball 2020 - Team Stats"
+author: "Alice Sweeting"
+date: "18/10/2020"
+output: html_document
+---
+
+<style>
+body {
+text-align: justify}
+</style>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# Load packages
+library(tidyverse)
+library(ggridges)
+library(ggdark)
+library(gghalves)
+library(ggtext)
+library(here)
+library(viridis)
+library(cowplot)
+library(extrafont)
+library(superNetballR)
+library(reactable)
+library(htmltools)
+
+# Load data
+load("~/GitHub/SportStatisticsRSweetBlog/content/post/17102020_SuperNetballGF/SuncorpSuperNetball2020Data.RData")
+```
+
+# Suncorp Super Netball 2020 - Team & Individual Athlete Statistics
+### Alice Sweeting, PhD <br> [Victoria University, Melbourne](https://www.vu.edu.au/) {.tabset}
+
+The 2020 [Suncorp Super Netball](https://supernetball.com.au/) season has been like no other, with the entire competition relocating to Queensland for a hub-style format of competition. Matches were often played twice per week, with athletes, support staff, umpires, media and league administrators all spending a considerable amount of time away from partners, family and friends. The statistics, collected by [Champion Data](https://mc.championdata.com/super_netball/index.html), during every quater, match and round of the 2020 season have also been exciting to watch unfold. Below are key team and individual athlete statistics, upon completion of Round 14, collected by Champion and compiled here using the `tidyverse` and the wonderful `superNetballR` package by [Steve Lane.](https://github.com/SteveLane/superNetballR)
+
+#### Team Statistics
+
+```{r TeamStats, message = FALSE, warning = FALSE, echo=FALSE}
+# Create data
+TeamStats2020 <- Season2020_TeamData %>% 
+   filter(stat %in% c("goalsFromCentrePass", 
+                      "goalsFromGain", "goalsFromTurnovers",
+                      "gain", "intercepts", "pickups", "penalties",  
+                      "badPasses")) %>% 
+  group_by(squadNickname, stat) %>% 
+  summarise(SeasonTotal = sum(Total)) %>% 
+  pivot_wider(names_from = stat, values_from = SeasonTotal) %>% 
+  select(squadNickname, goalsFromCentrePass, goalsFromGain, 
+  goalsFromTurnovers, intercepts, gain, pickups, penalties, badPasses)
+# Rename columns
+colnames(TeamStats2020) <- c("Club", "Goals From Centre Pass", "Goals From Gain", 
+                             "Goals From Turnovers", "Intercepts", "Gains", "Pickups", "Penalties", "Bad Passes")
+# Rd14 ladder order
+TeamStats2020$`Season Finish` <- c(3, 5, 6, 2, 8, 4, 7, 1)
+# Create table
+reactable(TeamStats2020, pagination = TRUE, minRows = 10, defaultSortOrder = "asc", defaultSorted = "Season Finish", showSortIcon = TRUE, borderless = TRUE, highlight = TRUE, searchable = FALSE, defaultColDef = colDef(headerClass = "header", align = "center"),
+          columns = list(
+            Club = colDef(name = "Club",
+                          filterable = TRUE,
+                          align = "center", 
+                          style = list(fontSize = "12px", fontWeight = "bold"),
+                          headerStyle = list(fontWeight = 700),
+                          cell = function(value) {
+                            div(class = "Club",
+                                img(class = "logo", 
+                                    alt = paste(value, "logo"), 
+                                    src = sprintf("Images/%s.png", value)))}, 
+                          maxWidth = 100)
+            ))
+```
+
+#### Athlete Statistics
+```{r AthleteStats, message = FALSE, warning = FALSE, echo=FALSE}
+# Create data
+AthleteStats2020 <- Season2020_PlayerData %>% 
+     filter(stat %in% c("feedWithAttempt", 
+                      "gain", "goalAttempts",
+                      "intercepts", "penalties",  
+                      "rebounds", "minutesPlayed")) %>% 
+  group_by(squadNickname, shortDisplayName, stat) %>% 
+  summarise(SeasonTotal = sum(Total)) %>% 
+  pivot_wider(names_from = stat, values_from = SeasonTotal)
+# Rename columns
+colnames(AthleteStats2020) <- c("Club", "Athlete", "Feed with Attempt", "Gains", 
+                             "Goal Attempts", "Intercepts", "Minutes Played", "Penalties", "Rebounds")
+# Create table
+reactable(AthleteStats2020, pagination = TRUE, minRows = 10, defaultSortOrder = "desc", defaultSorted = "Minutes Played", showSortIcon = TRUE, borderless = TRUE, height = 900, highlight = TRUE, searchable = FALSE, defaultColDef = colDef(headerClass = "header", align = "center"),
+          columns = list(
+            Club = colDef(name = "Club",
+                          filterable = TRUE,
+                          align = "center", 
+                          style = list(fontSize = "8px", fontWeight = "bold"),
+                          headerStyle = list(fontWeight = 700),
+                          cell = function(value) {
+                            div(class = "Club",
+                                img(class = "logo", 
+                                    alt = paste(value, "logo"), 
+                                    src = sprintf("Images/%s.png", value)))}, 
+                          maxWidth = 100),
+            Athlete = colDef(name = "Athlete",
+                          filterable = TRUE,
+                          align = "center", 
+                          style = list(fontSize = "18px"),
+                          headerStyle = list(fontWeight = 700),  
+                          maxWidth = 500)))
+  
+```
+
+
+```{css echo=FALSE}
+/* Whole document: */
+body{
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 12pt;
+}
+/* Headers */
+h1{
+  font-size: 32px;
+  font-weight: bold;
+}
+.author,.date{
+    display: none;
+}
+
+.title {
+  margin: 18px 0;
+  font-size: 16px;
+}
+.title h2 {
+  font-size: 20px;
+  font-weight: 600;
+}
+.plusMinus-table {
+  margin-bottom: 20px;
+}
+/* Align header text to the bottom */
+.header,
+.group-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.header {
+  border-bottom-color: #555;
+  font-size: 13px;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+```
+
+
+```{css echo=FALSE}
+/* rmarkdown html documents */
+.main-container {
+  max-width: 1054px !important;
+}
+h1.title {
+  display: none;
+}
+/* pkgdown articles */
+.contents {
+  width: 1054px;
+}
+.page-header {
+  display: none;
+}
+```
+
