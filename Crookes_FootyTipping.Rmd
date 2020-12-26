@@ -123,9 +123,7 @@ QuestionSummary <- ResultsAnalysis %>%
 Introduction
 =========================================
 
-```{r picture, echo = F, out.width = '160%'}
-knitr::include_graphics("C:/Users/e5104072/Desktop/MCG.jpg")
-```
+Welcome to the Crookes 2020 Footy Tipping Competition! To work through the results, click on the tabs/ menus above.
 
 Overview {.storyboard} 
 =========================================
