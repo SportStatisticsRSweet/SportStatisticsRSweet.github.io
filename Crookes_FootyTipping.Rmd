@@ -1,6 +1,5 @@
 ---
 title: "Crookes Footy Tipping Competition"
-author: "By Alice Sweeting"
 output: 
   flexdashboard::flex_dashboard:
     storyboard: true
@@ -129,7 +128,7 @@ Introduction
 knitr::include_graphics("C:/Users/e5104072/Desktop/MCG.jpg")
 ```
 
-An overview of how we went... {.storyboard} 
+Overview {.storyboard} 
 =========================================
 
 ### How many people correctly selected Port Adelaide to finish on top? <br><br> Who else did people pick?
@@ -350,7 +349,7 @@ QuestionSummary %>%
 ```
 
 
-The results are in! {.storyboard} 
+Results! {.storyboard} 
 =========================================
 
 ### In third place... we have an offshore-based entry!
@@ -383,7 +382,7 @@ knitr::include_graphics("C:/Users/e5104072/Desktop/Johnny.jpg")
 knitr::include_graphics("C:/Users/e5104072/Desktop/Wayan.jpg")
 ```
 
-Want to see the total number of points you finished on? 
+How did you go?
 =========================================
 
 ```{r TotalTable, message = FALSE, warning = FALSE, echo=FALSE}
@@ -394,7 +393,7 @@ reactable(OverallWinner, pagination = FALSE, defaultSortOrder = "desc",
   
 ```
 
-And finally, the raw data for those interested...
+Raw Data
 =========================================
 ```{r RawData, message = FALSE, warning = FALSE, echo=FALSE}
 # Create table
