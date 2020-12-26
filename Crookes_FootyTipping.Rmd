@@ -1,0 +1,406 @@
+---
+title: "Crookes Footy Tipping Competition"
+author: "By Alice Sweeting"
+output: 
+  flexdashboard::flex_dashboard:
+    storyboard: true
+    fig_width: 16 
+    fig_height: 6 
+    theme: cerulean
+    source_code: embed
+---
+
+```{r setup, echo=FALSE}
+knitr::opts_chunk$set(echo = FALSE,dpi=300)
+# Load packages
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(ggdark)
+library(reactable)
+library(htmltools)
+# Load data
+RawData <- read.csv("C:/Users/e5104072/Desktop/CrookesFootyTippingComp.csv")
+```
+
+```{r TidyingData, echo=FALSE}
+# Rename columns
+colnames(RawData) <- c("TimeStamp", "Email", "Name", "1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "Grand Final Location", 
+                       "Grand Final Time", "Pre-match Entertainment", "Grand Final Contested by", "Grand Final Winner", "Grand Final Margin", 
+                       "Norm Smith", "Brownlow Medal", "Coleman Medal", "Rising Star", "All Australian Captain", "Total Number of Adelaide Wins", 
+                       "When is Dave allowed in QLD?")
+# Make factors
+RawData <- RawData %>%
+    purrr::modify_at(18:22, factor)
+# Rename levels
+levels(RawData$`Norm Smith`)[levels(RawData$`Norm Smith`)=="Danger bird "] <- "Patrick Dangerfield"
+levels(RawData$`Norm Smith`)[levels(RawData$`Norm Smith`)=="Dangerfield"] <- "Patrick Dangerfield"
+levels(RawData$`Norm Smith`)[levels(RawData$`Norm Smith`)=="P Dangerfield "] <- "Patrick Dangerfield"
+levels(RawData$`Norm Smith`)[levels(RawData$`Norm Smith`)=="P Dangerfield "] <- "Patrick Dangerfield"
+levels(RawData$`Norm Smith`)[levels(RawData$`Norm Smith`)=="Dustin Martin "] <- "Dustin Martin"
+levels(RawData$`Norm Smith`)[levels(RawData$`Norm Smith`)=="Lachie Neale "] <- "Lachie Neale"
+# And again
+levels(RawData$`Brownlow Medal`)[levels(RawData$`Brownlow Medal`)=="L Neale"] <- "Lachie Neale"
+levels(RawData$`Brownlow Medal`)[levels(RawData$`Brownlow Medal`)=="Lachie Neale "] <- "Lachie Neale"
+levels(RawData$`Brownlow Medal`)[levels(RawData$`Brownlow Medal`)=="Lachie Neale - Brisbane Lions."] <- "Lachie Neale"
+levels(RawData$`Brownlow Medal`)[levels(RawData$`Brownlow Medal`)=="Lachie Neale Brisbane"] <- "Lachie Neale"
+levels(RawData$`Brownlow Medal`)[levels(RawData$`Brownlow Medal`)=="Lochie Neale "] <- "Lachie Neale"
+levels(RawData$`Brownlow Medal`)[levels(RawData$`Brownlow Medal`)=="Neale"] <- "Lachie Neale"
+levels(RawData$`Brownlow Medal`)[levels(RawData$`Brownlow Medal`)=="Lachie Neal"] <- "Lachie Neale"
+levels(RawData$`Brownlow Medal`)[levels(RawData$`Brownlow Medal`)=="Neale Lions"] <- "Lachie Neale"
+levels(RawData$`Brownlow Medal`)[levels(RawData$`Brownlow Medal`)=="P.Dangerfield "] <- "Patrick Dangerfield"
+# Damn whitespaces!
+levels(RawData$`Coleman Medal`)[levels(RawData$`Coleman Medal`)=="Baby Hawkins"] <- "Tom Hawkins"
+levels(RawData$`Coleman Medal`)[levels(RawData$`Coleman Medal`)=="Josh Kennedy "] <- "Josh Kennedy"
+levels(RawData$`Coleman Medal`)[levels(RawData$`Coleman Medal`)=="Josh Kennedy Eagles"] <- "Josh Kennedy"
+levels(RawData$`Coleman Medal`)[levels(RawData$`Coleman Medal`)=="Josh Kennedy West Coast"] <- "Josh Kennedy"
+levels(RawData$`Coleman Medal`)[levels(RawData$`Coleman Medal`)=="Kennedy Eagles"] <- "Josh Kennedy"
+levels(RawData$`Coleman Medal`)[levels(RawData$`Coleman Medal`)=="Kennedy. Josh"] <- "Josh Kennedy"
+levels(RawData$`Coleman Medal`)[levels(RawData$`Coleman Medal`)=="T Hawkins"] <- "Tom Hawkins"
+levels(RawData$`Coleman Medal`)[levels(RawData$`Coleman Medal`)=="T. Hawkins "] <- "Tom Hawkins"
+levels(RawData$`Coleman Medal`)[levels(RawData$`Coleman Medal`)=="T.Hawkins "] <- "Tom Hawkins"
+levels(RawData$`Coleman Medal`)[levels(RawData$`Coleman Medal`)=="Tom Hawkins "] <- "Tom Hawkins"
+# Neaerly there
+levels(RawData$`Rising Star`)[levels(RawData$`Rising Star`)=="I Rankine"] <- "Izak Rankine"
+levels(RawData$`Rising Star`)[levels(RawData$`Rising Star`)=="Isaac Rankine"] <- "Izak Rankine"
+levels(RawData$`Rising Star`)[levels(RawData$`Rising Star`)=="Izak Rankin"] <- "Izak Rankine"
+levels(RawData$`Rising Star`)[levels(RawData$`Rising Star`)=="Rankin"] <- "Izak Rankine"
+levels(RawData$`Rising Star`)[levels(RawData$`Rising Star`)=="Rankine"] <- "Izak Rankine"
+levels(RawData$`Rising Star`)[levels(RawData$`Rising Star`)=="Anderson Suns"] <- "Noah Anderson"
+levels(RawData$`Rising Star`)[levels(RawData$`Rising Star`)=="Noah Anderson G C"] <- "Noah Anderson"
+levels(RawData$`Rising Star`)[levels(RawData$`Rising Star`)=="Noah Anderson Suns"] <- "Noah Anderson"
+# Finally
+levels(RawData$`All Australian Captain`)[levels(RawData$`All Australian Captain`)=="Boak "] <- "Travis Boak"
+levels(RawData$`All Australian Captain`)[levels(RawData$`All Australian Captain`)=="T.Boak"] <- "Travis Boak"
+levels(RawData$`All Australian Captain`)[levels(RawData$`All Australian Captain`)=="Bontempelli "] <- "Marcus Bontempelli"
+levels(RawData$`All Australian Captain`)[levels(RawData$`All Australian Captain`)=="Danger"] <- "Patrick Dangerfield"
+levels(RawData$`All Australian Captain`)[levels(RawData$`All Australian Captain`)=="P.Dangerfield "] <- "Patrick Dangerfield"
+levels(RawData$`All Australian Captain`)[levels(RawData$`All Australian Captain`)=="J Selwood"] <- "Joel Selwood"
+levels(RawData$`All Australian Captain`)[levels(RawData$`All Australian Captain`)=="Selwood Cats"] <- "Joel Selwood"
+levels(RawData$`All Australian Captain`)[levels(RawData$`All Australian Captain`)=="Scott Penlebury"] <- "Scott Pendlebury"
+
+# Make margins numeric only
+RawData$`Grand Final Margin` <- as.numeric(str_extract_all(RawData$`Grand Final Margin`, "[0-9]+"))
+RawData$`Total Number of Adelaide Wins` <- as.numeric(str_extract_all(RawData$`Total Number of Adelaide Wins`, "[0-9]+"))
+# To avoid issue, make character
+RawData$`Grand Final Margin` <- as.character(RawData$`Grand Final Margin`)
+RawData$`Total Number of Adelaide Wins` <- as.character(RawData$`Total Number of Adelaide Wins`)
+# Remove null columns & pivot longer
+RawData <- RawData %>% 
+  select(-c(TimeStamp, Email)) %>% 
+  pivot_longer(
+        !Name, 
+        names_to = "Question", 
+        values_to = "Answer")
+# Call out ground truth
+GroundTruth <- RawData %>% 
+  filter(Name=="Correct") %>% 
+  select(-c(Name))
+colnames(GroundTruth) <- c("Question", "Correct Answer")
+# Now remove from raw
+RawData <- RawData %>% 
+  filter(Name!="Correct") 
+# Merge
+ResultsAnalysis <- merge(RawData, GroundTruth, by = "Question")
+# To check if columns are identical
+ResultsAnalysis <- ResultsAnalysis %>%
+    rowwise %>% 
+    mutate(Points = case_when(Answer == `Correct Answer` ~ 1,
+                           TRUE ~ 0)) 
+# Tidy!
+ResultsAnalysis$Name <- as.factor(ResultsAnalysis$Name)
+levels(ResultsAnalysis$Name)[levels(ResultsAnalysis$Name)=="Wayan â€œ3-Time Championâ€\u009d Hadi"] <- "Wayan `3-Time Champion` Hadi"
+ResultsAnalysis$Question <- as.factor(ResultsAnalysis$Question)
+# Now summarise
+OverallWinner <- ResultsAnalysis %>% 
+  group_by(Name) %>% 
+  summarise(Total = sum(Points)) %>% 
+  arrange(desc(Total))
+# Question Analysis
+QuestionSummary <- ResultsAnalysis %>% 
+  group_by(Question, Answer) %>% 
+  summarise(Total = n())
+```
+
+Introduction
+=========================================
+
+```{r picture, echo = F, out.width = '160%'}
+knitr::include_graphics("C:/Users/e5104072/Desktop/MCG.jpg")
+```
+
+An overview of how we went... {.storyboard} 
+=========================================
+
+### How many people correctly selected Port Adelaide to finish on top? <br><br> Who else did people pick?
+
+```{r Figure1, fig.width=16, fig.height=7, echo=FALSE}
+QuestionSummary %>% 
+  filter(Question == "1st") %>% 
+  arrange(desc(Total)) %>% 
+  ggplot(aes(x = reorder(Answer, -Total), y = Total, colour = Answer)) +
+  geom_point(size = 10) + 
+  geom_segment(aes(x = Answer, y = 0, xend = Answer, yend = Total, colour = Answer), 
+               linetype = "dashed") +
+  geom_text(aes(label = Total), size = 4, colour = "black", check_overlap = TRUE) +
+  labs(x = NULL, y = NULL, 
+       title = NULL) +
+  dark_theme_gray()  + 
+  theme(plot.title = element_text(size = 14, face = "bold", hjust = 0.5),
+        plot.background = element_rect(fill = "grey10"), 
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        legend.background = element_blank(),
+        text = element_text(family = "Lucida Sans"),
+        axis.ticks.x = element_line(color = "grey30", size = 0.1),
+        axis.line.x =  element_line(color = "grey30", size = 0.1), 
+        axis.text.x = element_text(size = 10, face = "bold", angle = 25, vjust = 1, hjust = 1),
+        axis.ticks.y =  element_blank(), 
+        axis.title.y = element_blank(), 
+        axis.line.y = element_blank(), 
+        axis.text.y = element_blank(),
+        legend.title = element_blank(), legend.position = "none")
+```
+
+### How many people correctly selected Pat Dangerfield for All-Australian Captain? <br><br> Who else did people pick?
+
+```{r Figure2, fig.width=16, fig.height=7, echo=FALSE}
+QuestionSummary %>% 
+  filter(Question == "All Australian Captain") %>% 
+  arrange(desc(Total)) %>% 
+  ggplot(aes(x = reorder(Answer, -Total), y = Total, colour = Answer)) +
+  geom_point(size = 10) + 
+  geom_segment(aes(x = Answer, y = 0, xend = Answer, yend = Total, colour = Answer), 
+               linetype = "dashed") +
+  geom_text(aes(label = Total), size = 4, colour = "black", check_overlap = TRUE) +
+  labs(x = NULL, y = NULL, 
+       title = NULL) +
+  dark_theme_gray()  + 
+  theme(plot.title = element_text(size = 14, face = "bold", hjust = 0.5),
+        plot.background = element_rect(fill = "grey10"), 
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        legend.background = element_blank(),
+        text = element_text(family = "Lucida Sans"),
+        axis.ticks.x = element_line(color = "grey30", size = 0.1),
+        axis.line.x =  element_line(color = "grey30", size = 0.1), 
+        axis.text.x = element_text(size = 9, face = "bold", angle = 25, vjust = 1, hjust = 1),
+        axis.ticks.y =  element_blank(), 
+        axis.title.y = element_blank(), 
+        axis.line.y = element_blank(), 
+        axis.text.y = element_blank(),
+        legend.title = element_blank(), legend.position = "none")
+```
+
+### How many people correctly selected the Coleman Medallist? <br><br> Who else did people pick?
+
+```{r Figure3, fig.width=16, fig.height=7, echo=FALSE}
+QuestionSummary %>% 
+  filter(Question == "Coleman Medal") %>% 
+  arrange(desc(Total)) %>% 
+  ggplot(aes(x = reorder(Answer, -Total), y = Total, colour = Answer)) +
+  geom_point(size = 10) + 
+  geom_segment(aes(x = Answer, y = 0, xend = Answer, yend = Total, colour = Answer), 
+               linetype = "dashed") +
+  geom_text(aes(label = Total), size = 4, colour = "black", check_overlap = TRUE) +
+  labs(x = NULL, y = NULL, 
+       title = NULL) +
+  dark_theme_gray()  + 
+  theme(plot.title = element_text(size = 14, face = "bold", hjust = 0.5),
+        plot.background = element_rect(fill = "grey10"), 
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        legend.background = element_blank(),
+        text = element_text(family = "Lucida Sans"),
+        axis.ticks.x = element_line(color = "grey30", size = 0.1),
+        axis.line.x =  element_line(color = "grey30", size = 0.1), 
+        axis.text.x = element_text(size = 9, face = "bold", angle = 25, vjust = 1, hjust = 1),
+        axis.ticks.y =  element_blank(), 
+        axis.title.y = element_blank(), 
+        axis.line.y = element_blank(), 
+        axis.text.y = element_blank(),
+        legend.title = element_blank(), legend.position = "none")
+```
+
+### How many people correctly selected the Brownlow Medallist? <br><br> Who else did people pick?
+
+```{r Figure4, fig.width=16, fig.height=7, echo=FALSE}
+QuestionSummary %>% 
+  filter(Question == "Brownlow Medal") %>% 
+  arrange(desc(Total)) %>% 
+  ggplot(aes(x = reorder(Answer, -Total), y = Total, colour = Answer)) +
+  geom_point(size = 10) + 
+  geom_segment(aes(x = Answer, y = 0, xend = Answer, yend = Total, colour = Answer), 
+               linetype = "dashed") +
+  geom_text(aes(label = Total), size = 4, colour = "black", check_overlap = TRUE) +
+  labs(x = NULL, y = NULL, 
+       title = NULL) +
+  dark_theme_gray()  + 
+  theme(plot.title = element_text(size = 14, face = "bold", hjust = 0.5),
+        plot.background = element_rect(fill = "grey10"), 
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        legend.background = element_blank(),
+        text = element_text(family = "Lucida Sans"),
+        axis.ticks.x = element_line(color = "grey30", size = 0.1),
+        axis.line.x =  element_line(color = "grey30", size = 0.1), 
+        axis.text.x = element_text(size = 9, face = "bold", angle = 25, vjust = 1, hjust = 1),
+        axis.ticks.y =  element_blank(), 
+        axis.title.y = element_blank(), 
+        axis.line.y = element_blank(), 
+        axis.text.y = element_blank(),
+        legend.title = element_blank(), legend.position = "none")
+```
+
+### How many people correctly selected the Rising Star? <br><br> Who else did people pick?
+
+```{r Figure5, fig.width=16, fig.height=7, echo=FALSE}
+QuestionSummary %>% 
+  filter(Question == "Rising Star") %>% 
+  arrange(desc(Total)) %>% 
+  ggplot(aes(x = reorder(Answer, -Total), y = Total, colour = Answer)) +
+  geom_point(size = 10) + 
+  geom_segment(aes(x = Answer, y = 0, xend = Answer, yend = Total, colour = Answer), 
+               linetype = "dashed") +
+  geom_text(aes(label = Total), size = 4, colour = "black", check_overlap = TRUE) +
+  labs(x = NULL, y = NULL, 
+       title = NULL) +
+  dark_theme_gray()  + 
+  theme(plot.title = element_text(size = 14, face = "bold", hjust = 0.5),
+        plot.background = element_rect(fill = "grey10"), 
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        legend.background = element_blank(),
+        text = element_text(family = "Lucida Sans"),
+        axis.ticks.x = element_line(color = "grey30", size = 0.1),
+        axis.line.x =  element_line(color = "grey30", size = 0.1), 
+        axis.text.x = element_text(size = 9, face = "bold", angle = 25, vjust = 1, hjust = 1),
+        axis.ticks.y =  element_blank(), 
+        axis.title.y = element_blank(), 
+        axis.line.y = element_blank(), 
+        axis.text.y = element_blank(),
+        legend.title = element_blank(), legend.position = "none")
+```
+
+### How many people tipped Richmond to win the Grand Final? <br><br> Who else did people pick?
+
+```{r Figure6, fig.width=16, fig.height=7, echo=FALSE}
+QuestionSummary %>% 
+  filter(Question == "Grand Final Winner") %>% 
+  arrange(desc(Total)) %>% 
+  ggplot(aes(x = reorder(Answer, -Total), y = Total, colour = Answer)) +
+  geom_point(size = 10) + 
+  geom_segment(aes(x = Answer, y = 0, xend = Answer, yend = Total, colour = Answer), 
+               linetype = "dashed") +
+  geom_text(aes(label = Total), size = 4, colour = "black", check_overlap = TRUE) +
+  labs(x = NULL, y = NULL, 
+       title = NULL) +
+  dark_theme_gray()  + 
+  theme(plot.title = element_text(size = 14, face = "bold", hjust = 0.5),
+        plot.background = element_rect(fill = "grey10"), 
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        legend.background = element_blank(),
+        text = element_text(family = "Lucida Sans"),
+        axis.ticks.x = element_line(color = "grey30", size = 0.1),
+        axis.line.x =  element_line(color = "grey30", size = 0.1), 
+        axis.text.x = element_text(size = 9, face = "bold", angle = 25, vjust = 1, hjust = 1),
+        axis.ticks.y =  element_blank(), 
+        axis.title.y = element_blank(), 
+        axis.line.y = element_blank(), 
+        axis.text.y = element_blank(),
+        legend.title = element_blank(), legend.position = "none")
+```
+
+### How many people tipped Dusty to win the Norm? <br><br> Who else did people pick?
+
+```{r Figure7, fig.width=16, fig.height=7, echo=FALSE}
+QuestionSummary %>% 
+  filter(Question == "Norm Smith") %>% 
+  arrange(desc(Total)) %>% 
+  ggplot(aes(x = reorder(Answer, -Total), y = Total, colour = Answer)) +
+  geom_point(size = 10) + 
+  geom_segment(aes(x = Answer, y = 0, xend = Answer, yend = Total, colour = Answer), 
+               linetype = "dashed") +
+  geom_text(aes(label = Total), size = 4, colour = "black", check_overlap = TRUE) +
+  labs(x = NULL, y = NULL, 
+       title = NULL) +
+  dark_theme_gray()  + 
+  theme(plot.title = element_text(size = 14, face = "bold", hjust = 0.5),
+        plot.background = element_rect(fill = "grey10"), 
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        legend.background = element_blank(),
+        text = element_text(family = "Lucida Sans"),
+        axis.ticks.x = element_line(color = "grey30", size = 0.1),
+        axis.line.x =  element_line(color = "grey30", size = 0.1), 
+        axis.text.x = element_text(size = 7, face = "bold", angle = 25, vjust = 1, hjust = 1),
+        axis.ticks.y =  element_blank(), 
+        axis.title.y = element_blank(), 
+        axis.line.y = element_blank(), 
+        axis.text.y = element_blank(),
+        legend.title = element_blank(), legend.position = "none")
+```
+
+
+The results are in! {.storyboard} 
+=========================================
+
+### In third place... we have an offshore-based entry!
+
+```{r picture2, echo = F, out.width = '160%'}
+knitr::include_graphics("C:/Users/e5104072/Desktop/Aaron.jpg")
+```
+
+### In second place... we have a rising star in the competition!
+
+```{r picture3, echo = F, out.width = '160%'}
+knitr::include_graphics("C:/Users/e5104072/Desktop/Elise.jpg")
+```
+
+### We have a tie for first place! So lets go ascending by age...
+
+```{r picture4, echo = F, out.width = '160%'}
+knitr::include_graphics("C:/Users/e5104072/Desktop/Sue.jpg")
+```
+
+### We have a tie for first place! And fittingly, we have...
+
+```{r picture5, echo = F, out.width = '160%'}
+knitr::include_graphics("C:/Users/e5104072/Desktop/Johnny.jpg")
+```
+
+### There was a five-way tie for the wooden spoon, but only one person declared themselves a former "Champion" in their entry...
+
+```{r picture6, echo = F, out.width = '160%'}
+knitr::include_graphics("C:/Users/e5104072/Desktop/Wayan.jpg")
+```
+
+Want to see the total number of points you finished on? 
+=========================================
+
+```{r TotalTable, message = FALSE, warning = FALSE, echo=FALSE}
+# Create table
+reactable(OverallWinner, pagination = FALSE, defaultSortOrder = "desc", 
+          defaultSorted = "Total", showSortIcon = TRUE, minRows = 20, 
+          borderless = TRUE, highlight = TRUE, searchable = TRUE, defaultColDef = colDef(headerClass = "header", align = "center"))
+  
+```
+
+And finally, the raw data for those interested...
+=========================================
+```{r RawData, message = FALSE, warning = FALSE, echo=FALSE}
+# Create table
+reactable(ResultsAnalysis, pagination = FALSE, defaultSortOrder = "desc", 
+          defaultSorted = "Question", showSortIcon = TRUE, minRows = 20, 
+          borderless = TRUE, highlight = TRUE, searchable = TRUE, defaultColDef = colDef(headerClass = "header", align = "center"))
+  
+```
+
