@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Slides.knit</title>
+    <meta charset="utf-8" />
+    <script src="Slides_files/header-attrs/header-attrs.js"></script>
+    <link href="Slides_files/remark-css/default.css" rel="stylesheet" />
+    <link href="Slides_files/remark-css/rladies-fonts.css" rel="stylesheet" />
+    <link href="Slides_files/tachyons/tachyons.min.css" rel="stylesheet" />
+    <script src="Slides_files/kePrint/kePrint.js"></script>
+    <link href="Slides_files/lightable/lightable.css" rel="stylesheet" />
+    <link rel="stylesheet" href="VictoriaUniversity.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+
+
+
+class: inverse, right
+background-image: url(https://img.rawpixel.com/s3fs-private/rawpixel_images/website_content/upwk61736958-wikimedia-image.jpg?w=1300&amp;dpr=1&amp;fit=default&amp;crop=default&amp;q=80&amp;vib=3&amp;con=3&amp;usm=15&amp;bg=F4F4F3&amp;auto=format&amp;ixlib=js-2.2.1&amp;s=229dce74adfbd1584aa717e4a2b7b4ad)
+background-size: cover 
+
+# Sport, Data &amp; Analytics 
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+## Alice Sweeting, PhD
+#### Lecturer | Research Fellow (Sport Science &amp; Analytics)
+
+.logoposRB[
+  &lt;img src="VictoriaUniversity.png" width="25%"/&gt; 
+]
+
+---
+class: inverse, right, bottom, hide_logo
+background-image: url(https://s3.ap-southeast-2.amazonaws.com/hdp.au.prod.app.yrra-yoursay.files/5315/7404/0550/BPP9377.jpg)
+background-size: cover
+
+
+.caption[
+Image: [City of Yarra](https://aboriginalhistoryofyarra.com.au/)
+]
+
+???
+
+I wish to acknowledge the people of the Kulin Nations, on whose land we are gathered today. I pay my respects to their Elders, past and present.
+
+Pictured is the river Birrarung, near where I live, whose Traditional Owners where I live and usually work, are the Wurundjeri-willam people of the Kulin Nation. 
+
+---
+
+class: left, bottom, inverse
+background-image: url(https://cdn.pixabay.com/photo/2016/03/26/13/09/workspace-1280538_1280.jpg)
+background-size: cover
+
+# A (brief) Overview of... 
+&lt;br&gt;
+
+  * ## My Research Journey
+  
+--
+  &lt;br&gt;
+  * ## Current Sports Analytics Work
+  
+--
+  &lt;br&gt;
+  * ## Creating a Sports Analytics course from scratch  
+
+---
+class: left, top 
+# A little about me...
+
+.pull-left[
+&lt;img src="https://raw.githubusercontent.com/SportStatisticsRSweet/SportStatisticsRSweet.github.io/master/AliceLemonade.jpg", width="80%"&gt;
+]
+
+.pull-right[
+* LOVED (read; lived, talked and breathed) horses.
+]
+
+---
+class: left, top 
+# A little about me...
+
+.pull-left[
+&lt;img src="http://technologyusedinsports.weebly.com/uploads/1/7/9/6/17966087/1580147_orig.png", width="80%"&gt;
+]
+
+.pull-right[
+* LOVED (read; lived, talked and breathed) horses.
+
+**2008 to 2011** | Bachelor of Sport and Exercise Science/ Bachelor of Sport and Recreation Management
+.right[Victoria University]
+
+
+**2012** | Bachelor of Applied Sciences in Human Movement (Honours)
+.right[Victoria University]
+
+
+**2013 to 2016** | Doctor of Philosophy (PhD - [Research Thesis)](http://vuir.vu.edu.au/34111/)
+.right[Victoria University, AIS and Netball Australia]
+
+]
+
+---
+class: left, top 
+# A little about me...
+
+.pull-left[
+&lt;img src="http://technologyusedinsports.weebly.com/uploads/1/7/9/6/17966087/1580147_orig.png", width="80%"&gt;
+]
+
+.pull-right[
+* LOVED (read; lived, talked and breathed) horses.
+
+**2008 to 2011** | Bachelor of Sport and Exercise Science/ Bachelor of Sport and Recreation Management
+.right[Victoria University]
+
+
+**2012** | Bachelor of Applied Sciences in Human Movement (Honours)
+.right[Victoria University]
+
+
+**2013 to 2016** | Doctor of Philosophy (PhD - [Research Thesis)](http://vuir.vu.edu.au/34111/)
+.right[Victoria University, AIS and Netball Australia]
+
+&lt;br&gt;
+* Investigated the movement sequences of netball athletes, using data mining techniques 
+
+]
+
+---
+class: left
+.center[
+# Sport Scientist (WB) &amp; Researcher (VU)
+]
+
+.pull-left[
+&lt;img src="https://www.vu.edu.au/sites/default/files/styles/full_width_at_small_breakpoint/public/images/HighPerformanceTeam_20171205_016.jpg?itok=g3ORHZon" width="120%"&gt; 
+]
+
+.pull-right[
+Responsible for:
+
+* Ensuring knowledge exchange between VU-WB
+
+]
+
+---
+class: left
+.center[
+# Sport Scientist (WB) &amp; Researcher (VU)
+]
+
+.pull-left[
+&lt;img src="https://www.vu.edu.au/sites/default/files/styles/full_width_at_small_breakpoint/public/images/HighPerformanceTeam_20171205_016.jpg?itok=g3ORHZon" width="120%"&gt; 
+]
+
+.pull-right[
+Responsible for:
+
+* Ensuring knowledge exchange between VU-WB
+
+* Capturing data and monitoring athletes
+
+]
+
+---
+class: left
+.center[
+# Sport Scientist (WB) &amp; Researcher (VU)
+]
+
+.pull-left[
+&lt;img src="https://www.vu.edu.au/sites/default/files/styles/full_width_at_small_breakpoint/public/images/HighPerformanceTeam_20171205_016.jpg?itok=g3ORHZon" width="120%"&gt; 
+]
+
+.pull-right[
+Responsible for:
+
+* Ensuring knowledge exchange between VU-WB
+
+* Capturing data and monitoring athletes
+
+* Driving the sport science research program 
+
+]
+
+---
+class: left
+.center[
+# Sport Scientist (WB) &amp; Researcher (VU)
+]
+
+.pull-left[
+&lt;img src="https://www.vu.edu.au/sites/default/files/styles/full_width_at_small_breakpoint/public/images/HighPerformanceTeam_20171205_016.jpg?itok=g3ORHZon" width="120%"&gt; 
+]
+
+.pull-right[
+Responsible for:
+
+* Ensuring knowledge exchange between VU-WB
+
+* Capturing data and monitoring athletes
+
+* Driving the sport science research program 
+
+* Supervision of student (Honours and PhD) research
+
+]
+
+---
+class: left
+.center[
+# Sport Scientist (WB) &amp; Researcher (VU)
+]
+
+.pull-left[
+&lt;img src="https://www.vu.edu.au/sites/default/files/styles/full_width_at_small_breakpoint/public/images/HighPerformanceTeam_20171205_016.jpg?itok=g3ORHZon" width="120%"&gt; 
+]
+
+.pull-right[
+Responsible for:
+
+* Ensuring knowledge exchange between VU-WB
+
+* Capturing data and monitoring athletes
+
+* Driving the sport science research program 
+
+* Supervision of student (Honours and PhD) research
+&lt;br&gt;
+&lt;br&gt;
+.center[
+.large[
+**Working with a variety of different people (coaches, physiotherapists, analysts, students and athletes etc) on a large number of short- and long-term projects**
+]
+]
+]
+
+---
+class: left, top
+# Examples of Sports Analytics &amp; Research Work
+
+.NonVU[
+### &lt;svg viewBox="0 0 512 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zM262.655 90c-54.497 0-89.255 22.957-116.549 63.758-3.536 5.286-2.353 12.415 2.715 16.258l34.699 26.31c5.205 3.947 12.621 3.008 16.665-2.122 17.864-22.658 30.113-35.797 57.303-35.797 20.429 0 45.698 13.148 45.698 32.958 0 14.976-12.363 22.667-32.534 33.976C247.128 238.528 216 254.941 216 296v4c0 6.627 5.373 12 12 12h56c6.627 0 12-5.373 12-12v-1.333c0-28.462 83.186-29.647 83.186-106.667 0-58.002-60.165-102-116.531-102zM256 338c-25.365 0-46 20.635-46 46 0 25.364 20.635 46 46 46s46-20.636 46-46c0-25.365-20.635-46-46-46z"&gt;&lt;/path&gt;&lt;/svg&gt; Monitor how hard an athlete works during a training session.
+]
+
+--
+
+.NonVU[
+### &lt;svg viewBox="0 0 416 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M272 96c26.51 0 48-21.49 48-48S298.51 0 272 0s-48 21.49-48 48 21.49 48 48 48zM113.69 317.47l-14.8 34.52H32c-17.67 0-32 14.33-32 32s14.33 32 32 32h77.45c19.25 0 36.58-11.44 44.11-29.09l8.79-20.52-10.67-6.3c-17.32-10.23-30.06-25.37-37.99-42.61zM384 223.99h-44.03l-26.06-53.25c-12.5-25.55-35.45-44.23-61.78-50.94l-71.08-21.14c-28.3-6.8-57.77-.55-80.84 17.14l-39.67 30.41c-14.03 10.75-16.69 30.83-5.92 44.86s30.84 16.66 44.86 5.92l39.69-30.41c7.67-5.89 17.44-8 25.27-6.14l14.7 4.37-37.46 87.39c-12.62 29.48-1.31 64.01 26.3 80.31l84.98 50.17-27.47 87.73c-5.28 16.86 4.11 34.81 20.97 40.09 3.19 1 6.41 1.48 9.58 1.48 13.61 0 26.23-8.77 30.52-22.45l31.64-101.06c5.91-20.77-2.89-43.08-21.64-54.39l-61.24-36.14 31.31-78.28 20.27 41.43c8 16.34 24.92 26.89 43.11 26.89H384c17.67 0 32-14.33 32-32s-14.33-31.99-32-31.99z"&gt;&lt;/path&gt;&lt;/svg&gt; Collect an athlete's physical output during training and matches.
+]
+
+--
+
+.NonVU[
+### &lt;svg viewBox="0 0 496 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M481.5 60.3c-4.8-18.2-19.1-32.5-37.3-37.4C420.3 16.5 383 8.9 339.4 8L496 164.8c-.8-43.5-8.2-80.6-14.5-104.5zm-467 391.4c4.8 18.2 19.1 32.5 37.3 37.4 23.9 6.4 61.2 14 104.8 14.9L0 347.2c.8 43.5 8.2 80.6 14.5 104.5zM4.2 283.4L220.4 500c132.5-19.4 248.8-118.7 271.5-271.4L275.6 12C143.1 31.4 26.8 130.7 4.2 283.4zm317.3-123.6c3.1-3.1 8.2-3.1 11.3 0l11.3 11.3c3.1 3.1 3.1 8.2 0 11.3l-28.3 28.3 28.3 28.3c3.1 3.1 3.1 8.2 0 11.3l-11.3 11.3c-3.1 3.1-8.2 3.1-11.3 0l-28.3-28.3-22.6 22.7 28.3 28.3c3.1 3.1 3.1 8.2 0 11.3l-11.3 11.3c-3.1 3.1-8.2 3.1-11.3 0L248 278.6l-22.6 22.6 28.3 28.3c3.1 3.1 3.1 8.2 0 11.3l-11.3 11.3c-3.1 3.1-8.2 3.1-11.3 0l-28.3-28.3-28.3 28.3c-3.1 3.1-8.2 3.1-11.3 0l-11.3-11.3c-3.1-3.1-3.1-8.2 0-11.3l28.3-28.3-28.3-28.2c-3.1-3.1-3.1-8.2 0-11.3l11.3-11.3c3.1-3.1 8.2-3.1 11.3 0l28.3 28.3 22.6-22.6-28.3-28.3c-3.1-3.1-3.1-8.2 0-11.3l11.3-11.3c3.1-3.1 8.2-3.1 11.3 0l28.3 28.3 22.6-22.6-28.3-28.3c-3.1-3.1-3.1-8.2 0-11.3l11.3-11.3c3.1-3.1 8.2-3.1 11.3 0l28.3 28.3 28.3-28.5z"&gt;&lt;/path&gt;&lt;/svg&gt; Record the number of skilled involvements during drills and matches.
+]
+
+--
+
+.NonVU[
+### &lt;svg viewBox="0 0 640 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M96 224c35.3 0 64-28.7 64-64s-28.7-64-64-64-64 28.7-64 64 28.7 64 64 64zm448 0c35.3 0 64-28.7 64-64s-28.7-64-64-64-64 28.7-64 64 28.7 64 64 64zm32 32h-64c-17.6 0-33.5 7.1-45.1 18.6 40.3 22.1 68.9 62 75.1 109.4h66c17.7 0 32-14.3 32-32v-32c0-35.3-28.7-64-64-64zm-256 0c61.9 0 112-50.1 112-112S381.9 32 320 32 208 82.1 208 144s50.1 112 112 112zm76.8 32h-8.3c-20.8 10-43.9 16-68.5 16s-47.6-6-68.5-16h-8.3C179.6 288 128 339.6 128 403.2V432c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48v-28.8c0-63.6-51.6-115.2-115.2-115.2zm-223.7-13.4C161.5 263.1 145.6 256 128 256H64c-35.3 0-64 28.7-64 64v32c0 17.7 14.3 32 32 32h65.9c6.3-47.4 34.9-87.3 75.2-109.4z"&gt;&lt;/path&gt;&lt;/svg&gt; Quantify the interactions between team-members during training and matches.
+]
+
+--
+
+.NonVU[
+### &lt;svg viewBox="0 0 512 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M496 384H64V80c0-8.84-7.16-16-16-16H16C7.16 64 0 71.16 0 80v336c0 17.67 14.33 32 32 32h464c8.84 0 16-7.16 16-16v-32c0-8.84-7.16-16-16-16zM464 96H345.94c-21.38 0-32.09 25.85-16.97 40.97l32.4 32.4L288 242.75l-73.37-73.37c-12.5-12.5-32.76-12.5-45.25 0l-68.69 68.69c-6.25 6.25-6.25 16.38 0 22.63l22.62 22.62c6.25 6.25 16.38 6.25 22.63 0L192 237.25l73.37 73.37c12.5 12.5 32.76 12.5 45.25 0l96-96 32.4 32.4c15.12 15.12 40.97 4.41 40.97-16.97V112c.01-8.84-7.15-16-15.99-16z"&gt;&lt;/path&gt;&lt;/svg&gt; Track the performance of potential recruits and draft selections.
+]
+
+--
+
+.NonVU[
+### &lt;svg viewBox="0 0 416 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M207.9 15.2c.8 4.7 16.1 94.5 16.1 128.8 0 52.3-27.8 89.6-68.9 104.6L168 486.7c.7 13.7-10.2 25.3-24 25.3H80c-13.7 0-24.7-11.5-24-25.3l12.9-238.1C27.7 233.6 0 196.2 0 144 0 109.6 15.3 19.9 16.1 15.2 19.3-5.1 61.4-5.4 64 16.3v141.2c1.3 3.4 15.1 3.2 16 0 1.4-25.3 7.9-139.2 8-141.8 3.3-20.8 44.7-20.8 47.9 0 .2 2.7 6.6 116.5 8 141.8.9 3.2 14.8 3.4 16 0V16.3c2.6-21.6 44.8-21.4 48-1.1zm119.2 285.7l-15 185.1c-1.2 14 9.9 26 23.9 26h56c13.3 0 24-10.7 24-24V24c0-13.2-10.7-24-24-24-82.5 0-221.4 178.5-64.9 300.9z"&gt;&lt;/path&gt;&lt;/svg&gt; Estimate the energy expenditure of athletes during training and matches.
+]
+
+
+---
+class: bottom, inverse, hide_logo
+background-image: url(https://cdn.pixabay.com/photo/2014/10/14/20/24/football-488714_1280.jpg)
+background-size: cover 
+
+# Current Sport Analytics Work
+
+
+---
+class: inverse, bottom
+background-image: url(https://images.catapultsports.com/wp-content/uploads/2018/05/Fundamentals.jpg)
+background-size: cover
+
+.left[
+.caption[
+Image source: [Catapult Sports](https://www.catapultsports.com/)
+]]
+
+
+???
+
+* Global Positioning Systems = Capture data on the position and displacement of players (outdoor use only)
+* Local Positioning Systems = Capture position and displacement with better accuracy than GPS (indoor and outdoor use)
+* Accelerometers = Capture changes in acceleration, orientation and direction (indoor and outdoor use)
+* Optical tracking systems = estimate the position of athletes on a court or field, in real time or post-hoc, using computer vision algorithms
+
+---
+class: center
+# How to Detect Change in Athlete Physical Output? 
+
+&lt;table style="color: black; font-size: 25px; margin-left: auto; margin-right: auto;" class="table table-responsive table-bordered"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;font-weight: bold;color: white !important;background-color: #000000 !important;border-right: 1px solid; padding: 15px"&gt; Drill &lt;/th&gt;
+   &lt;th style="text-align:center;font-weight: bold;color: white !important;background-color: #000000 !important;border-right: 1px solid; padding: 15px"&gt; Total Duration (mins) &lt;/th&gt;
+   &lt;th style="text-align:center;font-weight: bold;color: white !important;background-color: #000000 !important;border-right: 1px solid; padding: 15px"&gt; Total Distance (m) &lt;/th&gt;
+   &lt;th style="text-align:center;font-weight: bold;color: white !important;background-color: #000000 !important;border-right: 1px solid; padding: 15px"&gt; Total HIR (m) &lt;/th&gt;
+   &lt;th style="text-align:center;font-weight: bold;color: white !important;background-color: #000000 !important;border-right: 1px solid; padding: 15px"&gt; Metres per Min (m/min) &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Warm Up &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 10 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1026 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 83 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 103 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Pair Kicks &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 414 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 12 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 69 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 4v3 Game &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 849 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 277 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 170 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;color: black !important;border-bottom: 1px solid"&gt; Stoppages &lt;/td&gt;
+   &lt;td style="text-align:center;color: black !important;border-bottom: 1px solid"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:center;color: black !important;border-bottom: 1px solid"&gt; 921 &lt;/td&gt;
+   &lt;td style="text-align:center;color: black !important;border-bottom: 1px solid"&gt; 362 &lt;/td&gt;
+   &lt;td style="text-align:center;color: black !important;border-bottom: 1px solid"&gt; 102 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+???
+* These parameters can help give insight into specific drills, training as a whole and help to evaluate training sessions
+* (Click to show link) we can also use aggregate data to cluster drills based on these physical outputs, into high/ medium/ low intensity categories
+* Aggregate parameters don't give granular insights into physical output
+* Difficult to determine when output changes over time
+
+---
+class: center
+# How to Detect Change in Athlete Physical Output? 
+&lt;img src="https://raw.githubusercontent.com/SportStatisticsRSweet/SportStatisticsRSweet.github.io/master/SportDataR/RawTrace.png", align="middle", width="75%"&gt;
+
+???
+* Capture the raw trace from a wearble sensor (here is GPS)
+* Analysing continious trace data can help to give us more insight into the why part of athlete physical output
+* This trace data could be from LPS, GPS or optical. We could also look at raw accelerometer data too
+* Here we have time on our x-axis and velocity on our y-axis, giving us a visual into an athlete's "active" time spent on the ground
+
+
+---
+class: center
+# How to Detect Change in Athlete Physical Output? 
+&lt;img src="https://raw.githubusercontent.com/SportStatisticsRSweet/SportStatisticsRSweet.github.io/master/SportDataR/RawTrace_Bands.png", align="middle", width="75%"&gt;
+
+???
+* Logical extension to seperate activity into low and high-intensity
+* Thresholds used are often arbitary 
+* Difficult to determine how output changes throughout a team-sport match, as a function of time
+* Need a way of understanding continuous data, as a time-series
+
+---
+class: center
+
+# How to Detect Change in Athlete Physical Output? 
+&lt;img src="https://raw.githubusercontent.com/SportStatisticsRSweet/SportStatisticsRSweet.github.io/master/SportDataR/RawTrace_TimeSeries.png", align="middle", width="75%"&gt;
+
+--
+
+[Corbett, D. M., Sweeting, A. J., &amp; Robertson, S. (2019). A change point approach to analysing the match activity profiles of team-sport athletes. Journal of sports sciences, 37(14), 1600-1608.](https://doi.org/10.1080/02640414.2019.1577941)
+
+
+???
+* We can do this via time-series analysis, so here the vertical red bars represent different segements found in our continuous trace
+* Identify and describe segments of physical output in team-sport matches that are very different.
+* The methodology presented may have application in comparing the specificity of training to matches and designing match rotation strategies.
+
+
+---
+class: center
+
+# How to Detect Change in Athlete Physical Output? 
+
+&lt;img src="https://www.tandfonline.com/na101/home/literatum/publisher/tandf/journals/content/rjsp20/2019/rjsp20.v037.i14/02640414.2019.1577941/20190611/images/large/rjsp_a_1577941_f0001_oc.jpeg", align="middle", width="70%"&gt;
+
+.right[
+.tinyl[
+Figure from [Corbett et al., (2019) in Journal of Sport Sciences.](https://www.tandfonline.com/doi/full/10.1080/02640414.2019.1577941)]
+]
+
+
+---
+class: left, top 
+# How to Classify Kicks in Australian Football?
+
+
+Work by [Emily Cust, PhD](https://twitter.com/EmCust) who used inertial measurement units (IMUs) to classify Australian Rules football (AF) kick types in an applied environment using ankle-mounted IMUs.
+
+
+.pull-left[
+  &lt;img src="IMUplacement.png" width="70%"/&gt;
+] 
+
+--
+
+.pull-right[
+  &lt;img src="IMUPeaks.png" width="120%"/&gt;
+] 
+
+.right[
+.tiny[
+Images: [Classification of Australian football kick types in-situation via ankle-mounted inertial measurement units (JSS)](https://www.tandfonline.com/doi/abs/10.1080/02640414.2020.1868678)]]
+
+???
+IMUs and video capture of a controlled protocol, including four kick types at varying distances, were recorded during a single testing session with 20 female AF athletes. Processed IMU data were modelled using support vector machine classifier, random forest, and k-nearest neighbour algorithms under a 2-Kick, 4-Kick, and kick distance (10, 20, 30 m) conditions. The random forest model showed the highest results for overall classification accuracy, highlighting the potential for an applied semi-automated AF training kick detection and type classification system using IMUs. 
+- Anyone who has had to film and manually notate how many kicks, or skilled actions, an athlete performs during a training session will know just laborious this task is! Hence the ability to use wearable sensors and machine learning approaches to help classify kick counts is super useful, turning around analysis quicker and freeing up the time of the performance analyst to focus on interpreting the data for evaluating the training session.
+
+
+
+---
+class: left, top 
+# Interaction of Skilled Behaviours Australian Football?
+
+Work by [Peter Browne, PhD](https://twitter.com/_PeterBrowne) who explored the interaction of skilled constraints using rule-mining techniques
+
+.center[
+&lt;img src= "https://ars.els-cdn.com/content/image/1-s2.0-S0167945719301939-gr6.jpg", align="middle", width="65%"&gt;
+]
+&lt;br&gt;
+.tiny[
+[Browne et al., (2019). Prevalence of interactions and influence of performance constraints on kick outcomes across Australian Football tiers: Implications for representative practice designs. *Human Movement Science*](https://www.sciencedirect.com/science/article/pii/S0167945719301939) 
+]
+
+???
+* I spoke on the previous slide about classifying kicks in Australian Football and counting these. Currently, events and outcomes are captured in statistical analysis of team sports performance. This is frequency count data where a human manually codes performance variables including kicks, tackles and handballs, live during a game or post-hoc via video 
+* Kicking is an important action in AF, as it constitutes the predominant form of strategic ball movement and the sole manner in which a goal can be scored.
+* On average, each player executes a kick every ten minutes within an AFL match 
+* The completion of a successful kick is a resultant of multiple attributes of the game and the immediate constraints that emerge on the kick, such as opposition pressure, team mates’ availability and the current status of the ball carrier
+- Determining the influential constraints within competitive performance, with respect to their impact on key performance outcomes, would provide an evidence-based approach to practice designs, harnessing the power of performance analysis and evaluations
+* For example, we can look at the source of the kick, so in an AFL context was it from a mark/ free kick or at a stoppage. Was the player on the run whilst kicking or stationary? Did they get rid of the ball in less than two seconds or was it six seconds? How long was the kick? Was the player being tackled whilst they were trying to kick the ball?
+* These constraints can also interact with one another, in non-linear manner
+* Here is work from Peter Browne's PhD thesis, where he measured the context or constraints surrounding skilled involvements during Aussie Rules football.
+* So if we take a kick, as an example, we can assess the influence that these different constraints have together, on the likelihood of an effective kick. We can do this through rule mining techniques, which is very common in a marketing space but also now widely used in sports analytics.
+*  Example of how adding additional constraint variables and considering the constraint interaction alters the mean efficiency of the kick outcome. 
+* Percentage values indicate confidence level of an effective kick. We can see as constraints accumulate, the average kicking efficiency is altered
+]
+
+
+---
+class: center
+# How Do Athletes and Teams Coordinate During Matches?
+&lt;img src= "https://www.tandfonline.com/na101/home/literatum/publisher/tandf/journals/content/rjsp20/2019/rjsp20.v037.i15/02640414.2019.1586077/20190615/images/large/rjsp_a_1586077_f0001_oc.jpeg", align="middle", width="65%"&gt;
+
+
+.tiny[
+[Alexander, J. P., Spencer, B., Sweeting, A. J., Mara, J. K., &amp; Robertson, S. (2019). The influence of match phase and field position on collective team behaviour in Australian Rules football. Journal of sports sciences, 37(15), 1699-1707.](https://www.tandfonline.com/doi/full/10.1080/02640414.2019.1586077) 
+]
+
+???
+* From the same data source, of capturing an athlete's position over time relative to a court or field and team-mates/ opposition is to examine tactical behaviours or collective team behavior
+* Collective team behaviour in invasion sports refers to how individual players position themselves across a field of play to form an overall group organisation. Determining collective team behaviour may provide a greater understanding of team tactics or game style.
+* Here we have an Aussie Rules football ground, with the blue dots representing the position of an athlete. We can measure the centroid, or the middle position of all the dots/ athletes and the maximum length and width of the team. This gives us an idea as to how teams spread and congest around the ball, during phases of play so in attack or defense or transitioning the ball from attack to defence.
+* This is work from Jeremy Alexander's PhD thesis, with the WB, investigated the influence of match phase and field position on collective team behaviour
+* Players were more inclined to re-position closer to their defensive end to restrict space when the ball was closer to their goal and conversely, press higher up the field when the ball was in their forward half
+
+---
+class: bottom, inverse, hide_logo
+background-image: url(https://cdn.pixabay.com/photo/2020/03/10/16/47/moon-4919501_1280.jpg)
+background-size: cover 
+
+# Future Sports Analytics Research
+
+---
+class: bottom, inverse, hide_logo
+background-image: url(https://images.rawpixel.com/image_1300/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvZnJiYWxhbmNlX2luc3BpcmF0aW9uX21vdGl2YXRpb25fbGlmZV8wLWltYWdlLWt5YmM2ZzRxLmpwZw.jpg?s=6aRYFMCEYmZCAa-WMmyKGry1ileDZ-jTx-IGUreVSEg)
+background-size: cover 
+
+# Current Teaching Work
+&lt;br&gt;
+&lt;br&gt;
+
+# Creating a Postgraduate &lt;br&gt; Sports Analytics Course 
+
+
+---
+class: top, left, inverse, hide_logo
+background-image: url(https://images.unsplash.com/photo-1611315350692-f1ffc82012e0?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=3840&amp;q=80)
+background-size: cover 
+
+# Any Questions?
+
+## .BottomRight[Alice.Sweeting@vu.edu.au]
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
