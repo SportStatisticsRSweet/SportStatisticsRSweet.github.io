@@ -1,0 +1,972 @@
+---
+output:
+  xaringan::moon_reader:
+    css: [default, "VictoriaUniversity.css", "VictoriaUniversity-fonts.css"]
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: 16:9 
+      beforeInit: "https://platform.twitter.com/widgets.js"
+---
+
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE, knitr.table.format = "html")
+knitr::opts_chunk$set(fig.retina = 3, warning = FALSE, message = FALSE)
+ xaringanExtra::use_tachyons()
+```
+
+class: right, top, inverse
+background-image: url(Images/Analytics.jpg)
+background-size: cover
+## An interactive workshop on analysing and visualising sports data in R
+
+
+### Alice Sweeting, PhD  
+
+---
+class: right, bottom, inverse
+background-image: url(Images/Basketball.jpg)
+background-size: cover
+## In This Workshop We Will Cover...
+
+--
+
+Overview of Analytics and Tools for Analysis
+
+<br>
+--
+
+Introduction to R and RStudio
+
+<br>
+--
+
+Interactive Example on Analysing and Visualising Performance Data
+
+<br>
+
+---
+class: right, bottom, inverse
+background-image: url(Images/Basketball.jpg)
+background-size: cover
+## You Can Access These Slides:
+
+##bit.ly/SESNZ_Slides
+
+---
+class: center, bottom, inverse
+background-image: url(Images/Marathon.jpg)
+background-size: cover
+
+
+.large[
+First, download R for Windows or Mac: <br> https://cran.rstudio.com
+]
+--
+.large[
+Next, download RStudio Desktop: <br> https://posit.co/download/rstudio-desktop
+]
+
+
+---
+class: center, top
+
+# What program(s) do you use to to analyse, visualise & report on sport science data?
+
+--
+
+<img src="https://pbs.twimg.com/media/EUaL5vYUwAESgMC?format=png&name=900x900" align="middle" width="80%"/>
+
+---
+class: bottom, left, inverse
+background-image: url(https://cdn.pixabay.com/photo/2016/10/26/12/48/excel-1771393_1280.jpg)
+background-size: cover 
+
+---
+
+class: center, top
+
+# Advantages of Excel for Data Analysis
+
+.left[
+* Easy to download, install, open.
+]
+
+--
+.left[
+* Interactive, (fairly) friendly to save, send, open and edit
+]
+--
+.left[
+* Point and click to enter data, create figures, calculate math
+]
+--
+.left[
+* Many tabs = data entry, analysis, visualisation, (dashboard) reporting
+]
+--
+.left[
+* Can even run (basic to advanced) statistics! See [Analysis ToolPak](https://support.microsoft.com/en-us/office/use-the-analysis-toolpak-to-perform-complex-data-analysis-6c67ccf0-f4a9-487c-8dec-bdb5a2cefab6)
+]
+
+???
+* This includes ANOVAS, regression, exponential smoothing, moving averages, t-tests etc
+
+
+--
+.left[
+* Help is never far away...
+]
+ 
+<img src="https://media.giphy.com/media/eCz0zwSl7qxB6/giphy.gif" width="40%", align="middle"/>
+
+---
+
+class: center, top
+
+# But before long...
+
+<img src="https://media.giphy.com/media/l1IY5NRhxdCJYxsmA/giphy.gif" align="middle" width="85%%"/>
+
+---
+
+class: center, top
+
+# We end up here!
+
+<img src="https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/ExcelStoppedWorking.png" align="middle" width="75%"/>
+
+.footnote[
+Credit: [**Dr Jacquie Tran, ESSA Forum, 2019**](https://github.com/jacquietran/2019_essa_forum)
+]
+
+---
+class: left, top
+.center[
+# If You Do Use A Spreadsheet Program for Data Analysis...
+]
+* Ensure you are consistent
+???
+* This includes coding categorical data the same (so male and female, not male and m, female and f)
+* Use a consistent code for missing data, rather than leaving it blank AND highlighting the cell AND/OR writing NA
+* Be careful with extra white spaces, mixing date types and creating easy to interpret row/ column headers
+--
+<br>
+<br>
+* Put only one thing in a cell
+???
+* Put one piece of data in a cell
+* Try and use the same units in columns
+* Don't merge cells (looks pretty) but really isn't very functional & very messy when exporting
+--
+<br>
+<br>
+* Treat raw data as *exactly* that, raw data!
+???
+* Keep raw data separate, preferably in another document appropriately labelled
+* If you do keep raw data in the same workbook, put it in another tab and lock the tab from editing
+
+
+
+???
+* A single big rectangle with rows corresponding to subjects and columns corresponding to variables.
+* The first row should contain variable names, and please do not use more than one row for the variable names.
+* Sometimes you need to make different Excel files, to fit tidy data
+* Often, people have bits of data sprinkled around, including summary statistics next to their raw data!
+
+---
+class: center
+<img src="https://www.tandfonline.com/na101/home/literatum/publisher/tandf/journals/content/utas20/2018/utas20.v072.i01/00031305.2017.1375989/20180424-01/images/large/utas_a_1375989_f0005_b.jpeg" align="middle" width="80%"/>
+<br>
+<br>
+.small[
+[Karl W. Broman & Kara H. Woo (2018) Data Organization in Spreadsheets, The American Statistician, 72:1, 2-10, DOI: 10.1080/00031305.2017.1375989](https://www.tandfonline.com/doi/full/10.1080/00031305.2017.1375989)
+]
+
+---
+class: center
+
+<img src="https://www.openscapes.org/img/blog/tidydata/tidydata_1.jpg" align="middle" width="90%"/>
+<br>
+<br>
+.small[
+Illustration from the Openscapes blog Tidy Data for reproducibility, efficiency, and collaboration by Julia Lowndes and Allison Horst
+]
+
+---
+class: center
+
+<img src="https://raw.githubusercontent.com/allisonhorst/stats-illustrations/master/rstats-artwork/tidydata_2.jpg" align="middle" width="80%"/>
+<br>
+<br>
+.small[
+Illustration from the Openscapes blog Tidy Data for reproducibility, efficiency, and collaboration by Julia Lowndes and Allison Horst
+]
+---
+class: left, top
+.center[
+# If You Do Use A Spreadsheet Program for Data Analysis
+]
+* Ensure you are consistent
+<br>
+<br>
+* Put only one thing in a cell
+<br>
+<br>
+* Treat raw data as *exactly* that, raw data!
+<br>
+<br>
+* Try and keep data in a rectangle, tidy fashion
+<br>
+<br>
+* Create a data dictionary
+
+???
+- This is a seperate file that explains what all the variables are within your data set
+- This also includes the measurement units (etc cm versus m)
+- Ideally, you accompany this with another file that includes information about your data and workflow
+
+---
+class: center
+<br>
+<img src="https://www.tandfonline.com/na101/home/literatum/publisher/tandf/journals/content/utas20/2018/utas20.v072.i01/00031305.2017.1375989/20180424-01/images/large/utas_a_1375989_f0009_b.jpeg" align="middle" width="90%"/>
+<br>
+<br>
+.small[
+[Karl W. Broman & Kara H. Woo (2018) Data Organization in Spreadsheets, The American Statistician, 72:1, 2-10, DOI: 10.1080/00031305.2017.1375989](https://www.tandfonline.com/doi/full/10.1080/00031305.2017.1375989)
+]
+
+---
+class: left, top
+.center[
+# If You Do Use A Spreadsheet Program for Data Analysis
+]
+.pull-left[
+* Ensure you are consistent
+<br>
+<br>
+* Put only one thing in a cell
+<br>
+<br>
+* Treat raw data as *exactly* that, raw data!
+<br>
+<br>
+* Try and keep data in a rectangle, tidy fashion
+<br>
+<br>
+* Create a data dictionary
+<br>
+<br>
+* Create backups (saved in plain text files)
+<br>
+<br>
+.small[
+[Karl W. Broman & Kara H. Woo (2018) Data Organization in Spreadsheets, The American Statistician, 72:1, 2-10, DOI: 10.1080/00031305.2017.1375989](https://www.tandfonline.com/doi/full/10.1080/00031305.2017.1375989)
+]
+]
+--
+.pull-right[<img src="https://www.openscapes.org/img/blog/tidydata/tidydata_7.jpg" width="100%"/>
+<br>
+.small[
+Illustration from the Openscapes blog Tidy Data for reproducibility, efficiency, and collaboration by Julia Lowndes and Allison Horst
+]]
+
+
+---
+
+class: center, top
+
+# Working with Data in Analytics
+
+.left[
+* Abundance of data, from varying technologies at differing sample rates, stored in multiple formats.
+]
+--
+.left[
+* Large datasets, that often need cleaning and merging, which is likely performed manually.
+]
+--
+<img src="https://www.openscapes.org/img/blog/tidydata/tidydata_3.jpg" align="middle" width="60%"/>
+<br>
+.small[
+Illustration from the Openscapes blog Tidy Data for reproducibility, efficiency, and collaboration by Julia Lowndes and Allison Horst
+]
+
+???
+* This may even include for yourself, so you know what you did (and workflow) in one week, month, years time
+
+
+---
+class: center, top
+# Programming Languages
+.center[
+<img src="https://www.openscapes.org/img/blog/tidydata/tidydata_5.jpg" align="middle" width="70%"/>
+]
+<br>
+.small[
+Illustration from the Openscapes blog Tidy Data for reproducibility, efficiency, and collaboration by Julia Lowndes and Allison Horst
+]
+
+???
+* Easier for automation & iteration!
+* Create a project, run analysis, create a dashboard and/ or report 
+* Automate reporting processes in .pdf or .html output
+
+
+
+
+---
+class: center, top
+# Programming for Analytics & Performance Sport
+
+<img src="https://www.python.org/static/community_logos/python-logo-inkscape.svg" align="middle" width="120%"/>
+
+<br>
+.small[Logo from Python.org]
+
+???
+- Python is widely used by data scientists and engineers around the world. Also a popular introductory language
+- Code is fairly straightforward to read and supported by open-source communities, with suggestion encouraged for improvements to the software
+- Great at using data dictionaries to drive analysis. For example, creating a data dictionary of skilled actions in Australian Football and looking up skilled actions in an untidy, messy format.
+- Python is free, open-source and has fantastic data visualisation capabilities
+- You don't have to be a programmer to program in Python 
+- However, the error messages can be really annoying to understand, particuarly when dealing with large volumes of code/ data
+
+---
+class: center, top
+# Programming for Analytics & Performance Sport
+
+<img src="https://www.r-project.org/logo/Rlogo.svg" align="middle" width="50%"/>
+
+.small[Logo from R Project.org]
+
+???
+- R, like Python, is free and open-source. 
+- Relies on the community to create, push and debug packages that can handle all parts of the data import, tidying, analysing, visualising & reporting process
+- Developed with statistics in mind, which it does super well.
+- Has a whole host of tools to deal with the data pipeline, called the tidyverse
+- Highly flexible software that can run on any operating system
+- RStudio has a whole host of features, including GitHub integration and the ability to run Python code inside of R
+- Personally, I found R easier to get started in and the community very welcoming to help with debugging. Therefore, I think it is great to use for movement science
+- I still use Python for really specific things like above and work with many colleagues who use Python
+
+---
+class: center, top
+
+<img src="https://raw.githubusercontent.com/allisonhorst/stats-illustrations/master/rstats-artwork/r_rollercoaster.png" align="middle"/>
+
+
+---
+class: center, top
+# Other Tools for Analytics & Performance Sport
+
+.pull-left[
+<img src="https://www.tableau.com/sites/default/files/pages/tableau_cmyk_2015.png" />
+<br>
+.small[Logo from Tableau]
+]
+.pull-right[<img src="https://dotnet.microsoft.com/blob-assets/images/customers/power-bi.png"/>
+<br>
+.small[Logo from Microsoft]
+]
+
+<img src="https://miro.medium.com/max/1200/1*Oe7xavCj5qCBzwTbLDbPTg.jpeg" align="middle" width="40%"/>
+.small[Logo from Medium]
+
+
+???
+- Structured Query Language is a domain-specific language used in programming and designed for managing data held in a relational database management system.
+- Accesses many records with one single command and eliminates the need to specify how to reach the record
+- Contains many statements, that focus on querying, definitions, data control and manipulation
+- These elements include clauses, expressions, predicates, queries and statements
+- Insignificant whitespace is generally ignored in SQL
+- Used for interacting with a database for extracting data, updating data, replacing data, creating data
+- Typically used when you have data hosted in servers, that are large 
+- I've used SQL queries on a data.frame, that has been extracted into R. There are a number of different packages that help with this.
+
+---
+class: left, bottom, inverse
+background-image: url(Images/Surfing.jpg)
+background-size: cover
+# Do you have any questions?
+
+
+---
+class: left, top, inverse
+background-image: url(Images/Barbell.jpg)
+background-size: cover
+## Interactive Exercise in R
+
+---
+class: bottom, left, inverse
+background-image: url(https://cdn.pixabay.com/photo/2014/10/14/20/24/the-ball-488714_960_720.jpg)
+background-size: cover 
+
+## Visit: bit.ly/SESNZ_ExampleData <br> to download
+
+---
+class: center, top
+background-image: url(Images/RStudio.jpeg)
+background-size: cover
+
+---
+class: center, top
+background-image: url(Images/RStudio1.jpeg)
+background-size: cover
+
+---
+class: center, top
+background-image: url(Images/RStudio2.jpeg)
+background-size: cover
+
+---
+class: center, top
+background-image: url(Images/RStudio3.jpeg)
+background-size: cover
+
+---
+class: center, top
+background-image: url(Images/RStudio4.jpeg)
+background-size: cover
+
+---
+class: left, top
+.center[
+# Setting up the R Workspace
+]
+
+
+1. Ensure R and RStudio are downloaded. 
+<br>
+<br>
+--
+
+2. Create a new project in RStudio: `File -> New Project -> New Directory -> New Project`. 
+<br>
+.center[
+<img src="https://raw.githubusercontent.com/SportStatisticsRSweet/WCSF_WorkshopInR/master/Figures/CreateNewProject.png" width="35%", align="middle"/>
+]
+--
+
+
+* Using this approach will contain all your files, scripts and data in one location
+
+
+* Avoids having multiple .R and .RData files scattered within and across multiple folders!
+---
+
+class: left, top
+.center[
+# Setting up the R Workspace (cont.)
+]
+
+
+* Create a folder within your new project (either via RStudio or manually) named "Data"
+
+
+--
+
+* Next, copy the example data (.xlsx) downloaded file into this "Data" folder
+
+
+--
+ 
+
+* Ensure the packages below are installed or up-to-date:
+
+```{r InstallPackagesForWorkshop, eval = FALSE}
+# Create a list of the packages required
+IntroToRPackages <- c(
+    'readxl',
+    'tidyverse', 
+    'viridis')
+# Install listed packages
+install.packages(IntroToRPackages)
+```
+--
+```{r LoadPackagesForWorkshop, eval = TRUE}
+# Load the packages so we can use them!
+library(readxl)
+library(tidyverse)
+library(viridis)
+```
+
+---
+class: center, top
+background-image: url(https://www.tidyverse.org/images/tidyverse-default.png)
+background-size: cover
+
+---
+class: left, top
+.center[
+# Importing Example Data   
+]
+
+Import our example data, using the `readxl` package, which loads Excel (.xlsx) data into R
+
+``` {r ImportingData, include=TRUE}
+# Load "RawData" sheet from our Excel file into R 
+RawData  <- read_excel("Data/ExampleAthleteData.xlsx", sheet = "RawData")
+```
+
+---
+class: left, top
+.center[
+  # Assessing Example Data   
+]
+
+Look at the underlying data structure in R
+
+``` {r AssessStructureData, include=TRUE}
+# Assess the structure of imported data
+str(RawData)
+```
+
+--
+
+ <br>
+Turn our imported data into a [tibble](https://tibble.tidyverse.org/) - also known in the tidyverse as a "lazy" data.frame!
+
+``` {r MakeDataTibble, include=TRUE}
+# Create a tibble from our existing object named "Raw Data"
+RawData <- as_tibble(RawData)
+```
+
+---
+class: left, top
+.center[
+# Assessing Example Data (cont.)   
+]
+
+``` {r InspectTibble, include=TRUE}
+# Lets inspect our tibble!
+RawData 
+```
+
+--
+<br>
+.center[
+By default, a tibble will only print the first 10 rows, making it easier to work with large data in the console.
+]
+
+---
+class: left, top
+.center[
+# Assessing Example Data (cont.)   
+]
+
+Extract, or subset, by a column name and examine the first x entries
+--
+``` {r ExtractFromTibble, include=TRUE}
+# Call out the first five entries of the "Athlete" column
+head(RawData$Athlete, 5) 
+```
+
+--
+<br>
+``` {r ExtractFromTibble2, include=TRUE}
+# Call out the first eight entries of the "Athlete" column
+head(RawData$Athlete, 8) 
+```
+
+--
+<br>
+``` {r ExtractFromTibble3, include=TRUE}
+# Call out the first ten entries of the "Left Leg Force" column
+head(RawData$`Left Leg Force`, 10) 
+```
+
+---
+class: left, top
+.center[
+# Tidying Example Data    
+]
+<br>
+.center[ 
+<img src="https://d33wubrfki0l68.cloudfront.net/571b056757d68e6df81a3e3853f54d3c76ad6efc/32d37/diagrams/data-science.png" width="70%", align="middle"/>
+.footnote[
+Image Source: [**R for Data Science**](https://r4ds.had.co.nz/introduction.html)
+]
+]
+--
+<br>
+<br>
+.center[
+**Changing column names in R**
+]
+
+---
+class: left, top
+.center[
+# Tidying Example Data (cont.)   
+]
+
+``` {r ChangingColNames, include=TRUE}
+# Rename columns - make them tidier
+colnames(RawData) <- c("Date", "Athlete", "LeftLeg", "RightLeg") 
+```
+--
+``` {r InspectTibble2, include=TRUE}
+# Inspect tibble, with new column names...
+RawData 
+```
+
+---
+class: left, top
+.center[
+# A Common Untidy Data Problem in Sport Science 
+]
+Problem = One variable is spread across multiple columns. Difficult to analyse with R!
+  
+--
+  
+Example data problem = One variable (force in N) is spread across multiple (Left and Right) columns.
+
+--
+  
+``` {r InspectTibble5, include=TRUE}
+# Closer inspection of data frame, to demonstrate "wide" format
+RawData 
+```
+
+
+---
+class: left, top
+.center[
+# A Common Untidy Data Problem in Sport Science 
+]
+
+Example data problem = One variable (force in N) is spread across multiple (Left and Right) columns.
+
+--
+  
+Solution = pivot (using lovely `tidyverse` tools) from many columns to many rows, and less columns!
+  
+``` {r Pivoting, include=TRUE}
+# Using the tidyverse, we move from a "wide" to a "long" format
+RawData <- RawData %>% 
+pivot_longer(LeftLeg:RightLeg, names_to = "Leg", values_to = "Force")
+```
+
+--
+  
+``` {r InspectTibble6, include=TRUE}
+# Observe our pivoting!
+RawData 
+```
+
+---
+class: center, top
+.center[
+# Transforming Example Data    
+]
+
+
+<img src="https://d33wubrfki0l68.cloudfront.net/571b056757d68e6df81a3e3853f54d3c76ad6efc/32d37/diagrams/data-science.png" width="70%", align="middle"/>
+  .footnote[
+    Image Source: [**R for Data Science**](https://r4ds.had.co.nz/introduction.html)
+  ]
+--
+  
+<br>
+  **How do I quickly perform summary statistics in R, as I would in Excel?**
+  
+
+---
+class: left, top
+.center[
+# Transforming Example Data    
+]
+
+
+Example data problem = I want to calculate the mean and SD of Force, for all athletes and both legs.
+
+--
+
+Solution = group by (again using lovely `tidyverse` tools) each athlete and give output for both legs.
+
+``` {r GroupBy, eval=FALSE}
+# Perform group by analysis - mean & SD
+RawData %>% 
+  group_by(Athlete, Leg) %>% 
+  summarise(Mean = mean(Force),
+            SD = sd(Force))
+```
+--
+```{r ref.label = 'GroupBy', echo=FALSE}
+
+```
+
+---
+class: left, top
+.center[
+# Transforming Example Data    
+]
+
+
+Example data problem = I want to create a new column, whereby Force is expressed relative (N/ kg).
+
+--
+
+Solution = mutate (again using lovely `tidyverse` tools) to create a new column for relative force values.
+
+``` {r GroupBy3, eval=FALSE}
+# Make Force data relative, for simplicity we assume all athletes are 80kg
+RawData %>% 
+  mutate(RelativeForce = Force/80)
+```
+--
+```{r ref.label = 'GroupBy3', echo=FALSE}
+
+```
+
+
+---
+class: top, left, inverse
+background-image: url(https://cdn.pixabay.com/photo/2016/12/05/00/28/san-francisco-1882882_960_720.jpg)
+background-size: cover
+
+# Visualising Example Data
+
+---
+class: center, top
+
+## Visualising Example Data    
+
+.left[
+Create a simple plot of Force (N), for each athlete, using `ggplot2` package.
+
+``` {r Plot1, fig.show = 'hide', fig.height = 7, fig.width = 13}
+# Create a basic plot using ggplot2
+ggplot(RawData, aes(x = Athlete, y = Force)) +
+  geom_point()
+```
+]
+--
+.center[
+```{r ref.label = 'Plot1', echo = FALSE,fig.height = 5, fig.width = 13}
+
+```
+]
+
+---
+class: center, top
+
+# Visualising Example Data (cont.)    
+
+.left[
+How do I plot summary stats for each athlete?
+]
+--
+.left[
+``` {r PlotT5, fig.show = 'hide', fig.height = 7, fig.width = 13}
+# Start with our classic template
+ggplot(RawData, aes(x = Leg, y = Force)) +
+# Create a boxplot
+  geom_boxplot() +
+# Create a "wrap" by adding a new panel for each athlete and set the scales to "free" for the x-axis
+facet_wrap(~Athlete, scales = "free_x")
+```
+]
+
+---
+class: center, top
+
+# Visualising Example Data (cont.)    
+
+.left[
+How do I plot summary stats for each athlete?
+]
+``` {r ref.label = 'PlotT5', echo = FALSE,fig.height = 6.5, fig.width = 13}
+
+```
+
+
+---
+class: center, top
+
+# Visualising Example Data (cont.)    
+
+.left[
+How do I plot **neater** summary stats for each athlete?
+]
+--
+.left[
+``` {r Plot5, fig.show = 'hide', fig.height = 7, fig.width = 13}
+# Start with our classic template
+ggplot(RawData, aes(x = Leg, y = Force)) +
+# Create a boxplot
+  geom_boxplot() +
+# Add a label for the y-axis
+  ylab("\n Force (N)") +
+# Make the theme "classic" for ease of interpretation
+  theme_classic() +
+# No legend placement is needed, as we are no longer mapping to a variable 
+  theme(#legend.position = "none",
+# Add more white space between the panels
+        panel.spacing = unit(1, "lines")) +
+# Create a "wrap" by adding a new panel for each athlete and set the scales to "free" for the x-axis
+  facet_wrap(~Athlete, scales = "free_x")
+```
+]
+
+---
+class: center, top
+
+# Visualising Example Data (cont.)    
+
+.left[
+How do I plot **neater** summary stats for each athlete?
+]
+``` {r ref.label = 'Plot5', echo = FALSE,fig.height = 6.5, fig.width = 13}
+
+```
+
+---
+class: center, top
+
+# Visualising Example Data (cont.)    
+
+.left[
+How do I plot distributions for all athletes and both their legs?
+]
+--
+.left[
+``` {r Plot6, fig.show = 'hide', fig.height = 7, fig.width = 13}
+# Start with our classic template, but now add fill and colour mappings
+ggplot(RawData, aes(Force, fill = Leg, colour = Leg)) +
+# Create a boxplot
+ geom_density(alpha = 0.8) +
+# Add a label for the x-axis
+  xlab("\n Force (N)") +
+# Make the theme "classic" for ease of interpretation
+  theme_classic() +
+# Move our legend from the RHS of the figure to the bottom
+  theme(legend.position = "bottom",
+# Remove y-axis label
+         axis.title.y = element_blank(),
+# Add more white space between the panels
+        panel.spacing = unit(1, "lines")) +
+# Create a "wrap" by adding a new panel for each athlete and set the scales to "free" for the x-axis
+  facet_wrap(~Athlete, scales = "free")
+```
+]
+
+---
+class: center, top
+
+# Visualising Example Data (cont.)    
+
+.left[
+How do I plot distributions for all athletes and both their legs?
+]
+``` {r ref.label = 'Plot6', echo = FALSE,fig.height = 6.5, fig.width = 13}
+
+```
+
+
+---
+class: center, top
+
+# Visualising Example Data (cont.)    
+
+**However, what may be wrong with this figure?**
+
+``` {r ref.label = 'Plot6', echo = FALSE,fig.height = 6.5, fig.width = 13}
+
+```
+
+---
+class: top, right, inverse
+background-image: url(https://cdn.pixabay.com/photo/2015/09/12/23/41/spectrum-937560_960_720.jpg)
+background-size: cover
+
+# Not Designing for Color-Vision Deficiency
+
+---
+class: center, top
+
+# Not Designing for Color-Vision Deficiency
+
+.left[
+* A proportion population may have some form of color-vision deficiency (i.e., are colorblind). 
+<br>
+<br>
+* These people may not be able to distinguish colors that look clearly different to most other people.
+]
+
+--
+.left[
+<br>
+* We should make slight modifications in ALL visuals so they safe for color-vision deficiency
+<br>
+<br>
+* Should also probably not color-code more than eight different items in a plot
+]
+--
+<br>
+.left[
+The `viridis` package contains colour scales to make visually pleasing plots that are likely easier to read by those with color-vision deficiency. You can read more about the package [here](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html)
+]
+
+.left[
+``` {r eval = FALSE}
+# Load the package - we already did so earlier in the session
+library(viridis)
+```
+]
+
+---
+class: center, top
+
+# Visualising Example Data (cont.)    
+
+.left[
+How do I plot *inclusive* distributions for all athletes and both their legs?
+]
+--
+.left[
+``` {r Plot7, fig.show = 'hide', fig.height = 7, fig.width = 13}
+# Start with our classic template, but now add only fill mapping
+ggplot(RawData, aes(Force, fill = Leg)) +
+# Create a boxplot
+ geom_density(alpha = 0.8) +
+# Add a label for the x-axis
+  xlab("\n Force (N)") +
+# Add a call to the viridis palette
+  scale_fill_viridis(discrete=TRUE) +
+# Make the theme "classic" for ease of interpretation
+  theme_classic() +
+# Move our legend from the RHS of the figure to the bottom
+  theme(legend.position = "bottom",
+# Remove y-axis label
+         axis.title.y = element_blank(),
+# Add more white space between the panels
+        panel.spacing = unit(1, "lines")) +
+# Create a "wrap" by adding a new panel for each athlete and set the scales to "free" for the x-axis
+  facet_wrap(~Athlete, scales = "free")
+```
+]
+
+---
+class: center, top
+
+# Visualising Example Data (cont.)    
+
+.left[
+How do I plot *inclusive* distributions for all athletes and both their legs?
+]
+
+``` {r ref.label = 'Plot7', echo = FALSE,fig.height = 6.5, fig.width = 13}
+
+```
+
+
+---
+class: center, top, blackfont
+background-image: url(Images/AthsTrack.jpg)
+background-size: cover
+# Thank you for Listening!
+
